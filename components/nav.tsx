@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 const links = [
   { href: "/o-kempu", label: "O kempu" },
@@ -13,11 +13,30 @@ const links = [
 
 export default function Nav() {
   const [isOpen, setIsOpen] = useState(false)
+  const closeButtonRef = useRef<HTMLButtonElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : ""
     return () => {
       document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    if (!isOpen) return
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsOpen(false)
+    }
+    document.addEventListener("keydown", handleKeyDown)
+    return () => document.removeEventListener("keydown", handleKeyDown)
+  }, [isOpen])
+
+  useEffect(() => {
+    if (isOpen) {
+      closeButtonRef.current?.focus()
+    } else {
+      triggerRef.current?.focus()
     }
   }, [isOpen])
 
@@ -48,9 +67,12 @@ export default function Nav() {
               Přispět →
             </Link>
             <button
+              ref={triggerRef}
               className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
               onClick={() => setIsOpen(true)}
-              aria-label="Otevřít menu"
+              aria-label={isOpen ? "Zavřít menu" : "Otevřít menu"}
+              aria-expanded={isOpen}
+              aria-controls="mobile-menu"
             >
               <span className="block w-6 h-0.5 bg-dark" />
               <span className="block w-6 h-0.5 bg-dark" />
@@ -60,8 +82,15 @@ export default function Nav() {
         </nav>
       </header>
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-forest flex flex-col items-center justify-center gap-8 md:hidden">
+        <div
+          className="fixed inset-0 z-50 bg-forest flex flex-col items-center justify-center gap-8 md:hidden"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Hlavní menu"
+          id="mobile-menu"
+        >
           <button
+            ref={closeButtonRef}
             className="absolute top-4 right-4 w-10 h-10 flex items-center justify-center"
             onClick={() => setIsOpen(false)}
             aria-label="Zavřít menu"
