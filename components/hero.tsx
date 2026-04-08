@@ -3,12 +3,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import StatBar from "@/components/stat-bar";
 
-// Placeholder slides — replace bg-* with next/image once photos arrive
 const slides = [
-  { label: "Léto plné pohybu" },
-  { label: "Rehabilitace v přírodě" },
-  { label: "Tým asistentů" },
-  { label: "Společné chvíle" },
+  { src: "/images/Handicamp_socky_2025-128.jpg", label: "Léto plné pohybu" },
+  { src: "/images/Handicamp_socky_2025-88.jpg", label: "Rehabilitace v přírodě" },
+  { src: "/images/Handicamp_socky_2025-80.jpg", label: "Společné chvíle" },
+  { src: "/images/Handicamp_socky_2025-106.jpg", label: "Tým asistentů" },
 ];
 
 export default function Hero() {
@@ -24,15 +23,21 @@ export default function Hero() {
 
   return (
     <section className="relative h-[90vh] min-h-[600px] flex flex-col justify-end overflow-hidden">
-      {/* Placeholder slides (swap for real images later) */}
       {slides.map((slide, i) => (
         <div
           key={i}
           aria-hidden={i !== current}
-          className={`absolute inset-0 bg-forest transition-opacity duration-1000 ${
+          className={`absolute inset-0 transition-opacity duration-1000 ${
             i === current ? "opacity-100" : "opacity-0"
           }`}
-        />
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={slide.src}
+            alt={slide.label}
+            className="w-full h-full object-cover"
+          />
+        </div>
       ))}
 
       {/* Dark-green overlay */}

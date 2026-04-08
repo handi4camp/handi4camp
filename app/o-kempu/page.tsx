@@ -54,6 +54,7 @@ export default function OKempuPage() {
       <PageHero
         title="O kempu"
         subtitle="Dvacet let tradice, důvěry a léta bez hranic pro děti s DMO."
+        imageSrc="/images/Handicamp_socky_2025-117.jpg"
       />
 
       {/* Příběh */}

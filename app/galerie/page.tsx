@@ -14,19 +14,18 @@ const galleryYears: GalleryYear[] = [
   {
     year: 2024,
     photos: [
-      { src: "", alt: "Zahajovací ceremonie 2024", rotation: -2 },
-      { src: "", alt: "Plavání 2024", rotation: 1 },
-      { src: "", alt: "Rehabilitace na louce", rotation: -1 },
-      { src: "", alt: "Výlet na Pálavu", rotation: 2 },
-      { src: "", alt: "Večerní posezení", rotation: -3 },
+      { src: "/images/Handicamp_socky_2025-173.jpg", alt: "Společná fotografie 2024", rotation: -2 },
+      { src: "/images/Handicamp_socky_2025-78.jpg", alt: "Odpoledne u kempu", rotation: 1 },
+      { src: "/images/IMG_0992.jpg", alt: "Výlet do pivovaru", rotation: -1 },
+      { src: "/images/IMG_1939.jpg", alt: "Večer maskotů", rotation: 2 },
+      { src: "/images/IMG_4366.jpg", alt: "Výtvarná dílna", rotation: -3 },
     ],
   },
   {
     year: 2023,
     photos: [
-      { src: "", alt: "Kempové hry 2023", rotation: 1 },
-      { src: "", alt: "Fyzioterapie 2023", rotation: -2 },
-      { src: "", alt: "Výlet do lesa", rotation: 2 },
+      { src: "/images/IMG_1521.jpg", alt: "Pohoda u vody", rotation: 1 },
+      { src: "/images/IMG_1523.jpg", alt: "Letní nálada", rotation: -2 },
     ],
   },
 ];
@@ -50,6 +49,7 @@ export default function GaleriePage() {
       <PageHero
         title="Galerie & Aktuality"
         subtitle="Vzpomínky, příběhy a okamžiky z každého ročníku."
+        imageSrc="/images/Handicamp_socky_2025-175.jpg"
       />
 
       {/* Galerie */}

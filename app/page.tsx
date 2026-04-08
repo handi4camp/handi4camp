@@ -8,11 +8,11 @@ import type { PolaroidPhoto } from "@/components/polaroid-gallery";
 import type { SponsorEntry } from "@/components/sponsor-logos";
 
 const photos: PolaroidPhoto[] = [
-  { src: "", alt: "Děti na kempu 2024", rotation: -2 },
-  { src: "", alt: "Rehabilitace v přírodě", rotation: 1 },
-  { src: "", alt: "Výlet na Pálavu", rotation: -1 },
-  { src: "", alt: "Společná večeře", rotation: 2 },
-  { src: "", alt: "Tým asistentů", rotation: -3 },
+  { src: "/images/Handicamp_socky_2025-61.jpg", alt: "Výtvarná dílna", rotation: -2 },
+  { src: "/images/Handicamp_socky_2025-49.jpg", alt: "Malování na kempu", rotation: 1 },
+  { src: "/images/Handicamp_socky_2025-66.jpg", alt: "Chvíle radosti", rotation: -1 },
+  { src: "/images/IMG_0491.jpg", alt: "Plavání při západu slunce", rotation: 2 },
+  { src: "/images/IMG_0869.jpg", alt: "Přátelství na kempu", rotation: -3 },
 ];
 
 const sponsors: SponsorEntry[] = [
