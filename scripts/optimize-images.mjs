@@ -1,6 +1,6 @@
 import sharp from 'sharp'
-import { readdir, unlink } from 'fs/promises'
-import { join, extname, basename } from 'path'
+import { unlink } from 'fs/promises'
+import { join } from 'path'
 
 const INPUT_DIR = 'public/images'
 const QUALITY = 82
