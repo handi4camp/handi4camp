@@ -39,12 +39,23 @@ export default function Nav() {
             </li>
           ))}
         </ul>
-        <Link
-          href="/jak-pomoci#darovani"
-          className="bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
-        >
-          Přispět →
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/jak-pomoci#darovani"
+            className="hidden md:inline-flex bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
+          >
+            Přispět →
+          </Link>
+          <button
+            className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-1.5"
+            onClick={() => setIsOpen(true)}
+            aria-label="Otevřít menu"
+          >
+            <span className="block w-6 h-0.5 bg-dark" />
+            <span className="block w-6 h-0.5 bg-dark" />
+            <span className="block w-6 h-0.5 bg-dark" />
+          </button>
+        </div>
       </nav>
     </header>
   );
