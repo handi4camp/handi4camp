@@ -7,7 +7,6 @@ const links = [
   { href: "/o-kempu", label: "O kempu" },
   { href: "/jak-pomoci", label: "Jak pomoci" },
   { href: "/galerie", label: "Galerie & Aktuality" },
-  { href: "/partneri", label: "Partneři" },
   { href: "/kontakt", label: "Kontakt" },
 ];
 

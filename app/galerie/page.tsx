@@ -43,6 +43,7 @@ export default function GaleriePage() {
   const [activeYear, setActiveYear] = useState(galleryYears[0].year);
   const activeGallery = galleryYears.find((g) => g.year === activeYear)!;
   const [posts, setPosts] = useState<Post[]>([]);
+  const [postsError, setPostsError] = useState<string | null>(null);
 
   useEffect(() => {
     client.queries.postConnection().then((res) => {
@@ -58,6 +59,9 @@ export default function GaleriePage() {
             slug: e!.node!._sys.filename,
           }))
       );
+    }).catch((err) => {
+      console.error("Failed to load posts:", err);
+      setPostsError(err?.message ?? "Nepodařilo se načíst aktuality.");
     });
   }, []);
 
@@ -99,18 +103,22 @@ export default function GaleriePage() {
       <section className="py-16 bg-light-green">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-8">Aktuality</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {posts.map((post) => (
-              <NewsCard
-                key={post.slug}
-                title={post.title}
-                date={post.date}
-                excerpt={post.excerpt ?? undefined}
-                coverImage={post.coverImage ?? undefined}
-                href={`/galerie/${post.slug}`}
-              />
-            ))}
-          </div>
+          {postsError ? (
+            <p className="text-sm text-dark/50">{postsError}</p>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {posts.map((post) => (
+                <NewsCard
+                  key={post.slug}
+                  title={post.title}
+                  date={post.date}
+                  excerpt={post.excerpt ?? undefined}
+                  coverImage={post.coverImage ?? undefined}
+                  href={`/galerie/${post.slug}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </>

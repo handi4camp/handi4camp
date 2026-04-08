@@ -23,7 +23,7 @@ export default function JakPomociPage() {
         subtitle="Vaše podpora umožňuje dětem prožít léto, na které nikdy nezapomenou."
       />
 
-      {/* Darování */}
+      {/* Darování + transparentnost */}
       <section id="darovani" className="py-16 bg-warm-white scroll-mt-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-4">Darování</h2>
@@ -57,10 +57,37 @@ export default function JakPomociPage() {
             ))}
           </div>
           <DonationBox />
+
+          <div className="mt-10 border-t border-light-green pt-10">
+            <h3 className="font-bold text-lg mb-4">Transparentní financování</h3>
+            <p className="text-dark/70 text-sm mb-6">
+              Veškeré příjmy a výdaje kempu jsou veřejně dohledatelné.
+            </p>
+            <dl className="space-y-3 text-sm mb-6">
+              <div className="flex gap-2 flex-wrap">
+                <dt className="text-dark/60 w-40 flex-none">Transparentní účet:</dt>
+                <dd className="font-mono font-bold">XXXX-XXXXXX/XXXX</dd>
+              </div>
+              <div className="flex gap-2 flex-wrap">
+                <dt className="text-dark/60 w-40 flex-none">Výpis transakcí:</dt>
+                <dd>
+                  <a href="#" className="text-forest underline hover:text-dark transition-colors">
+                    Odkaz na transparentní účet →
+                  </a>
+                </dd>
+              </div>
+            </dl>
+            <a
+              href="/documents/darovaci-smlouva.pdf"
+              className="inline-block bg-forest text-warm-white font-semibold px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors text-sm"
+            >
+              Stáhnout darovací smlouvu (PDF)
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Sponzoring */}
+      {/* Sponzoring + partneři + co se podařilo */}
       <section id="sponzoring" className="py-16 bg-light-green scroll-mt-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-4">
@@ -74,29 +101,22 @@ export default function JakPomociPage() {
             <h3 className="font-bold text-forest mb-4">Co sponzor získá:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na webu
-                kempu
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na webu kempu
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na tričkách
-                účastníků
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na tričkách účastníků
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Zmínka v
-                příspěvcích na sociálních sítích
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Zmínka v příspěvcích na sociálních sítích
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Certifikát
-                partnerství
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Certifikát partnerství
               </li>
             </ul>
           </div>
-          <p className="text-sm text-dark/70 mb-4">
-            Pro domluvu partnerství kontaktujte Barboru Slátkovou přímo:
-          </p>
           <a
             href="mailto:info@handi4camp.cz?subject=Zájem o sponzoring Handi4Camp"
-            className="inline-block bg-forest text-warm-white font-bold px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors"
+            className="inline-block bg-forest text-warm-white font-bold px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors mb-12"
           >
             Napsat email →
           </a>
@@ -104,10 +124,7 @@ export default function JakPomociPage() {
       </section>
 
       {/* Dobrovolnictví */}
-      <section
-        id="dobrovolnictvi"
-        className="py-16 bg-warm-white scroll-mt-16"
-      >
+      <section id="dobrovolnictvi" className="py-16 bg-warm-white scroll-mt-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-4">
             Dobrovolnictví
@@ -123,20 +140,16 @@ export default function JakPomociPage() {
             </h3>
             <ul className="space-y-2 text-sm text-dark/70">
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> 10 dní intenzivní
-                práce s dětmi s DMO
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> 10 dní intenzivní práce s dětmi s DMO
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Dohled zkušených
-                fyzioterapeutů
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Dohled zkušených fyzioterapeutů
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Praxe uznatelná
-                v rámci studia
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Praxe uznatelná v rámci studia
               </li>
               <li className="flex gap-2">
-                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Strava a
-                ubytování zajištěno
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Strava a ubytování zajištěno
               </li>
             </ul>
           </div>

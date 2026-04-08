@@ -1,6 +1,3 @@
-"use client";
-import { useEffect, useRef } from "react";
-
 export type PolaroidPhoto = {
   src: string;
   alt: string;
@@ -12,38 +9,8 @@ export default function PolaroidGallery({
 }: {
   photos: PolaroidPhoto[];
 }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const indexRef = useRef(0);
-  const isHovering = useRef(false);
-
-  useEffect(() => {
-    const container = scrollRef.current;
-    if (!container) return;
-
-    const interval = setInterval(() => {
-      if (isHovering.current) return;
-
-      const cards = container.querySelectorAll<HTMLElement>("[data-card]");
-      if (!cards.length) return;
-
-      indexRef.current = (indexRef.current + 1) % cards.length;
-      const target = cards[indexRef.current];
-      const containerLeft = container.getBoundingClientRect().left;
-      const cardLeft = target.getBoundingClientRect().left;
-      const offset = cardLeft - containerLeft + container.scrollLeft - (container.clientWidth - target.offsetWidth) / 2;
-      container.scrollTo({ left: offset, behavior: "smooth" });
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, []);
-
   return (
-    <div
-      ref={scrollRef}
-      className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      onMouseEnter={() => { isHovering.current = true; }}
-      onMouseLeave={() => { isHovering.current = false; }}
-    >
+    <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       <div className="flex gap-8 px-6 sm:px-10 py-10">
         {photos.map((photo, i) => {
           const deg = photo.rotation ?? (i % 2 === 0 ? -2 : 2);
