@@ -1,9 +1,9 @@
 ---
-title: Hello, World!
+title: "Handi4Camp — otevíráme nový web"
+date: 2024-04-08T00:00:00.000Z
+excerpt: "Vítejte na novém webu Handi4Camp. Najdete zde vše o našem letním táboře pro děti s DMO."
 ---
 
-## Hello World!
+## Vítejte na Handi4Camp!
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut non lorem diam. Quisque vulputate nibh sodales eros pretium tincidunt. Aenean porttitor efficitur convallis. Nulla sagittis finibus convallis. Phasellus in fermentum quam, eu egestas tortor. Maecenas ac mollis leo. Integer maximus eu nisl vel sagittis.
-
-Suspendisse facilisis, mi ac scelerisque interdum, ligula ex imperdiet felis, a posuere eros justo nec sem. Nullam laoreet accumsan metus, sit amet tincidunt orci egestas nec. Pellentesque ut aliquet ante, at tristique nunc. Donec non massa nibh. Ut posuere lacus non aliquam laoreet. Fusce pharetra ligula a felis porttitor, at mollis ipsum maximus. Donec quam tortor, vehicula a magna sit amet, tincidunt dictum enim. In hac habitasse platea dictumst. Mauris sit amet ornare ligula, blandit consequat risus. Duis malesuada pellentesque lectus, non feugiat turpis eleifend a. Nullam tempus ante et diam pretium, ac faucibus ligula interdum.
+Jsme rádi, že jste tu. Náš nový web je místem, kde najdete vše o letním táboře pro děti s dětskou mozkovou obrnou.

@@ -1,6 +1,5 @@
 import { defineConfig } from "tinacms";
 
-// Your hosting provider likely exposes this as an environment variable
 const branch =
   process.env.GITHUB_BRANCH ||
   process.env.VERCEL_GIT_COMMIT_REF ||
@@ -9,54 +8,143 @@ const branch =
 
 export default defineConfig({
   branch,
-
-  // Get this from tina.io
   clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  // Get this from tina.io
   token: process.env.TINA_TOKEN,
-
   build: {
     outputFolder: "admin",
     publicFolder: "public",
   },
-  // Uncomment to allow cross-origin requests from non-localhost origins
-  // during local development (e.g. GitHub Codespaces, Gitpod, Docker).
-  // Use 'private' to allow all private-network IPs (WSL2, Docker, etc.)
-  // server: {
-  //   allowedOrigins: ['https://your-codespace.github.dev'],
-  // },
   media: {
     tina: {
       mediaRoot: "",
       publicFolder: "public",
     },
   },
-  // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/r/content-modelling-collections/
   schema: {
     collections: [
       {
         name: "post",
-        label: "Posts",
+        label: "Aktuality",
         path: "content/posts",
         fields: [
           {
             type: "string",
             name: "title",
-            label: "Title",
+            label: "Nadpis",
             isTitle: true,
             required: true,
           },
           {
+            type: "datetime",
+            name: "date",
+            label: "Datum publikace",
+            required: true,
+          },
+          {
+            type: "image",
+            name: "coverImage",
+            label: "Titulní fotka",
+          },
+          {
+            type: "string",
+            name: "excerpt",
+            label: "Krátký popis",
+            ui: { component: "textarea" },
+          },
+          {
             type: "rich-text",
             name: "body",
-            label: "Body",
+            label: "Obsah",
             isBody: true,
           },
         ],
         ui: {
-          // This is an DEMO router. You can remove this to fit your site
-          router: ({ document }) => `/demo/blog/${document._sys.filename}`,
+          router: ({ document }) => `/galerie`,
         },
+      },
+      {
+        name: "gallery",
+        label: "Galerie",
+        path: "content/gallery",
+        fields: [
+          {
+            type: "number",
+            name: "year",
+            label: "Rok ročníku",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Popis ročníku",
+          },
+          {
+            type: "image",
+            name: "photos",
+            label: "Fotky",
+            list: true,
+          },
+        ],
+      },
+      {
+        name: "sponsor",
+        label: "Sponzoři",
+        path: "content/sponsors",
+        fields: [
+          {
+            type: "string",
+            name: "name",
+            label: "Název",
+            isTitle: true,
+            required: true,
+          },
+          {
+            type: "image",
+            name: "logo",
+            label: "Logo",
+          },
+          {
+            type: "string",
+            name: "website",
+            label: "Web URL",
+          },
+          {
+            type: "string",
+            name: "tier",
+            label: "Úroveň partnerství",
+            options: ["gold", "silver", "partner"],
+          },
+          {
+            type: "boolean",
+            name: "active",
+            label: "Zobrazit na webu",
+          },
+        ],
+      },
+      {
+        name: "milestone",
+        label: "Milníky",
+        path: "content/milestones",
+        fields: [
+          {
+            type: "number",
+            name: "year",
+            label: "Rok",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "title",
+            label: "Název milníku",
+            required: true,
+          },
+          {
+            type: "string",
+            name: "description",
+            label: "Popis",
+            ui: { component: "textarea" },
+          },
+        ],
       },
     ],
   },
