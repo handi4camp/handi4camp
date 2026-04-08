@@ -21,7 +21,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-screen flex flex-col justify-end overflow-hidden">
+    <section className="relative h-screen flex flex-col justify-end md:justify-start overflow-hidden">
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -57,7 +57,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-24 text-warm-white">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-0 md:mt-[50vh] text-warm-white">
         <h1 className="font-serif text-5xl md:text-7xl font-bold mb-4 leading-tight">
           Léto bez hranic —<br />již 20 let
         </h1>
