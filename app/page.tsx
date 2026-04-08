@@ -65,7 +65,7 @@ export default function Home() {
 
       {/* Foto pás */}
       <section className="pt-12 pb-8 bg-warm-white overflow-visible">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 text-center">
           <h2 className="font-serif text-2xl font-bold">
             Chvíle, které zůstanou
           </h2>
