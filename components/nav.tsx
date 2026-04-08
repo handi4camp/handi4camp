@@ -1,4 +1,7 @@
+"use client"
+
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 const links = [
   { href: "/o-kempu", label: "O kempu" },
@@ -9,6 +12,15 @@ const links = [
 ];
 
 export default function Nav() {
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : ""
+    return () => {
+      document.body.style.overflow = ""
+    }
+  }, [isOpen])
+
   return (
     <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-sm border-b border-light-green">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
