@@ -6,21 +6,21 @@ import PolaroidGallery from "@/components/polaroid-gallery";
 import type { PolaroidPhoto } from "@/components/polaroid-gallery";
 
 const photos: PolaroidPhoto[] = [
-  { src: "/images/Handicamp_socky_2025-61.jpg", alt: "Výtvarná dílna", rotation: -2 },
-  { src: "/images/IMG_0411.jpg", alt: "Radost na táboře", rotation: 1 },
-  { src: "/images/Handicamp_socky_2025-49.jpg", alt: "Malování na kempu", rotation: -1 },
-  { src: "/images/IMG_0773.jpg", alt: "Společná chvíle", rotation: 2 },
-  { src: "/images/Handicamp_socky_2025-66.jpg", alt: "Chvíle radosti", rotation: -3 },
-  { src: "/images/IMG_0617.jpg", alt: "Odpoledne venku", rotation: 1 },
-  { src: "/images/IMG_0491.jpg", alt: "Plavání při západu slunce", rotation: -2 },
-  { src: "/images/IMG_0574.jpg", alt: "Pohyb a smích", rotation: 3 },
-  { src: "/images/IMG_0869.jpg", alt: "Přátelství na kempu", rotation: -1 },
-  { src: "/images/IMG_4504.jpg", alt: "Letní program", rotation: 2 },
-  { src: "/images/IMG_1559.jpg", alt: "Tým pohromadě", rotation: -2 },
-  { src: "/images/IMG_0518.jpg", alt: "Kreativní dílna", rotation: 1 },
-  { src: "/images/IMG_0394.jpg", alt: "Venkovní aktivity", rotation: -3 },
-  { src: "/images/IMG_1852.jpg", alt: "Večerní program", rotation: 2 },
-  { src: "/images/IMG_0621.jpg", alt: "Vzpomínka na kamp", rotation: -1 },
+  { src: "/images/handicamp-foto-07.webp", alt: "Výtvarná dílna", rotation: -2 },
+  { src: "/images/handicamp-foto-13.webp", alt: "Radost na táboře", rotation: 1 },
+  { src: "/images/handicamp-foto-06.webp", alt: "Malování na kempu", rotation: -1 },
+  { src: "/images/handicamp-foto-19.webp", alt: "Společná chvíle", rotation: 2 },
+  { src: "/images/handicamp-foto-08.webp", alt: "Chvíle radosti", rotation: -3 },
+  { src: "/images/handicamp-foto-17.webp", alt: "Odpoledne venku", rotation: 1 },
+  { src: "/images/handicamp-foto-14.webp", alt: "Plavání při západu slunce", rotation: -2 },
+  { src: "/images/handicamp-foto-16.webp", alt: "Pohyb a smích", rotation: 3 },
+  { src: "/images/handicamp-foto-20.webp", alt: "Přátelství na kempu", rotation: -1 },
+  { src: "/images/handicamp-foto-28.webp", alt: "Letní program", rotation: 2 },
+  { src: "/images/handicamp-foto-24.webp", alt: "Tým pohromadě", rotation: -2 },
+  { src: "/images/handicamp-foto-15.webp", alt: "Kreativní dílna", rotation: 1 },
+  { src: "/images/handicamp-foto-12.webp", alt: "Venkovní aktivity", rotation: -3 },
+  { src: "/images/handicamp-foto-25.webp", alt: "Večerní program", rotation: 2 },
+  { src: "/images/handicamp-foto-18.webp", alt: "Vzpomínka na kamp", rotation: -1 },
 ];
 
 const sponsors = [
