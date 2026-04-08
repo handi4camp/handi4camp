@@ -35,6 +35,23 @@ export default function KontaktPage() {
                 </div>
                 <div>
                   <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
+                    Facebook
+                  </dt>
+                  <dd>
+                    <a
+                      href="https://www.facebook.com/Handi4Camp"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-forest hover:text-dark transition-colors"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src="/facebook.svg" alt="" className="w-4 h-4" />
+                      Handi4Camp
+                    </a>
+                  </dd>
+                </div>
+                <div>
+                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
                     Záštita
                   </dt>
                   <dd>

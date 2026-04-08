@@ -66,13 +66,23 @@ export default function Footer() {
             >
               info@handi4camp.cz
             </a>
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col gap-3">
               <Link
                 href="/jak-pomoci#darovani"
                 className="inline-block bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
               >
                 Přispět →
               </Link>
+              <a
+                href="https://www.facebook.com/Handi4Camp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-warm-white/70 hover:text-warm-white transition-colors text-sm"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src="/facebook.svg" alt="" className="w-4 h-4 brightness-0 invert" />
+                Handi4Camp na Facebooku
+              </a>
             </div>
           </div>
         </div>

@@ -3,9 +3,7 @@ import Hero from "@/components/hero";
 import StatBar from "@/components/stat-bar";
 import Rozcestnik from "@/components/rozcestnik";
 import PolaroidGallery from "@/components/polaroid-gallery";
-import SponsorLogos from "@/components/sponsor-logos";
 import type { PolaroidPhoto } from "@/components/polaroid-gallery";
-import type { SponsorEntry } from "@/components/sponsor-logos";
 
 const photos: PolaroidPhoto[] = [
   { src: "/images/Handicamp_socky_2025-61.jpg", alt: "Výtvarná dílna", rotation: -2 },
@@ -25,7 +23,7 @@ const photos: PolaroidPhoto[] = [
   { src: "/images/IMG_0621.jpg", alt: "Vzpomínka na kamp", rotation: -1 },
 ];
 
-const sponsors: SponsorEntry[] = [
+const sponsors = [
   { name: "Rotary Club Valtice Břeclav", logo: "/images/partners/valtice.png", website: "https://rotary.cz" },
   { name: "Skupina ČEZ", logo: "/images/partners/cez.png", website: "https://cez.cz" },
   { name: "Sportisimo", logo: "/images/partners/sportisimo.svg", website: "https://sportisimo.cz" },
@@ -81,27 +79,7 @@ export default function Home() {
         </div>
       </section>
 
-      <Rozcestnik />
-
-      {/* CTA */}
-      <section className="bg-forest py-20 text-center text-warm-white">
-        <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-            Chcete pomoci?
-          </h2>
-          <p className="text-warm-white/80 text-lg mb-10">
-            Každá koruna, každý partner a každý dobrovolník se počítá.
-          </p>
-          <Link
-            href="/jak-pomoci"
-            className="inline-block bg-gold text-dark font-bold px-10 py-4 rounded-lg text-xl hover:bg-gold/90 transition-colors"
-          >
-            Chci pomoci
-          </Link>
-        </div>
-      </section>
-
-      <SponsorLogos sponsors={sponsors} />
+      <Rozcestnik sponsors={sponsors} />
     </>
   );
 }
