@@ -3,10 +3,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 const slides = [
-  { src: "/images/Handicamp_socky_2025-128.jpg", label: "Léto plné pohybu" },
-  { src: "/images/Handicamp_socky_2025-88.jpg", label: "Rehabilitace v přírodě" },
-  { src: "/images/Handicamp_socky_2025-80.jpg", label: "Společné chvíle" },
-  { src: "/images/Handicamp_socky_2025-106.jpg", label: "Tým asistentů" },
+  { src: "/images/handicamp-foto-03.webp", label: "Léto plné pohybu" },
+  { src: "/images/handicamp-foto-11.webp", label: "Rehabilitace v přírodě" },
+  { src: "/images/handicamp-foto-10.webp", label: "Společné chvíle" },
+  { src: "/images/handicamp-foto-01.webp", label: "Tým asistentů" },
 ];
 
 export default function Hero() {
