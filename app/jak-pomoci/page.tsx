@@ -1,5 +1,6 @@
 import PageHero from "@/components/page-hero";
 import DonationBox from "@/components/donation-box";
+import { Check } from "lucide-react";
 
 const donationTiers = [
   { amount: "500 Kč", desc: "stravu asistenta na jeden den" },
@@ -73,19 +74,19 @@ export default function JakPomociPage() {
             <h3 className="font-bold text-forest mb-4">Co sponzor získá:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Logo na webu
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na webu
                 kempu
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Logo na tričkách
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Logo na tričkách
                 účastníků
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Zmínka v
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Zmínka v
                 příspěvcích na sociálních sítích
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Certifikát
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Certifikát
                 partnerství
               </li>
             </ul>
@@ -122,19 +123,19 @@ export default function JakPomociPage() {
             </h3>
             <ul className="space-y-2 text-sm text-dark/70">
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> 10 dní intenzivní
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> 10 dní intenzivní
                 práce s dětmi s DMO
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Dohled zkušených
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Dohled zkušených
                 fyzioterapeutů
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Praxe uznatelná
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Praxe uznatelná
                 v rámci studia
               </li>
               <li className="flex gap-2">
-                <span className="text-gold font-bold">✓</span> Strava a
+                <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> Strava a
                 ubytování zajištěno
               </li>
             </ul>

@@ -59,7 +59,7 @@ export default defineConfig({
           },
         ],
         ui: {
-          router: ({ document }) => `/galerie`,
+          router: ({ document }) => `/galerie/${document._sys.filename}`,
         },
       },
       {

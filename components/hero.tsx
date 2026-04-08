@@ -1,7 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import StatBar from "@/components/stat-bar";
 
 const slides = [
   { src: "/images/Handicamp_socky_2025-128.jpg", label: "Léto plné pohybu" },
@@ -22,7 +21,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative h-[90vh] min-h-[600px] flex flex-col justify-end overflow-hidden">
+    <section className="relative h-screen flex flex-col justify-end overflow-hidden">
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -58,7 +57,7 @@ export default function Hero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-0 text-warm-white">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-24 text-warm-white">
         <h1 className="font-serif text-5xl md:text-7xl font-bold mb-4 leading-tight">
           Léto bez hranic —<br />již 20 let
         </h1>
@@ -66,7 +65,7 @@ export default function Hero() {
           Každoročně dáváme 12 dětem s DMO léto, jaké si zaslouží. A jejich
           rodičům 10 dní zaslouženého oddychu.
         </p>
-        <div className="flex flex-wrap gap-4 pb-12">
+        <div className="flex flex-wrap gap-4">
           <Link
             href="/jak-pomoci#darovani"
             className="bg-gold text-dark font-bold px-8 py-3 rounded-lg text-lg hover:bg-gold/90 transition-colors"
@@ -82,10 +81,6 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Stat strip pinned to bottom of hero */}
-      <div className="relative z-10">
-        <StatBar />
-      </div>
     </section>
   );
 }

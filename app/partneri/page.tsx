@@ -4,7 +4,9 @@ import Link from "next/link";
 import type { SponsorEntry } from "@/components/sponsor-logos";
 
 const sponsors: SponsorEntry[] = [
-  { name: "Rotary Club Valtice Břeclav", website: "https://rotary.cz" },
+  { name: "Rotary Club Valtice Břeclav", logo: "/images/partners/valtice.png", website: "https://rotary.cz" },
+  { name: "Skupina ČEZ", logo: "/images/partners/cez.png", website: "https://cez.cz" },
+  { name: "Sportisimo", logo: "/images/partners/sportisimo.svg", website: "https://sportisimo.cz" },
 ];
 
 export default function PartneriPage() {

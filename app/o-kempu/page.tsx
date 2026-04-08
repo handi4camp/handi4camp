@@ -1,6 +1,7 @@
 import PageHero from "@/components/page-hero";
 import MilestoneTimeline from "@/components/milestone-timeline";
 import type { MilestoneEntry } from "@/components/milestone-timeline";
+import { Check } from "lucide-react";
 
 const milestones: MilestoneEntry[] = [
   {
@@ -148,7 +149,7 @@ export default function OKempuPage() {
               key={trust}
               className="flex items-center gap-2 text-sm font-semibold text-forest"
             >
-              <span className="text-gold text-lg">✓</span> {trust}
+              <Check className="w-4 h-4 text-gold shrink-0" strokeWidth={2.5} /> {trust}
             </div>
           ))}
         </div>

@@ -1,13 +1,22 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageHero from "@/components/page-hero";
 import PolaroidGallery from "@/components/polaroid-gallery";
 import NewsCard from "@/components/news-card";
 import type { PolaroidPhoto } from "@/components/polaroid-gallery";
+import { client } from "@/tina/__generated__/client";
 
 type GalleryYear = {
   year: number;
   photos: PolaroidPhoto[];
+};
+
+type Post = {
+  title: string;
+  date: string;
+  excerpt?: string | null;
+  coverImage?: string | null;
+  slug: string;
 };
 
 const galleryYears: GalleryYear[] = [
@@ -30,19 +39,27 @@ const galleryYears: GalleryYear[] = [
   },
 ];
 
-const samplePosts = [
-  {
-    title: "Ročník 2024: Jubilejní dvacítka za námi",
-    date: "2024-08-20T00:00:00.000Z",
-    excerpt:
-      "Dvacátý ročník Handi4Camp se vydařil nad očekávání. Dvanáct úsměvů, desítky nezapomenutelných momentů a skvělý tým asistentů.",
-    href: "/galerie",
-  },
-];
-
 export default function GaleriePage() {
   const [activeYear, setActiveYear] = useState(galleryYears[0].year);
   const activeGallery = galleryYears.find((g) => g.year === activeYear)!;
+  const [posts, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    client.queries.postConnection().then((res) => {
+      const edges = res.data.postConnection.edges ?? [];
+      setPosts(
+        edges
+          .filter((e) => e?.node)
+          .map((e) => ({
+            title: e!.node!.title,
+            date: e!.node!.date,
+            excerpt: e!.node!.excerpt,
+            coverImage: e!.node!.coverImage,
+            slug: e!.node!._sys.filename,
+          }))
+      );
+    });
+  }, []);
 
   return (
     <>
@@ -83,8 +100,15 @@ export default function GaleriePage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-8">Aktuality</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {samplePosts.map((post) => (
-              <NewsCard key={post.title} {...post} />
+            {posts.map((post) => (
+              <NewsCard
+                key={post.slug}
+                title={post.title}
+                date={post.date}
+                excerpt={post.excerpt ?? undefined}
+                coverImage={post.coverImage ?? undefined}
+                href={`/galerie/${post.slug}`}
+              />
             ))}
           </div>
         </div>

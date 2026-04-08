@@ -40,7 +40,7 @@ export default function PricingAnchors() {
             >
               {tier.badge && (
                 <span className="text-xs font-bold bg-gold text-dark px-3 py-1 rounded-full self-start">
-                  ⭐ {tier.badge}
+                  {tier.badge}
                 </span>
               )}
               <div

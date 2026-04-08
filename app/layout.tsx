@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "Handi4Camp — Léto bez hranic",
   description:
     "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
