@@ -35,9 +35,9 @@ export default function JakPomociPage() {
           <h2 className="font-serif text-3xl font-bold mb-4">{p.donationHeading}</h2>
           <p className="text-dark/70 mb-8">{p.donationIntro}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            {(p.donationTiers ?? []).map((tier: any) => (
+            {(p.donationTiers ?? []).filter(Boolean).map((tier: any) => (
               <div
-                key={tier.amount}
+                key={tier?.amount ?? ""}
                 className={`rounded-xl p-6 ${
                   tier.featured ? "bg-forest text-warm-white" : "bg-light-green"
                 }`}
@@ -90,7 +90,7 @@ export default function JakPomociPage() {
           <div className="bg-warm-white rounded-2xl p-8 mb-8">
             <h3 className="font-bold text-forest mb-4">Co sponzor získá:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
-              {(p.sponsoringBenefits ?? []).map((benefit: string) => (
+              {(p.sponsoringBenefits ?? []).filter((x): x is string => x !== null).map((benefit) => (
                 <li key={benefit} className="flex gap-2">
                   <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {benefit}
                 </li>
@@ -113,7 +113,7 @@ export default function JakPomociPage() {
           <div className="bg-light-green rounded-2xl p-8 mb-8">
             <h3 className="font-bold text-forest mb-4">Co obnáší být asistentem:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
-              {(p.volunteeringRequirements ?? []).map((req: string) => (
+              {(p.volunteeringRequirements ?? []).filter((x): x is string => x !== null).map((req) => (
                 <li key={req} className="flex gap-2">
                   <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {req}
                 </li>

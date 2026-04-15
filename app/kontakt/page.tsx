@@ -38,7 +38,7 @@ export default function KontaktPage() {
                 <div>
                   <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">Email</dt>
                   <dd>
-                    <a href={`mailto:${p.email}`} className="text-forest hover:text-dark transition-colors">
+                    <a href={`mailto:${p.email ?? ""}`} className="text-forest hover:text-dark transition-colors">
                       {p.email}
                     </a>
                   </dd>
@@ -77,7 +77,7 @@ export default function KontaktPage() {
             <div>
               <h2 className="font-serif text-2xl font-bold mb-6">{p.formHeading}</h2>
               <form
-                action={`mailto:${p.email}`}
+                action={`mailto:${p.email ?? ""}`}
                 method="post"
                 encType="text/plain"
                 className="space-y-4"
