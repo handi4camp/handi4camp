@@ -41,21 +41,28 @@ export default function Home() {
   const [globalData, setGlobalData] = useState<GlobalQuery | null>(null);
 
   useEffect(() => {
-    client.queries.home({ relativePath: "home.md" }).then(setHomeData);
-    client.queries.global({ relativePath: "global.md" }).then(setGlobalData);
+    Promise.all([
+      client.queries.home({ relativePath: "home.md" }),
+      client.queries.global({ relativePath: "global.md" }),
+    ]).then(([home, global]) => {
+      setHomeData(home);
+      setGlobalData(global);
+    });
   }, []);
 
-  const { data: hData } = useTina(
-    homeData ?? { query: "", variables: {}, data: null as any }
-  );
-  const { data: gData } = useTina(
-    globalData ?? { query: "", variables: {}, data: null as any }
-  );
-
   if (!homeData || !globalData) return null;
+  return <HomePageContent homeData={homeData} globalData={globalData} />;
+}
+
+function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; globalData: GlobalQuery }) {
+  const { data: hData } = useTina(homeData);
+  const { data: gData } = useTina(globalData);
 
   const h = hData.home;
   const g = gData.global;
+
+  type Stat = NonNullable<NonNullable<typeof g.stats>[number]>;
+  type Card = NonNullable<NonNullable<typeof h.rozcestnikCards>[number]>;
 
   return (
     <>
@@ -84,7 +91,7 @@ export default function Home() {
         </div>
       </section>
 
-      <StatBar stats={(g.stats ?? []).map((s: any) => ({ value: s.value ?? "", label: s.label ?? "" }))} />
+      <StatBar stats={(g.stats ?? []).filter((s): s is Stat => s !== null).map((s) => ({ value: s.value ?? "", label: s.label ?? "" }))} />
 
       <section className="pt-12 pb-8 bg-warm-white overflow-visible">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 text-center">
@@ -104,7 +111,7 @@ export default function Home() {
       <Rozcestnik
         heading={h.rozcestnikHeading ?? ""}
         subheading={h.rozcestnikSubheading ?? ""}
-        cards={(h.rozcestnikCards ?? []).map((c: any) => ({ title: c.title ?? "", description: c.description ?? "" }))}
+        cards={(h.rozcestnikCards ?? []).filter((c): c is Card => c !== null).map((c) => ({ title: c.title ?? "", description: c.description ?? "" }))}
         sponsors={sponsors}
       />
     </>

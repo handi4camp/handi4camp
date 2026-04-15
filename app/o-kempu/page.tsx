@@ -24,13 +24,17 @@ export default function OKempuPage() {
     client.queries.okempu({ relativePath: "o-kempu.md" }).then(setTinaData);
   }, []);
 
-  const { data } = useTina(
-    tinaData ?? { query: "", variables: {}, data: null as any }
-  );
-
   if (!tinaData) return null;
+  return <OKempuPageContent tinaData={tinaData} />;
+}
+
+function OKempuPageContent({ tinaData }: { tinaData: OkempuQuery }) {
+  const { data } = useTina(tinaData);
 
   const p = data.okempu;
+
+  type Activity = NonNullable<NonNullable<typeof p.activities>[number]>;
+  type TeamMember = NonNullable<NonNullable<typeof p.teamMembers>[number]>;
 
   return (
     <>
@@ -60,7 +64,7 @@ export default function OKempuPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-10 text-center">{p.activitiesHeading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {(p.activities ?? []).map((a: any) => (
+            {(p.activities ?? []).filter((a): a is Activity => a !== null).map((a) => (
               <div key={a.title} className="bg-light-green rounded-2xl p-8">
                 <h3 className="font-serif text-xl font-bold text-forest mb-3">{a.title}</h3>
                 <p className="text-dark/70 text-sm">{a.description}</p>
@@ -74,7 +78,7 @@ export default function OKempuPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-8">{p.teamHeading}</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {(p.teamMembers ?? []).map((m: any) => (
+            {(p.teamMembers ?? []).filter((m): m is TeamMember => m !== null).map((m) => (
               <div key={m.name}>
                 <h3 className="font-bold text-gold mb-1">{m.name}</h3>
                 <p className="text-warm-white/80 text-sm">{m.description}</p>
@@ -86,7 +90,7 @@ export default function OKempuPage() {
 
       <section className="py-10 bg-warm-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-wrap justify-center gap-8">
-          {(p.trustItems ?? []).map((trust: string) => (
+          {(p.trustItems ?? []).filter((x): x is string => x !== null).map((trust) => (
             <div key={trust} className="flex items-center gap-2 text-sm font-semibold text-forest">
               <Check className="w-4 h-4 text-gold shrink-0" strokeWidth={2.5} /> {trust}
             </div>
