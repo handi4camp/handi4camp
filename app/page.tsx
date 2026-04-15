@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useTina } from "tinacms/dist/react";
+import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import Link from "next/link";
 import Hero from "@/components/hero";
@@ -64,6 +64,20 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
   type Stat = NonNullable<NonNullable<typeof g.stats>[number]>;
   type Card = NonNullable<NonNullable<typeof h.rozcestnikCards>[number]>;
 
+  const mappedStats = (g.stats ?? [])
+    .filter((s): s is Stat => s !== null)
+    .map((s) => ({ value: s.value ?? "", label: s.label ?? "", _tina: tinaField(s) }));
+
+  const mappedCards = (h.rozcestnikCards ?? [])
+    .filter((c): c is Card => c !== null)
+    .map((c) => ({
+      title: c.title ?? "",
+      description: c.description ?? "",
+      _tina: tinaField(c),
+      _tinaTitle: tinaField(c, 'title'),
+      _tinaDesc: tinaField(c, 'description'),
+    }));
+
   return (
     <>
       <Hero
@@ -73,29 +87,36 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
         cta1Href={h.heroCta1Href ?? "/jak-pomoci#darovani"}
         cta2Label={h.heroCta2Label ?? ""}
         cta2Href={h.heroCta2Href ?? "/jak-pomoci#sponzoring"}
+        tinaFields={{
+          headline: tinaField(h, 'heroHeadline'),
+          subtext: tinaField(h, 'heroSubtext'),
+          cta1Label: tinaField(h, 'heroCta1Label'),
+          cta2Label: tinaField(h, 'heroCta2Label'),
+        }}
       />
 
       <section className="py-16 bg-warm-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-3xl font-bold mb-4">{h.storyHeading}</h2>
-          <p className="text-dark/70 text-lg leading-relaxed mb-4">{h.storyBody}</p>
-          <blockquote className="border-l-4 border-gold pl-4 text-left italic text-dark/70 my-6 mx-auto max-w-xl">
+          <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(h, 'storyHeading')}>{h.storyHeading}</h2>
+          <p className="text-dark/70 text-lg leading-relaxed mb-4" data-tina-field={tinaField(h, 'storyBody')}>{h.storyBody}</p>
+          <blockquote className="border-l-4 border-gold pl-4 text-left italic text-dark/70 my-6 mx-auto max-w-xl" data-tina-field={tinaField(h, 'storyQuote')}>
             „{h.storyQuote}" — {h.storyQuoteAuthor}
           </blockquote>
           <Link
             href="/o-kempu"
             className="text-forest font-semibold hover:text-dark transition-colors"
+            data-tina-field={tinaField(h, 'storyLinkLabel')}
           >
             {h.storyLinkLabel}
           </Link>
         </div>
       </section>
 
-      <StatBar stats={(g.stats ?? []).filter((s): s is Stat => s !== null).map((s) => ({ value: s.value ?? "", label: s.label ?? "" }))} />
+      <StatBar stats={mappedStats} />
 
       <section className="pt-12 pb-8 bg-warm-white overflow-visible">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-2 text-center">
-          <h2 className="font-serif text-2xl font-bold">{h.photoStripHeading}</h2>
+          <h2 className="font-serif text-2xl font-bold" data-tina-field={tinaField(h, 'photoStripHeading')}>{h.photoStripHeading}</h2>
         </div>
         <PolaroidGallery photos={photos} />
         <div className="text-center pb-4">
@@ -111,8 +132,12 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
       <Rozcestnik
         heading={h.rozcestnikHeading ?? ""}
         subheading={h.rozcestnikSubheading ?? ""}
-        cards={(h.rozcestnikCards ?? []).filter((c): c is Card => c !== null).map((c) => ({ title: c.title ?? "", description: c.description ?? "" }))}
+        cards={mappedCards}
         sponsors={sponsors}
+        tinaFields={{
+          heading: tinaField(h, 'rozcestnikHeading'),
+          subheading: tinaField(h, 'rozcestnikSubheading'),
+        }}
       />
     </>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useTina } from "tinacms/dist/react";
+import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import Link from "next/link";
 
@@ -27,7 +27,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div>
             <h3 className="font-serif text-xl font-bold mb-3">Handi4Camp</h3>
-            <p className="text-sm text-warm-white/80">{g.footerTagline}</p>
+            <p className="text-sm text-warm-white/80" data-tina-field={tinaField(g, 'footerTagline')}>{g.footerTagline}</p>
           </div>
           <div>
             <h4 className="font-semibold mb-3">Navigace</h4>
@@ -41,10 +41,11 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
           </div>
           <div>
             <h4 className="font-semibold mb-3">Kontakt</h4>
-            <p className="text-sm text-warm-white/80">{g.footerContactName}</p>
+            <p className="text-sm text-warm-white/80" data-tina-field={tinaField(g, 'footerContactName')}>{g.footerContactName}</p>
             <a
               href={`mailto:${g.footerEmail ?? ""}`}
               className="text-sm text-warm-white/80 hover:text-gold transition-colors"
+              data-tina-field={tinaField(g, 'footerEmail')}
             >
               {g.footerEmail}
             </a>
@@ -60,6 +61,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-warm-white/70 hover:text-warm-white transition-colors text-sm"
+                data-tina-field={tinaField(g, 'footerFacebookLabel')}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/facebook.svg" alt="" className="w-4 h-4 brightness-0 invert" />

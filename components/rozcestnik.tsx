@@ -10,6 +10,9 @@ type Sponsor = {
 type Card = {
   title: string;
   description: string;
+  _tina?: string;
+  _tinaTitle?: string;
+  _tinaDesc?: string;
 };
 
 const cardHrefs = [
@@ -24,9 +27,10 @@ type RozcestnikProps = {
   subheading: string;
   cards: Card[];
   sponsors: Sponsor[];
+  tinaFields?: { heading?: string; subheading?: string };
 };
 
-export default function Rozcestnik({ heading, subheading, cards, sponsors }: RozcestnikProps) {
+export default function Rozcestnik({ heading, subheading, cards, sponsors, tinaFields }: RozcestnikProps) {
   if (process.env.NODE_ENV === 'development' && cards.length !== cardHrefs.length) {
     console.warn(`Rozcestnik expects exactly ${cardHrefs.length} cards, got ${cards.length}`);
   }
@@ -36,8 +40,8 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors }: Roz
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-12">
-          <h2 className="font-serif text-4xl font-bold mb-3">{heading}</h2>
-          <p className="text-dark/60 text-lg">{subheading}</p>
+          <h2 className="font-serif text-4xl font-bold mb-3" data-tina-field={tinaFields?.heading}>{heading}</h2>
+          <p className="text-dark/60 text-lg" data-tina-field={tinaFields?.subheading}>{subheading}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
@@ -49,15 +53,16 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors }: Roz
                 key={i}
                 href={href}
                 className="group relative bg-light-green rounded-2xl p-8 flex flex-col gap-4 hover:bg-forest transition-colors duration-300"
+                data-tina-field={card._tina}
               >
                 <div className="w-14 h-14 rounded-xl bg-warm-white/60 group-hover:bg-warm-white/20 flex items-center justify-center transition-colors duration-300">
                   <Icon className="w-7 h-7 text-forest group-hover:text-gold transition-colors duration-300" strokeWidth={1.5} />
                 </div>
                 <div className="flex-1">
-                  <h3 className="font-serif text-xl font-bold text-forest group-hover:text-warm-white mb-2 transition-colors duration-300">
+                  <h3 className="font-serif text-xl font-bold text-forest group-hover:text-warm-white mb-2 transition-colors duration-300" data-tina-field={card._tinaTitle}>
                     {card.title}
                   </h3>
-                  <p className="text-sm text-dark/60 group-hover:text-warm-white/70 transition-colors duration-300 leading-relaxed">
+                  <p className="text-sm text-dark/60 group-hover:text-warm-white/70 transition-colors duration-300 leading-relaxed" data-tina-field={card._tinaDesc}>
                     {card.description}
                   </p>
                 </div>

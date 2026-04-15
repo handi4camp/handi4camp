@@ -1,4 +1,4 @@
-type Stat = { value: string; label: string };
+type Stat = { value: string; label: string; _tina?: string };
 
 export default function StatBar({ stats }: { stats: Stat[] }) {
   return (
@@ -8,6 +8,7 @@ export default function StatBar({ stats }: { stats: Stat[] }) {
           <div
             key={stat.label}
             className="py-8 px-6 text-center border-r border-dark/10 last:border-r-0"
+            data-tina-field={stat._tina}
           >
             <div className="font-serif text-3xl font-bold text-forest">
               {stat.value}
