@@ -9,7 +9,16 @@ const slides = [
   { src: "/images/handicamp-foto-01.webp", label: "Tým asistentů" },
 ];
 
-export default function Hero() {
+type HeroProps = {
+  headline: string;
+  subtext: string;
+  cta1Label: string;
+  cta1Href: string;
+  cta2Label: string;
+  cta2Href: string;
+};
+
+export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label, cta2Href }: HeroProps) {
   const [current, setCurrent] = useState(0);
 
   useEffect(() => {
@@ -39,10 +48,8 @@ export default function Hero() {
         </div>
       ))}
 
-      {/* Dark-green overlay */}
       <div className="absolute inset-0 bg-forest/60" />
 
-      {/* Slide indicator dots */}
       <div className="absolute top-6 right-6 z-20 flex gap-2">
         {slides.map((_, i) => (
           <button
@@ -56,31 +63,28 @@ export default function Hero() {
         ))}
       </div>
 
-      {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-0 md:mt-[50vh] text-warm-white">
         <h1 className="font-serif text-5xl md:text-7xl font-bold mb-4 leading-tight">
-          Léto bez hranic —<br />již 20 let
+          {headline}
         </h1>
         <p className="text-xl md:text-2xl mb-8 max-w-2xl text-warm-white/90">
-          Každoročně dáváme 12 dětem s DMO léto, jaké si zaslouží. A jejich
-          rodičům 10 dní zaslouženého oddychu.
+          {subtext}
         </p>
         <div className="flex flex-wrap gap-4">
           <Link
-            href="/jak-pomoci#darovani"
+            href={cta1Href}
             className="bg-gold text-dark font-bold px-8 py-3 rounded-lg text-lg hover:bg-gold/90 transition-colors"
           >
-            Přispět
+            {cta1Label}
           </Link>
           <Link
-            href="/jak-pomoci#sponzoring"
+            href={cta2Href}
             className="border-2 border-warm-white text-warm-white font-bold px-8 py-3 rounded-lg text-lg hover:bg-warm-white/10 transition-colors"
           >
-            Stát se sponzorem
+            {cta2Label}
           </Link>
         </div>
       </div>
-
     </section>
   );
 }
