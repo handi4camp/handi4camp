@@ -13,12 +13,12 @@ export default function KontaktPage() {
     client.queries.kontakt({ relativePath: "kontakt.md" }).then(setTinaData);
   }, []);
 
-  const { data } = useTina(
-    tinaData ?? { query: "", variables: {}, data: null as any }
-  );
-
   if (!tinaData) return null;
+  return <KontaktContent tinaData={tinaData} />;
+}
 
+function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
+  const { data } = useTina(tinaData);
   const p = data.kontakt;
 
   return (

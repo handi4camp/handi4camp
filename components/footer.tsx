@@ -13,12 +13,12 @@ export default function Footer() {
     client.queries.global({ relativePath: "global.md" }).then(setTinaData);
   }, []);
 
-  const { data } = useTina(
-    tinaData ?? { query: "", variables: {}, data: null as any }
-  );
-
   if (!tinaData) return null;
+  return <FooterContent tinaData={tinaData} />;
+}
 
+function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
+  const { data } = useTina(tinaData);
   const g = data.global;
 
   return (
@@ -43,7 +43,7 @@ export default function Footer() {
             <h4 className="font-semibold mb-3">Kontakt</h4>
             <p className="text-sm text-warm-white/80">{g.footerContactName}</p>
             <a
-              href={`mailto:${g.footerEmail}`}
+              href={`mailto:${g.footerEmail ?? ""}`}
               className="text-sm text-warm-white/80 hover:text-gold transition-colors"
             >
               {g.footerEmail}
