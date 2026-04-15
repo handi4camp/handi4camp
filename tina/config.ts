@@ -197,6 +197,7 @@ export default defineConfig({
           { type: "string", name: "organizerName", label: "Organizátorka — Jméno" },
           { type: "string", name: "email", label: "Email" },
           { type: "string", name: "facebookLabel", label: "Facebook — text odkazu" },
+          { type: "string", name: "facebookHref", label: "Facebook — URL" },
           { type: "string", name: "affiliationLabel", label: "Záštita — název" },
           { type: "string", name: "affiliationHref", label: "Záštita — URL" },
           { type: "string", name: "formHeading", label: "Formulář — Nadpis" },
@@ -230,6 +231,7 @@ export default defineConfig({
           { type: "string", name: "footerContactName", label: "Footer — Kontakt jméno" },
           { type: "string", name: "footerEmail", label: "Footer — Email" },
           { type: "string", name: "footerFacebookLabel", label: "Footer — Facebook text" },
+          { type: "string", name: "footerFacebookHref", label: "Footer — Facebook URL" },
         ],
         ui: {
           allowedActions: { create: false, delete: false },
