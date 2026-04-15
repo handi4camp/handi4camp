@@ -1,0 +1,16 @@
+---
+heroTitle: 'Kontakt'
+heroSubtitle: 'Máte otázku? Rádi vám odpovíme.'
+contactHeading: 'Spojte se s námi'
+organizerName: 'Barbora Slátková'
+email: 'info@handi4camp.cz'
+facebookLabel: 'Handi4Camp'
+facebookHref: 'https://www.facebook.com/Handi4Camp'
+affiliationLabel: 'Rotary Club Valtice Břeclav'
+affiliationHref: 'https://rotary.cz'
+formHeading: 'Napište nám'
+formNameLabel: 'Jméno'
+formEmailLabel: 'Email'
+formMessageLabel: 'Zpráva'
+formSubmitLabel: 'Odeslat zprávu →'
+---

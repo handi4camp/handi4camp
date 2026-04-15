@@ -1,0 +1,23 @@
+---
+heroHeadline: 'Léto bez hranic — již 20 let'
+heroSubtext: 'Každoročně dáváme 12 dětem s DMO léto, jaké si zaslouží. A jejich rodičům 10 dní zaslouženého oddychu.'
+heroCta1Label: 'Přispět'
+heroCta1Href: '/jak-pomoci#darovani'
+heroCta2Label: 'Stát se sponzorem'
+heroCta2Href: '/jak-pomoci#sponzoring'
+storyHeading: 'Dvacet let léta, které mění životy'
+storyBody: 'Handi4Camp vznikl před 20 lety jako iniciativa Barbory Slátkové a Rotary Clubu Valtice Břeclav. Každé léto spojujeme 12 dětí s dětskou mozkovou obrnou s budoucími lékaři a fyzioterapeuty, kteří jim věnují týden péče, pohybu a radosti.'
+storyQuote: 'Díky kempu syn poprvé v životě zažil, co znamená být součástí party.'
+storyQuoteAuthor: 'maminka účastníka'
+storyLinkLabel: 'Přečíst celý příběh →'
+photoStripHeading: 'Chvíle, které zůstanou'
+rozcestnikHeading: 'Jak chcete pomoci?'
+rozcestnikSubheading: 'Každá forma pomoci mění životy dětí s DMO.'
+rozcestnikCards:
+  - title: 'Chci darovat'
+    description: 'Pošlete libovolnou částku převodem nebo QR kódem'
+  - title: 'Chci sponzorovat'
+    description: 'Firemní partnerství s logem, zmínkou a hmatatelným dopadem'
+  - title: 'Chci být dobrovolníkem'
+    description: 'Jedete s námi? Studenti medicíny a fyzioterapie jsou vítáni'
+---
