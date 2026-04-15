@@ -27,6 +27,10 @@ type RozcestnikProps = {
 };
 
 export default function Rozcestnik({ heading, subheading, cards, sponsors }: RozcestnikProps) {
+  if (process.env.NODE_ENV === 'development' && cards.length !== cardHrefs.length) {
+    console.warn(`Rozcestnik expects exactly ${cardHrefs.length} cards, got ${cards.length}`);
+  }
+
   return (
     <section className="py-20 bg-warm-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,7 +46,7 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors }: Roz
             const href = cardHrefs[i] ?? "/jak-pomoci";
             return (
               <Link
-                key={href}
+                key={i}
                 href={href}
                 className="group relative bg-light-green rounded-2xl p-8 flex flex-col gap-4 hover:bg-forest transition-colors duration-300"
               >
