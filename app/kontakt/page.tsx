@@ -1,90 +1,90 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useTina } from "tinacms/dist/react";
+import { client } from "@/tina/__generated__/client";
 import PageHero from "@/components/page-hero";
 
+type KontaktQuery = Awaited<ReturnType<typeof client.queries.kontakt>>;
+
 export default function KontaktPage() {
+  const [tinaData, setTinaData] = useState<KontaktQuery | null>(null);
+
+  useEffect(() => {
+    client.queries.kontakt({ relativePath: "kontakt.md" }).then(setTinaData);
+  }, []);
+
+  const { data } = useTina(
+    tinaData ?? { query: "", variables: {}, data: null as any }
+  );
+
+  if (!tinaData) return null;
+
+  const p = data.kontakt;
+
   return (
     <>
-      <PageHero title="Kontakt" subtitle="Máte otázku? Rádi vám odpovíme." />
+      <PageHero title={p.heroTitle ?? ""} subtitle={p.heroSubtitle ?? ""} />
 
       <section className="py-16 bg-warm-white">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            {/* Kontaktní info */}
             <div>
-              <h2 className="font-serif text-2xl font-bold mb-6">
-                Spojte se s námi
-              </h2>
+              <h2 className="font-serif text-2xl font-bold mb-6">{p.contactHeading}</h2>
               <dl className="space-y-5 text-sm">
                 <div>
-                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
-                    Organizátorka
-                  </dt>
-                  <dd className="text-dark font-medium">Barbora Slátková</dd>
+                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">Organizátorka</dt>
+                  <dd className="text-dark font-medium">{p.organizerName}</dd>
                 </div>
                 <div>
-                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
-                    Email
-                  </dt>
+                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">Email</dt>
                   <dd>
-                    <a
-                      href="mailto:info@handi4camp.cz"
-                      className="text-forest hover:text-dark transition-colors"
-                    >
-                      info@handi4camp.cz
+                    <a href={`mailto:${p.email}`} className="text-forest hover:text-dark transition-colors">
+                      {p.email}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
-                    Facebook
-                  </dt>
+                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">Facebook</dt>
                   <dd>
                     <a
-                      href="https://www.facebook.com/Handi4Camp"
+                      href={p.facebookHref ?? "https://www.facebook.com/Handi4Camp"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-forest hover:text-dark transition-colors"
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/facebook.svg" alt="" className="w-4 h-4" />
-                      Handi4Camp
+                      {p.facebookLabel}
                     </a>
                   </dd>
                 </div>
                 <div>
-                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">
-                    Záštita
-                  </dt>
+                  <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest mb-1">Záštita</dt>
                   <dd>
                     <a
-                      href="https://rotary.cz"
+                      href={p.affiliationHref ?? "https://rotary.cz"}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-forest hover:text-dark transition-colors"
                     >
-                      Rotary Club Valtice Břeclav
+                      {p.affiliationLabel}
                     </a>
                   </dd>
                 </div>
               </dl>
             </div>
 
-            {/* Formulář — mailto fallback */}
             <div>
-              <h2 className="font-serif text-2xl font-bold mb-6">
-                Napište nám
-              </h2>
+              <h2 className="font-serif text-2xl font-bold mb-6">{p.formHeading}</h2>
               <form
-                action="mailto:info@handi4camp.cz"
+                action={`mailto:${p.email}`}
                 method="post"
                 encType="text/plain"
                 className="space-y-4"
               >
                 <div>
-                  <label
-                    htmlFor="contact-name"
-                    className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1"
-                  >
-                    Jméno
+                  <label htmlFor="contact-name" className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1">
+                    {p.formNameLabel}
                   </label>
                   <input
                     id="contact-name"
@@ -95,11 +95,8 @@ export default function KontaktPage() {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="contact-email"
-                    className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1"
-                  >
-                    Email
+                  <label htmlFor="contact-email" className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1">
+                    {p.formEmailLabel}
                   </label>
                   <input
                     id="contact-email"
@@ -110,11 +107,8 @@ export default function KontaktPage() {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="contact-message"
-                    className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1"
-                  >
-                    Zpráva
+                  <label htmlFor="contact-message" className="block text-xs font-semibold text-dark/60 uppercase tracking-widest mb-1">
+                    {p.formMessageLabel}
                   </label>
                   <textarea
                     id="contact-message"
@@ -128,7 +122,7 @@ export default function KontaktPage() {
                   type="submit"
                   className="w-full bg-forest text-warm-white font-bold py-3 rounded-lg hover:bg-forest/90 transition-colors"
                 >
-                  Odeslat zprávu →
+                  {p.formSubmitLabel}
                 </button>
               </form>
             </div>
