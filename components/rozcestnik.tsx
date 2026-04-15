@@ -7,63 +7,64 @@ type Sponsor = {
   website?: string;
 };
 
-const cards = [
-  {
-    icon: Heart,
-    title: "Chci darovat",
-    description: "Pošlete libovolnou částku převodem nebo QR kódem",
-    href: "/jak-pomoci#darovani",
-  },
-  {
-    icon: Building2,
-    title: "Chci sponzorovat",
-    description: "Firemní partnerství s logem, zmínkou a hmatatelným dopadem",
-    href: "/jak-pomoci#sponzoring",
-  },
-  {
-    icon: HandHelping,
-    title: "Chci být dobrovolníkem",
-    description: "Jedete s námi? Studenti medicíny a fyzioterapie jsou vítáni",
-    href: "/jak-pomoci#dobrovolnictvi",
-  },
-];
+type Card = {
+  title: string;
+  description: string;
+};
 
-export default function Rozcestnik({ sponsors }: { sponsors: Sponsor[] }) {
+const cardHrefs = [
+  "/jak-pomoci#darovani",
+  "/jak-pomoci#sponzoring",
+  "/jak-pomoci#dobrovolnictvi",
+];
+const cardIcons = [Heart, Building2, HandHelping];
+
+type RozcestnikProps = {
+  heading: string;
+  subheading: string;
+  cards: Card[];
+  sponsors: Sponsor[];
+};
+
+export default function Rozcestnik({ heading, subheading, cards, sponsors }: RozcestnikProps) {
   return (
     <section className="py-20 bg-warm-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
         <div className="text-center mb-12">
-          <h2 className="font-serif text-4xl font-bold mb-3">Jak chcete pomoci?</h2>
-          <p className="text-dark/60 text-lg">Každá forma pomoci mění životy dětí s DMO.</p>
+          <h2 className="font-serif text-4xl font-bold mb-3">{heading}</h2>
+          <p className="text-dark/60 text-lg">{subheading}</p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {cards.map((card) => (
-            <Link
-              key={card.href}
-              href={card.href}
-              className="group relative bg-light-green rounded-2xl p-8 flex flex-col gap-4 hover:bg-forest transition-colors duration-300"
-            >
-              <div className="w-14 h-14 rounded-xl bg-warm-white/60 group-hover:bg-warm-white/20 flex items-center justify-center transition-colors duration-300">
-                <card.icon className="w-7 h-7 text-forest group-hover:text-gold transition-colors duration-300" strokeWidth={1.5} />
-              </div>
-              <div className="flex-1">
-                <h3 className="font-serif text-xl font-bold text-forest group-hover:text-warm-white mb-2 transition-colors duration-300">
-                  {card.title}
-                </h3>
-                <p className="text-sm text-dark/60 group-hover:text-warm-white/70 transition-colors duration-300 leading-relaxed">
-                  {card.description}
-                </p>
-              </div>
-              <div className="flex items-center gap-1 text-sm font-semibold text-forest group-hover:text-gold transition-colors duration-300">
-                Zjistit více <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-              </div>
-            </Link>
-          ))}
+          {cards.map((card, i) => {
+            const Icon = cardIcons[i] ?? Heart;
+            const href = cardHrefs[i] ?? "/jak-pomoci";
+            return (
+              <Link
+                key={href}
+                href={href}
+                className="group relative bg-light-green rounded-2xl p-8 flex flex-col gap-4 hover:bg-forest transition-colors duration-300"
+              >
+                <div className="w-14 h-14 rounded-xl bg-warm-white/60 group-hover:bg-warm-white/20 flex items-center justify-center transition-colors duration-300">
+                  <Icon className="w-7 h-7 text-forest group-hover:text-gold transition-colors duration-300" strokeWidth={1.5} />
+                </div>
+                <div className="flex-1">
+                  <h3 className="font-serif text-xl font-bold text-forest group-hover:text-warm-white mb-2 transition-colors duration-300">
+                    {card.title}
+                  </h3>
+                  <p className="text-sm text-dark/60 group-hover:text-warm-white/70 transition-colors duration-300 leading-relaxed">
+                    {card.description}
+                  </p>
+                </div>
+                <div className="flex items-center gap-1 text-sm font-semibold text-forest group-hover:text-gold transition-colors duration-300">
+                  Zjistit více <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
-        {/* CTA */}
         <div className="text-center mb-16">
           <Link
             href="/jak-pomoci"
@@ -73,7 +74,6 @@ export default function Rozcestnik({ sponsors }: { sponsors: Sponsor[] }) {
           </Link>
         </div>
 
-        {/* Partners */}
         <div className="border-t border-dark/10 pt-12">
           <p className="text-center text-xs font-semibold tracking-widest text-dark/40 uppercase mb-8">
             Děkujeme našim partnerům
