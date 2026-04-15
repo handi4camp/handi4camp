@@ -7,6 +7,7 @@ import DonationBox from "@/components/donation-box";
 import { Check } from "lucide-react";
 
 type JakpomociQuery = Awaited<ReturnType<typeof client.queries.jakpomoci>>;
+type DonationTier = NonNullable<NonNullable<JakpomociQuery["data"]["jakpomoci"]["donationTiers"]>[number]>;
 
 export default function JakPomociPage() {
   const [tinaData, setTinaData] = useState<JakpomociQuery | null>(null);
@@ -15,12 +16,12 @@ export default function JakPomociPage() {
     client.queries.jakpomoci({ relativePath: "jak-pomoci.md" }).then(setTinaData);
   }, []);
 
-  const { data } = useTina(
-    tinaData ?? { query: "", variables: {}, data: null as any }
-  );
-
   if (!tinaData) return null;
+  return <JakPomociContent tinaData={tinaData} />;
+}
 
+function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
+  const { data } = useTina(tinaData);
   const p = data.jakpomoci;
 
   return (
@@ -35,21 +36,23 @@ export default function JakPomociPage() {
           <h2 className="font-serif text-3xl font-bold mb-4">{p.donationHeading}</h2>
           <p className="text-dark/70 mb-8">{p.donationIntro}</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-            {(p.donationTiers ?? []).filter(Boolean).map((tier: any) => (
-              <div
-                key={tier?.amount ?? ""}
-                className={`rounded-xl p-6 ${
-                  tier.featured ? "bg-forest text-warm-white" : "bg-light-green"
-                }`}
-              >
-                <div className={`font-serif text-3xl font-bold mb-2 ${tier.featured ? "text-gold" : "text-forest"}`}>
-                  {tier.amount}
+            {(p.donationTiers ?? [])
+              .filter((t): t is DonationTier => t !== null)
+              .map((tier) => (
+                <div
+                  key={tier.amount ?? ""}
+                  className={`rounded-xl p-6 ${
+                    tier.featured ? "bg-forest text-warm-white" : "bg-light-green"
+                  }`}
+                >
+                  <div className={`font-serif text-3xl font-bold mb-2 ${tier.featured ? "text-gold" : "text-forest"}`}>
+                    {tier.amount}
+                  </div>
+                  <p className={`text-sm ${tier.featured ? "text-warm-white/80" : "text-dark/70"}`}>
+                    Pokryje {tier.desc}
+                  </p>
                 </div>
-                <p className={`text-sm ${tier.featured ? "text-warm-white/80" : "text-dark/70"}`}>
-                  Pokryje {tier.desc}
-                </p>
-              </div>
-            ))}
+              ))}
           </div>
           <DonationBox
             accountNumber={p.accountNumber ?? ""}
@@ -90,11 +93,13 @@ export default function JakPomociPage() {
           <div className="bg-warm-white rounded-2xl p-8 mb-8">
             <h3 className="font-bold text-forest mb-4">Co sponzor získá:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
-              {(p.sponsoringBenefits ?? []).filter((x): x is string => x !== null).map((benefit) => (
-                <li key={benefit} className="flex gap-2">
-                  <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {benefit}
-                </li>
-              ))}
+              {(p.sponsoringBenefits ?? [])
+                .filter((x: string | null): x is string => x !== null)
+                .map((benefit) => (
+                  <li key={benefit} className="flex gap-2">
+                    <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {benefit}
+                  </li>
+                ))}
             </ul>
           </div>
           <a
@@ -113,11 +118,13 @@ export default function JakPomociPage() {
           <div className="bg-light-green rounded-2xl p-8 mb-8">
             <h3 className="font-bold text-forest mb-4">Co obnáší být asistentem:</h3>
             <ul className="space-y-2 text-sm text-dark/70">
-              {(p.volunteeringRequirements ?? []).filter((x): x is string => x !== null).map((req) => (
-                <li key={req} className="flex gap-2">
-                  <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {req}
-                </li>
-              ))}
+              {(p.volunteeringRequirements ?? [])
+                .filter((x: string | null): x is string => x !== null)
+                .map((req) => (
+                  <li key={req} className="flex gap-2">
+                    <Check className="w-4 h-4 text-gold shrink-0 mt-0.5" strokeWidth={2.5} /> {req}
+                  </li>
+                ))}
             </ul>
           </div>
           <a
