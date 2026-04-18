@@ -79,7 +79,7 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors, tinaF
             href="/jak-pomoci"
             className="inline-block bg-forest text-warm-white font-bold px-10 py-4 rounded-lg text-lg hover:bg-forest/90 transition-colors"
           >
-            Přidejte se →
+            Podpořte ♥
           </Link>
         </div>
 

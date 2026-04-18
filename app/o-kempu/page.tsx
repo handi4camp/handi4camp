@@ -51,6 +51,14 @@ function OKempuPageContent({ tinaData }: { tinaData: OkempuQuery }) {
           <p className="text-dark/70 text-lg leading-relaxed mb-4" data-tina-field={tinaField(p, 'storyParagraph1')}>{p.storyParagraph1}</p>
           <p className="text-dark/70 text-lg leading-relaxed mb-4" data-tina-field={tinaField(p, 'storyParagraph2')}>{p.storyParagraph2}</p>
           <p className="text-dark/70 text-lg leading-relaxed" data-tina-field={tinaField(p, 'storyParagraph3')}>{p.storyParagraph3}</p>
+          {p.storyQuote && (
+            <blockquote className="mt-10 border-l-4 border-gold pl-6">
+              <p className="text-dark/70 text-lg italic leading-relaxed mb-3" data-tina-field={tinaField(p, 'storyQuote')}>„{p.storyQuote}"</p>
+              {p.storyQuoteAuthor && (
+                <cite className="text-sm font-semibold text-forest not-italic" data-tina-field={tinaField(p, 'storyQuoteAuthor')}>— {p.storyQuoteAuthor}</cite>
+              )}
+            </blockquote>
+          )}
         </div>
       </section>
 

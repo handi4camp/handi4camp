@@ -116,6 +116,8 @@ export default defineConfig({
           { type: "string", name: "storyParagraph1", label: "Příběh — Odstavec 1", ui: { component: "textarea" } },
           { type: "string", name: "storyParagraph2", label: "Příběh — Odstavec 2", ui: { component: "textarea" } },
           { type: "string", name: "storyParagraph3", label: "Příběh — Odstavec 3", ui: { component: "textarea" } },
+          { type: "string", name: "storyQuote", label: "Příběh — Citát Barbory", ui: { component: "textarea" } },
+          { type: "string", name: "storyQuoteAuthor", label: "Příběh — Autor citátu" },
           { type: "string", name: "milestonesHeading", label: "Milníky — Nadpis" },
           { type: "string", name: "activitiesHeading", label: "Aktivity — Nadpis" },
           {
@@ -154,6 +156,12 @@ export default defineConfig({
         fields: [
           { type: "string", name: "heroTitle", label: "Hero — Nadpis" },
           { type: "string", name: "heroSubtitle", label: "Hero — Podnadpis" },
+          { type: "string", name: "donorInfoHeading", label: "Dárci — Nadpis sekce" },
+          { type: "string", name: "donorInfoBody", label: "Dárci — Text", ui: { component: "textarea" } },
+          { type: "string", name: "financeHeading", label: "Finance — Nadpis sekce" },
+          { type: "string", name: "financeSubheading", label: "Finance — Podnadpis" },
+          { type: "string", name: "financeBody1", label: "Finance — Odstavec 1", ui: { component: "textarea" } },
+          { type: "string", name: "financeBody2", label: "Finance — Odstavec 2", ui: { component: "textarea" } },
           { type: "string", name: "donationHeading", label: "Darování — Nadpis" },
           { type: "string", name: "donationIntro", label: "Darování — Úvod", ui: { component: "textarea" } },
           {

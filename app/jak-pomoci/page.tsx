@@ -32,6 +32,13 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
         tinaFields={{ title: tinaField(p, 'heroTitle'), subtitle: tinaField(p, 'heroSubtitle') }}
       />
 
+      <section className="py-16 bg-light-green">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-serif text-3xl font-bold mb-6" data-tina-field={tinaField(p, 'donorInfoHeading')}>{p.donorInfoHeading}</h2>
+          <p className="text-dark/70 text-lg leading-relaxed" data-tina-field={tinaField(p, 'donorInfoBody')}>{p.donorInfoBody}</p>
+        </div>
+      </section>
+
       <section id="darovani" className="py-16 bg-warm-white scroll-mt-16">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, 'donationHeading')}>{p.donationHeading}</h2>
@@ -86,6 +93,15 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
               {p.donationContractLabel}
             </a>
           </div>
+        </div>
+      </section>
+
+      <section className="py-16 bg-warm-white">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="font-serif text-3xl font-bold mb-6" data-tina-field={tinaField(p, 'financeHeading')}>{p.financeHeading}</h2>
+          <h3 className="font-bold text-xl mb-4 text-forest" data-tina-field={tinaField(p, 'financeSubheading')}>{p.financeSubheading}</h3>
+          <p className="text-dark/70 text-lg leading-relaxed mb-4" data-tina-field={tinaField(p, 'financeBody1')}>{p.financeBody1}</p>
+          <p className="text-dark/70 text-lg leading-relaxed" data-tina-field={tinaField(p, 'financeBody2')}>{p.financeBody2}</p>
         </div>
       </section>
 
