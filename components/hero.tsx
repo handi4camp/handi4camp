@@ -31,7 +31,7 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
   }, []);
 
   return (
-    <section className="relative h-screen flex flex-col justify-end md:justify-start overflow-hidden">
+    <section className="relative h-screen flex flex-col justify-end overflow-hidden">
       {slides.map((slide, i) => (
         <div
           key={i}
@@ -64,11 +64,11 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
         ))}
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-20 md:pb-0 md:mt-[50vh] text-warm-white">
-        <h1 className="font-serif text-5xl md:text-7xl font-bold mb-4 leading-tight" data-tina-field={tinaFields?.headline}>
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 text-warm-white">
+        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight" data-tina-field={tinaFields?.headline}>
           {headline}
         </h1>
-        <p className="text-xl md:text-2xl mb-8 max-w-2xl text-warm-white/90" data-tina-field={tinaFields?.subtext}>
+        <p className="text-base md:text-lg mb-8 max-w-2xl text-warm-white/90" data-tina-field={tinaFields?.subtext}>
           {subtext}
         </p>
         <div className="flex flex-wrap gap-4">
