@@ -12,8 +12,10 @@ export type PolaroidPhoto = {
 
 export default function PolaroidGallery({
   photos,
+  layout = "scroll",
 }: {
   photos: PolaroidPhoto[];
+  layout?: "scroll" | "grid";
 }) {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
 
@@ -21,10 +23,25 @@ export default function PolaroidGallery({
     .filter((p) => p.src)
     .map((p) => ({ src: p.src, alt: p.alt }));
 
+  const containerClass =
+    layout === "grid"
+      ? "grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-8 px-2 py-10"
+      : "flex gap-8 px-6 sm:px-10 py-10";
+
+  const wrapperClass =
+    layout === "grid"
+      ? ""
+      : "overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden";
+
+  const itemClass =
+    layout === "grid"
+      ? "transition-transform duration-300 ease-out hover:scale-105 hover:rotate-0 hover:z-10"
+      : "flex-none snap-center transition-transform duration-300 ease-out hover:scale-105 hover:rotate-0 hover:z-10";
+
   return (
     <>
-      <div className="overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        <div className="flex gap-8 px-6 sm:px-10 py-10">
+      <div className={wrapperClass}>
+        <div className={containerClass}>
           {photos.map((photo, i) => {
             const deg = photo.rotation ?? (i % 2 === 0 ? -2 : 2);
             const slideIndex = slides.findIndex((s) => s.src === photo.src);
@@ -32,10 +49,10 @@ export default function PolaroidGallery({
               <div
                 key={i}
                 data-card
-                className="flex-none snap-center transition-transform duration-300 ease-out hover:scale-105 hover:rotate-0 hover:z-10"
+                className={itemClass}
                 style={{ transform: `rotate(${deg}deg)` }}
               >
-                <div className="bg-white p-4 pb-14 shadow-xl w-64 sm:w-80">
+                <div className={`bg-white p-4 pb-14 shadow-xl ${layout === "grid" ? "w-full" : "w-64 sm:w-80"}`}>
                   <div className="aspect-[4/3] w-full overflow-hidden bg-light-green relative group/photo">
                     {photo.src ? (
                       <button
