@@ -42,24 +42,24 @@ export default function Nav() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-sm border-b border-light-green">
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <header className="sticky top-0 z-50 bg-forest border-b-2 border-gold/40">
+        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
           <Link href="/" aria-label="Handi4Camp">
             <Image
               src={logo}
               alt="Handi4Camp"
               width={160}
               height={128}
-              className="h-14 w-auto"
+              className="h-14 w-auto brightness-0 invert"
               priority
             />
           </Link>
-          <ul className="hidden md:flex items-center gap-6">
+          <ul className="hidden md:flex items-center gap-8">
             {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className="text-sm text-dark hover:text-forest transition-colors"
+                  className="text-sm font-medium tracking-wide text-warm-white/80 hover:text-gold transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -69,7 +69,7 @@ export default function Nav() {
           <div className="flex items-center gap-3">
             <Link
               href="/jak-pomoci#darovani"
-              className="hidden md:inline-flex bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
+              className="hidden md:inline-flex bg-gold text-dark font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-gold/90 transition-colors shadow-sm"
             >
               Přispět →
             </Link>
@@ -81,9 +81,9 @@ export default function Nav() {
               aria-expanded={isOpen}
               aria-controls="mobile-menu"
             >
-              <span className="block w-6 h-0.5 bg-dark" />
-              <span className="block w-6 h-0.5 bg-dark" />
-              <span className="block w-6 h-0.5 bg-dark" />
+              <span className="block w-6 h-0.5 bg-warm-white" />
+              <span className="block w-6 h-0.5 bg-warm-white" />
+              <span className="block w-6 h-0.5 bg-warm-white" />
             </button>
           </div>
         </nav>

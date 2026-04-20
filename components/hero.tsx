@@ -49,7 +49,8 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
         </div>
       ))}
 
-      <div className="absolute inset-0 bg-forest/60" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dark/80 via-dark/30 to-transparent pointer-events-none" />
+
 
       <div className="absolute top-6 right-6 z-20 flex gap-2">
         {slides.map((_, i) => (
@@ -65,10 +66,10 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
       </div>
 
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-32 text-warm-white">
-        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight" data-tina-field={tinaFields?.headline}>
+        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]" data-tina-field={tinaFields?.headline}>
           {headline}
         </h1>
-        <p className="text-base md:text-lg mb-8 max-w-2xl text-warm-white/90" data-tina-field={tinaFields?.subtext}>
+        <p className="text-base md:text-lg mb-8 max-w-2xl text-warm-white/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]" data-tina-field={tinaFields?.subtext}>
           {subtext}
         </p>
         <div className="flex flex-wrap gap-4">
