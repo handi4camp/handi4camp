@@ -2,9 +2,10 @@ type DonationBoxProps = {
   accountNumber: string;
   variableSymbol?: string;
   noteText?: string;
+  children?: React.ReactNode;
 };
 
-export default function DonationBox({ accountNumber, variableSymbol = "2024", noteText }: DonationBoxProps) {
+export default function DonationBox({ accountNumber, variableSymbol = "2024", noteText, children }: DonationBoxProps) {
   return (
     <div className="bg-light-green rounded-2xl p-8 flex flex-col md:flex-row gap-8 items-start">
       <div className="flex-1">
@@ -28,6 +29,7 @@ export default function DonationBox({ accountNumber, variableSymbol = "2024", no
         {noteText && (
           <p className="mt-4 text-xs text-dark/50">{noteText}</p>
         )}
+        {children && <div className="mt-6">{children}</div>}
       </div>
       <div className="flex-none text-center">
         <div className="bg-white p-4 rounded-xl inline-block shadow">
