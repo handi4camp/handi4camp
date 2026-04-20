@@ -13,21 +13,21 @@ type HomeQuery = Awaited<ReturnType<typeof client.queries.home>>;
 type GlobalQuery = Awaited<ReturnType<typeof client.queries.global>>;
 
 const photos: PolaroidPhoto[] = [
-  { src: "/images/handicamp-foto-07.webp", alt: "Výtvarná dílna", rotation: -2 },
-  { src: "/images/handicamp-foto-13.webp", alt: "Radost na táboře", rotation: 1 },
-  { src: "/images/handicamp-foto-06.webp", alt: "Malování na kempu", rotation: -1 },
-  { src: "/images/handicamp-foto-19.webp", alt: "Společná chvíle", rotation: 2 },
-  { src: "/images/handicamp-foto-08.webp", alt: "Chvíle radosti", rotation: -3 },
-  { src: "/images/handicamp-foto-17.webp", alt: "Odpoledne venku", rotation: 1 },
-  { src: "/images/handicamp-foto-14.webp", alt: "Plavání při západu slunce", rotation: -2 },
-  { src: "/images/handicamp-foto-16.webp", alt: "Pohyb a smích", rotation: 3 },
-  { src: "/images/handicamp-foto-20.webp", alt: "Přátelství na kempu", rotation: -1 },
-  { src: "/images/handicamp-foto-28.webp", alt: "Letní program", rotation: 2 },
-  { src: "/images/handicamp-foto-24.webp", alt: "Tým pohromadě", rotation: -2 },
-  { src: "/images/handicamp-foto-15.webp", alt: "Kreativní dílna", rotation: 1 },
-  { src: "/images/handicamp-foto-12.webp", alt: "Venkovní aktivity", rotation: -3 },
+  { src: "/images/handicamp-foto-07.webp", alt: "Výtvarná dílna", rotation: -2, videoSrc: "/reel.mp4" },
   { src: "/images/handicamp-foto-25.webp", alt: "Večerní program", rotation: 2 },
-  { src: "/images/handicamp-foto-18.webp", alt: "Vzpomínka na kamp", rotation: -1 },
+  { src: "/images/handicamp-foto-06.webp", alt: "Malování na kempu", rotation: -1 },
+  { src: "/images/handicamp-foto-17.webp", alt: "Odpoledne venku", rotation: 1 },
+  { src: "/images/handicamp-foto-13.webp", alt: "Radost na táboře", rotation: -2 },
+  { src: "/images/handicamp-foto-19.webp", alt: "Společná chvíle", rotation: 3 },
+  { src: "/images/handicamp-foto-08.webp", alt: "Chvíle radosti", rotation: -1 },
+  { src: "/images/handicamp-foto-14.webp", alt: "Plavání při západu slunce", rotation: 2 },
+  { src: "/images/handicamp-foto-16.webp", alt: "Pohyb a smích", rotation: -3 },
+  { src: "/images/handicamp-foto-20.webp", alt: "Přátelství na kempu", rotation: 1 },
+  { src: "/images/handicamp-foto-28.webp", alt: "Letní program", rotation: -2 },
+  { src: "/images/handicamp-foto-24.webp", alt: "Tým pohromadě", rotation: 2 },
+  { src: "/images/handicamp-foto-15.webp", alt: "Kreativní dílna", rotation: -1 },
+  { src: "/images/handicamp-foto-12.webp", alt: "Venkovní aktivity", rotation: 3 },
+  { src: "/images/handicamp-foto-18.webp", alt: "Vzpomínka na kamp", rotation: -2 },
 ];
 
 const sponsors = [
@@ -63,6 +63,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
 
   type Stat = NonNullable<NonNullable<typeof g.stats>[number]>;
   type Card = NonNullable<NonNullable<typeof h.rozcestnikCards>[number]>;
+  type Activity = NonNullable<NonNullable<typeof h.campActivities>[number]>;
 
   const mappedStats = (g.stats ?? [])
     .filter((s): s is Stat => s !== null)
@@ -78,6 +79,10 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
       _tinaDesc: tinaField(c, 'description'),
     }));
 
+  const mappedActivities = (h.campActivities ?? [])
+    .filter((a): a is Activity => a !== null)
+    .map((a) => ({ title: a.title ?? "", description: a.description ?? "" }));
+
   return (
     <>
       <Hero
@@ -86,7 +91,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
         cta1Label={h.heroCta1Label ?? ""}
         cta1Href={h.heroCta1Href ?? "/jak-pomoci#darovani"}
         cta2Label={h.heroCta2Label ?? ""}
-        cta2Href={h.heroCta2Href ?? "/jak-pomoci#sponzoring"}
+        cta2Href={h.heroCta2Href ?? "/jak-pomoci"}
         tinaFields={{
           headline: tinaField(h, 'heroHeadline'),
           subtext: tinaField(h, 'heroSubtext'),
@@ -95,22 +100,33 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
         }}
       />
 
-      <section className="py-16 bg-warm-white">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(h, 'storyHeading')}>{h.storyHeading}</h2>
-          <p className="text-dark/70 text-lg leading-relaxed mb-4" data-tina-field={tinaField(h, 'storyBody')}>{h.storyBody}</p>
-          <blockquote className="border-l-4 border-gold pl-4 text-left italic text-dark/70 my-6 mx-auto max-w-xl" data-tina-field={tinaField(h, 'storyQuote')}>
-            „{h.storyQuote}" — {h.storyQuoteAuthor}
-          </blockquote>
-          <Link
-            href="/o-kempu"
-            className="text-forest font-semibold hover:text-dark transition-colors"
-            data-tina-field={tinaField(h, 'storyLinkLabel')}
-          >
-            {h.storyLinkLabel}
-          </Link>
-        </div>
-      </section>
+      {mappedActivities.length > 0 && (
+        <section className="py-16 bg-warm-white" id="o-kempu">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl mx-auto">
+              <div>
+                <h2 className="font-serif text-3xl font-bold mb-6" data-tina-field={tinaField(h, 'campHeading')}>
+                  {h.campHeading}
+                </h2>
+                <p className="text-dark/70 text-lg leading-relaxed mb-10" data-tina-field={tinaField(h, 'campBody')}>
+                  {h.campBody}
+                </p>
+                <h3 className="font-serif text-xl font-semibold mb-6 text-forest" data-tina-field={tinaField(h, 'campActivitiesHeading')}>
+                  {h.campActivitiesHeading}
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {mappedActivities.map((activity) => (
+                    <div key={activity.title} className="bg-light-green rounded-2xl p-5">
+                      <h3 className="font-serif text-lg font-bold mb-1 text-forest">{activity.title}</h3>
+                      <p className="text-dark/70 text-sm leading-relaxed">{activity.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <StatBar stats={mappedStats} />
 
@@ -128,6 +144,15 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
           </Link>
         </div>
       </section>
+
+      {h.quoteText && (
+        <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
+          <blockquote className="text-dark/60 text-lg leading-relaxed italic mb-3" data-tina-field={tinaField(h, 'quoteText')}>
+            „{h.quoteText}"
+          </blockquote>
+          <p className="text-dark/40 text-sm" data-tina-field={tinaField(h, 'quoteAuthor')}>— {h.quoteAuthor}</p>
+        </div>
+      )}
 
       <Rozcestnik
         heading={h.rozcestnikHeading ?? ""}

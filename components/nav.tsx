@@ -1,10 +1,11 @@
 "use client"
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import logo from "../logo.png";
 
 const links = [
-  { href: "/o-kempu", label: "O kempu" },
   { href: "/jak-pomoci", label: "Jak pomoci" },
   { href: "/galerie", label: "Galerie" },
   { href: "/kontakt", label: "Kontakt" },
@@ -43,8 +44,15 @@ export default function Nav() {
     <>
       <header className="sticky top-0 z-50 bg-warm-white/95 backdrop-blur-sm border-b border-light-green">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
-          <Link href="/" className="font-serif text-xl font-bold text-forest">
-            Handi4Camp
+          <Link href="/" aria-label="Handi4Camp">
+            <Image
+              src={logo}
+              alt="Handi4Camp"
+              width={160}
+              height={128}
+              className="h-14 w-auto"
+              priority
+            />
           </Link>
           <ul className="hidden md:flex items-center gap-6">
             {links.map((link) => (

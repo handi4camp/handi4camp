@@ -74,15 +74,6 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors, tinaF
           })}
         </div>
 
-        <div className="text-center mb-16">
-          <Link
-            href="/jak-pomoci"
-            className="inline-block bg-forest text-warm-white font-bold px-10 py-4 rounded-lg text-lg hover:bg-forest/90 transition-colors"
-          >
-            Podpořte ♥
-          </Link>
-        </div>
-
         <div className="border-t border-dark/10 pt-12">
           <p className="text-center text-xs font-semibold tracking-widest text-dark/40 uppercase mb-8">
             Děkujeme našim partnerům
