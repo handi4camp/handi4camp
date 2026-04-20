@@ -6,8 +6,8 @@
   --color-warm-white: #FFFBF0;
   --color-dark: #1A1A1A;
   --color-light-green: #E8F5E9;
-  --font-serif: var(--font-playfair);
-  --font-sans: var(--font-inter);
+  --font-serif: var(--font-open-sans);
+  --font-sans: var(--font-open-sans);
 }
 
 body {
