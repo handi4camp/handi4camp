@@ -81,7 +81,12 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
 
   const mappedActivities = (h.campActivities ?? [])
     .filter((a): a is Activity => a !== null)
-    .map((a) => ({ title: a.title ?? "", description: a.description ?? "" }));
+    .map((a) => ({
+      title: a.title ?? "",
+      description: a.description ?? "",
+      _tinaTitle: tinaField(a, "title"),
+      _tinaDesc: tinaField(a, "description"),
+    }));
 
   return (
     <>
@@ -117,8 +122,8 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   {mappedActivities.map((activity) => (
                     <div key={activity.title} className="bg-light-green rounded-2xl p-5">
-                      <h3 className="font-serif text-lg font-bold mb-1 text-forest">{activity.title}</h3>
-                      <p className="text-dark/70 text-sm leading-relaxed">{activity.description}</p>
+                      <h3 className="font-serif text-lg font-bold mb-1 text-forest" data-tina-field={activity._tinaTitle}>{activity.title}</h3>
+                      <p className="text-dark/70 text-sm leading-relaxed" data-tina-field={activity._tinaDesc}>{activity.description}</p>
                     </div>
                   ))}
                 </div>

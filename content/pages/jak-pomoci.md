@@ -21,7 +21,10 @@ donationTiers:
     featured: false
 transparencyHeading: 'Transparentní financování'
 transparencyIntro: 'Veškeré příjmy a výdaje kempu jsou veřejně dohledatelné.'
+bankTransferHeading: 'Bankovní převod'
 accountNumber: 'XXXX-XXXXXX/XXXX'
+variableSymbol: '2024'
+transferMessage: 'Handi4Camp – dar'
 transactionLinkLabel: 'Odkaz na transparentní účet →'
 transactionLinkHref: '#'
 donationContractLabel: 'Stáhnout darovací smlouvu (PDF)'

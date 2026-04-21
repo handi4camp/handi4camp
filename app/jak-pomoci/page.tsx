@@ -153,7 +153,17 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
             </div>
             <div>
               <DonationBox
+                heading={p.bankTransferHeading ?? "Bankovní převod"}
                 accountNumber={p.accountNumber ?? ""}
+                variableSymbol={p.variableSymbol ?? "2024"}
+                transferMessage={p.transferMessage ?? "Handi4Camp – dar"}
+                qrCodeImage={p.qrCodeImage ?? undefined}
+                tinaFields={{
+                  heading: tinaField(p, "bankTransferHeading"),
+                  accountNumber: tinaField(p, "accountNumber"),
+                  variableSymbol: tinaField(p, "variableSymbol"),
+                  transferMessage: tinaField(p, "transferMessage"),
+                }}
                 noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
               >
                 <DonationConfirmationButton />
