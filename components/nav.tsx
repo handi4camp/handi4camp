@@ -90,7 +90,7 @@ export default function Nav() {
       </header>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 bg-forest flex flex-col items-center justify-center gap-8 md:hidden"
+          className="fixed inset-0 z-50 bg-forest flex flex-col md:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Hlavní menu"
@@ -105,26 +105,62 @@ export default function Nav() {
             <span className="block absolute w-6 h-0.5 bg-warm-white rotate-45" />
             <span className="block absolute w-6 h-0.5 bg-warm-white -rotate-45" />
           </button>
-          <ul className="flex flex-col items-center gap-8">
-            {links.map((link) => (
-              <li key={link.href}>
-                <Link
-                  href={link.href}
-                  className="font-serif text-2xl text-warm-white hover:text-gold transition-colors"
-                  onClick={() => setIsOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <Link
-            href="/jak-pomoci#darovani"
-            className="bg-gold text-dark font-semibold px-6 py-3 rounded-lg text-base hover:bg-gold/90 transition-colors"
-            onClick={() => setIsOpen(false)}
-          >
-            Přispět →
-          </Link>
+          <div className="flex justify-center pt-16 pb-6">
+            <Link href="/" onClick={() => setIsOpen(false)}>
+              <Image
+                src={logo}
+                alt="Handi4Camp"
+                width={160}
+                height={128}
+                className="h-14 w-auto brightness-0 invert"
+              />
+            </Link>
+          </div>
+          <div className="flex-1 flex flex-col items-center justify-center gap-8">
+            <ul className="flex flex-col items-center gap-8">
+              {links.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="font-serif text-2xl text-warm-white hover:text-gold transition-colors"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+            <Link
+              href="/jak-pomoci#darovani"
+              className="bg-gold text-dark font-semibold px-6 py-3 rounded-lg text-base hover:bg-gold/90 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              Přispět →
+            </Link>
+          </div>
+          <div className="flex justify-center gap-6 pb-10">
+            <a
+              href="https://www.facebook.com/Handi4Camp"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Facebook"
+              className="text-warm-white/70 hover:text-warm-white transition-colors"
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/facebook.svg" alt="" className="w-6 h-6 brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+            </a>
+            <a
+              href="https://www.instagram.com/handi_camp/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="text-warm-white/70 hover:text-warm-white transition-colors"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+              </svg>
+            </a>
+          </div>
         </div>
       )}
     </>
