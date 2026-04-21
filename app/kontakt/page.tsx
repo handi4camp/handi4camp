@@ -115,7 +115,11 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
           </div>
 
           <div className="mt-12 pt-10 border-t border-light-green text-center">
-            <p className="text-dark/50 text-sm mb-2">Pořádáme pod záštitou</p>
+            <p className="text-dark/50 text-sm mb-4">Pořádáme pod záštitou</p>
+            <div className="mb-4 flex justify-center">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/rotary_logo.png" alt="Rotary" className="h-16" />
+            </div>
             <a
               href={p.affiliationHref ?? "https://rotary.cz"}
               target="_blank"

@@ -49,7 +49,7 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
         </div>
       ))}
 
-      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dark/80 via-dark/30 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dark/80 via-dark/50 to-transparent pointer-events-none" />
 
 
       <div className="absolute top-6 right-6 z-20 flex gap-2">
@@ -69,7 +69,7 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
         <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight [text-shadow:0_2px_12px_rgba(0,0,0,0.5)]" data-tina-field={tinaFields?.headline}>
           {headline}
         </h1>
-        <p className="text-base md:text-lg mb-8 max-w-2xl text-warm-white/90 [text-shadow:0_1px_6px_rgba(0,0,0,0.5)]" data-tina-field={tinaFields?.subtext}>
+        <p className="text-base md:text-lg mb-8 max-w-2xl text-warm-white [text-shadow:0_2px_8px_rgba(0,0,0,0.9),0_1px_3px_rgba(0,0,0,0.8)]" data-tina-field={tinaFields?.subtext}>
           {subtext}
         </p>
         <div className="flex flex-wrap gap-4">
