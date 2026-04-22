@@ -43,7 +43,7 @@ export default function Nav() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 bg-forest border-b-2 border-gold/40">
+      <header className="sticky top-0 z-50 bg-forest">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-20">
           <Link href="/" aria-label="Handi4Camp">
             <Image
