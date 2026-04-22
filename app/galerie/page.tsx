@@ -17,13 +17,18 @@ function extractYoutubeId(url: string): string | null {
 
 const galleryYears: GalleryYear[] = [
   {
-    year: 2024,
-    youtubeUrls: ["https://youtu.be/xRRjuz_516k"],
+    year: 2025,
+    youtubeUrls: [],
     photos: Array.from({ length: 28 }, (_, i) => ({
       src: `/images/handicamp-foto-${String(i + 1).padStart(2, "0")}.webp`,
-      alt: `Foto z HandiCampu 2024 - ${i + 1}`,
+      alt: `Foto z HandiCampu 2025 - ${i + 1}`,
       rotation: i % 2 === 0 ? -2 : 2,
     })),
+  },
+  {
+    year: 2024,
+    youtubeUrls: ["https://youtu.be/xRRjuz_516k"],
+    photos: [],
   },
   {
     year: 2023,
