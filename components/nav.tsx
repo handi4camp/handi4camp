@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import logo from "../logo.png";
 
 const links = [
+  { href: "/", label: "Domů" },
   { href: "/jak-pomoci", label: "Jak pomoci" },
   { href: "/galerie", label: "Galerie" },
   { href: "/kontakt", label: "Kontakt" },
