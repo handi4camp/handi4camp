@@ -8,7 +8,6 @@ import ContactForm from "@/components/contact-form";
 import {
   Globe, Tag, Share2, Award,
   Calendar, UserCheck, BookOpen, Home,
-  Banknote, Mail, FileCheck,
 } from "lucide-react";
 
 type JakpomociQuery = Awaited<ReturnType<typeof client.queries.jakpomoci>>;
@@ -121,9 +120,68 @@ function Field({ label, name, value, onChange, type = "text", required }: {
 const sponsoringBenefitIcons = [Globe, Tag, Share2, Award];
 const volunteeringRequirementIcons = [Calendar, UserCheck, BookOpen, Home];
 
+const TAB_CONFIG: Record<string, { label: string; desc: string }> = {
+  darovani: { label: 'Darování', desc: 'Finanční nebo věcný dar' },
+  sponzoring: { label: 'Firemní sponzoring', desc: 'Pro firmy a organizace' },
+  dobrovolnictvi: { label: 'Dobrovolnictví', desc: 'Zapojte se osobně' }
+};
+
+type TabKey = 'darovani' | 'sponzoring' | 'dobrovolnictvi';
+
+function FeatureGrid({ 
+  items, 
+  icons, 
+  cardBgClass, 
+  tinaFieldData 
+}: { 
+  items: string[], 
+  icons: React.ElementType[], 
+  cardBgClass: string, 
+  tinaFieldData?: string 
+}) {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10" data-tina-field={tinaFieldData}>
+      {items.map((item, i) => {
+        const Icon = icons[i] ?? Award;
+        return (
+          <div key={item} className={`${cardBgClass} rounded-2xl p-6 flex gap-4 items-start`}>
+            <div className="flex-none w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
+              <Icon className="w-5 h-5 text-forest" strokeWidth={1.75} />
+            </div>
+            <p className="font-semibold text-dark text-sm leading-snug pt-1">{item}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
   const { data } = useTina(tinaData);
   const p = data.jakpomoci;
+
+  const [activeTab, setActiveTab] = useState<TabKey>('darovani');
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.replace('#', '') as TabKey;
+      if (TAB_CONFIG[hash]) {
+        setActiveTab(hash);
+      }
+    };
+    
+    // Check initial hash
+    handleHashChange();
+    
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const setTabAndHash = (tab: TabKey) => {
+    setActiveTab(tab);
+    window.history.pushState(null, '', `#${tab}`);
+  };
 
   const sponsoringBenefits = (p.sponsoringBenefits ?? []).filter((x: string | null): x is string => x !== null);
   const volunteeringRequirements = (p.volunteeringRequirements ?? []).filter((x: string | null): x is string => x !== null);
@@ -136,180 +194,174 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
         tinaFields={{ title: tinaField(p, "heroTitle"), subtitle: tinaField(p, "heroSubtitle") }}
       />
 
-      {/* Darování */}
-      <section id="darovani" className="py-20 bg-warm-white scroll-mt-16">
+      <div className="bg-warm-white pt-12 pb-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div>
-              <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "donationHeading")}>
-                {p.donationHeading}
-              </h2>
-              <p className="text-dark/70 mb-6" data-tina-field={tinaField(p, "donationIntro")}>
-                {p.donationIntro}
-              </p>
-              <p className="text-sm text-forest font-medium">
-                Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb. — po přijetí vám vystavíme potvrzení.
-              </p>
-            </div>
-            <div>
-              <DonationBox
-                heading={p.bankTransferHeading ?? "Bankovní převod"}
-                accountNumber={p.accountNumber ?? ""}
-                variableSymbol={p.variableSymbol ?? "2024"}
-                transferMessage={p.transferMessage ?? "Handi4Camp – dar"}
-                qrCodeImage={p.qrCodeImage ?? undefined}
-                tinaFields={{
-                  heading: tinaField(p, "bankTransferHeading"),
-                  accountNumber: tinaField(p, "accountNumber"),
-                  variableSymbol: tinaField(p, "variableSymbol"),
-                  transferMessage: tinaField(p, "transferMessage"),
-                }}
-                noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
-              >
-                <DonationConfirmationButton />
-              </DonationBox>
-            </div>
+          <div className="text-center mb-8">
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-dark mb-3">Jak se chcete zapojit?</h2>
+            <p className="text-dark/70 text-lg">Vyberte prosím jednu z možností níže:</p>
           </div>
 
-          {/* Na co jdou prostředky */}
-          <div className="mt-16 pt-16 border-t border-dark/10">
-            <h2 className="font-serif text-3xl font-bold mb-3" data-tina-field={tinaField(p, "financeHeading")}>
-              {p.financeHeading}
-            </h2>
-            <p className="text-base font-semibold text-forest mb-6" data-tina-field={tinaField(p, "financeSubheading")}>
-              {p.financeSubheading}
-            </p>
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              <div className="flex-none">
-                <span className="inline-block bg-forest text-warm-white font-bold text-lg px-5 py-3 rounded-xl">
-                  900–1 200 Kč / osobu / den
-                </span>
-              </div>
-              <div className="flex-1 space-y-4">
-                <p className="text-dark/70 leading-relaxed" data-tina-field={tinaField(p, "financeBody1")}>{p.financeBody1}</p>
-                <p className="text-dark/70 leading-relaxed" data-tina-field={tinaField(p, "financeBody2")}>{p.financeBody2}</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {(Object.keys(TAB_CONFIG) as TabKey[]).map((tab) => {
+              const config = TAB_CONFIG[tab];
+              const isActive = activeTab === tab;
+              return (
+                <button
+                  key={tab}
+                  onClick={() => setTabAndHash(tab)}
+                  className={`p-4 sm:p-6 rounded-2xl transition-all border-2 flex flex-row sm:flex-col items-center sm:text-center text-left group gap-4 sm:gap-0 ${
+                    isActive
+                      ? 'border-forest bg-forest/5 shadow-md'
+                      : 'border-dark/10 bg-white hover:border-forest/40 hover:shadow-sm'
+                  }`}
+                >
+                  <div className="flex-1 sm:order-first">
+                    <span className={`block font-bold text-lg sm:text-xl mb-1 sm:mb-2 ${isActive ? 'text-forest' : 'text-dark group-hover:text-forest'}`}>
+                      {config.label}
+                    </span>
+                    <span className="block text-sm text-dark/60 sm:mb-6">
+                      {config.desc}
+                    </span>
+                  </div>
+                  
+                  {/* Ukazatel výběru (styl radio buttonu pro lepší srozumitelnost) */}
+                  <div className={`shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-colors sm:mt-auto sm:order-last ${
+                    isActive ? 'border-forest bg-forest' : 'border-dark/20 bg-white group-hover:border-forest/40'
+                  }`}>
+                    {isActive && <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full" />}
+                  </div>
+                </button>
+              );
+            })}
           </div>
         </div>
-      </section>
+      </div>
+
+      {/* Darování */}
+      {activeTab === 'darovani' && (
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <section id="darovani" className="py-20 bg-warm-white">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="grid md:grid-cols-2 gap-12 items-start">
+                <div>
+                  <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro dárce</p>
+                  <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "donationHeading")}>
+                    {p.donationHeading}
+                  </h2>
+                  <p className="text-dark/70 mb-6 text-lg" data-tina-field={tinaField(p, "donationIntro")}>
+                    {p.donationIntro}
+                  </p>
+                  
+                  <div className="space-y-4 text-dark/80 text-base leading-relaxed mb-8">
+                    <p>
+                      Ubytování a celodenní strava stojí asi od 900 do 1200 Kč na osobu za den. Ubytování musí být plně přizpůsobené pro vozíčkáře (sociální zařízení, bez prahů) a výhodou je i bazén, protože teplá voda klientům uvolňuje křeče. Celkově takových 10 až 14 dní vychází na 350 000 až 400 000 Kč.
+                    </p>
+                    <p>
+                      Primárně jdou tyto náklady na stravu a ubytování. Pokud zbudou finance, investuji je do workshopů, odborníků na přednášky (např. kurzy sebeobrany pro vozíčkáře, canisterapie, hipoterapie s koňmi). Ideálně tedy mířím ročně na rozpočet 400 000 Kč, abych měla zajištěno ubytování a stravu a mohla si dovolit i doplňkové aktivity.
+                    </p>
+                  </div>
+
+                  <p className="text-sm text-forest font-medium italic">
+                    Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb. — po přijetí vám vystavíme potvrzení.
+                  </p>
+                </div>
+                <div>
+                  <DonationBox
+                    heading={p.bankTransferHeading ?? "Bankovní převod"}
+                    accountNumber={p.accountNumber ?? ""}
+                    variableSymbol={p.variableSymbol ?? "2024"}
+                    transferMessage={p.transferMessage ?? "Handi4Camp – dar"}
+                    qrCodeImage={p.qrCodeImage ?? undefined}
+                    tinaFields={{
+                      heading: tinaField(p, "bankTransferHeading"),
+                      accountNumber: tinaField(p, "accountNumber"),
+                      variableSymbol: tinaField(p, "variableSymbol"),
+                      transferMessage: tinaField(p, "transferMessage"),
+                    }}
+                    noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
+                  >
+                    <DonationConfirmationButton />
+                  </DonationBox>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
 
       {/* Firemní sponzoring */}
-      <section id="sponzoring" className="py-20 bg-light-green scroll-mt-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro firmy</p>
-          <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "sponsoringHeading")}>
-            {p.sponsoringHeading}
-          </h2>
-          <p className="text-dark/70 mb-4" data-tina-field={tinaField(p, "sponsoringIntro")}>
-            {p.sponsoringIntro}
-          </p>
-          <p className="text-dark/80 italic mb-10 text-base">
-            "Stáváte se součástí příběhu, na který děti vzpomínají celý život."
-          </p>
+      {activeTab === 'sponzoring' && (
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <section id="sponzoring" className="py-20 bg-warm-white">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro firmy</p>
+              <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "sponsoringHeading")}>
+                {p.sponsoringHeading}
+              </h2>
+              <p className="text-dark/70 mb-10" data-tina-field={tinaField(p, "sponsoringIntro")}>
+                {p.sponsoringIntro}
+              </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10" data-tina-field={tinaField(p, "sponsoringBenefits")}>
-            {sponsoringBenefits.map((benefit, i) => {
-              const Icon = sponsoringBenefitIcons[i] ?? Award;
-              return (
-                <div key={benefit} className="bg-warm-white rounded-2xl p-6 flex gap-4 items-start">
-                  <div className="flex-none w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-forest" strokeWidth={1.75} />
-                  </div>
-                  <p className="font-semibold text-dark text-sm leading-snug pt-1">{benefit}</p>
-                </div>
-              );
-            })}
-          </div>
+              <FeatureGrid 
+                items={sponsoringBenefits}
+                icons={sponsoringBenefitIcons}
+                cardBgClass="bg-light-green"
+                tinaFieldData={tinaField(p, "sponsoringBenefits")}
+              />
 
-          <div>
-            <ContactForm
-              type="sponzor"
-              buttonLabel="Mám zájem o sponzoring →"
-              buttonClassName="inline-block bg-forest text-warm-white font-bold px-8 py-3.5 rounded-lg hover:bg-forest/90 transition-colors"
-            />
-            <p className="text-xs text-dark/50 mt-2 ml-1">Odpovídáme do 2 pracovních dnů.</p>
-          </div>
+              <p className="text-dark/60 italic text-sm mb-6">
+                &quot;Stáváte se součástí příběhu, na který děti vzpomínají celý život.&quot;
+              </p>
+
+              <div>
+                <ContactForm
+                  type="sponzor"
+                  buttonLabel="Mám zájem o sponzoring →"
+                  buttonClassName="inline-block bg-forest text-warm-white font-bold px-8 py-3.5 rounded-lg hover:bg-forest/90 transition-colors"
+                />
+                <p className="text-xs text-dark/50 mt-2 ml-1">Odpovídáme do 2 pracovních dnů.</p>
+              </div>
+            </div>
+          </section>
         </div>
-      </section>
+      )}
 
       {/* Dobrovolnictví */}
-      <section id="dobrovolnictvi" className="py-20 bg-warm-white scroll-mt-16">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro studenty</p>
-          <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "volunteeringHeading")}>
-            {p.volunteeringHeading}
-          </h2>
-          <p className="text-dark/70 mb-10" data-tina-field={tinaField(p, "volunteeringIntro")}>
-            {p.volunteeringIntro}
-          </p>
+      {activeTab === 'dobrovolnictvi' && (
+        <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <section id="dobrovolnictvi" className="py-20 bg-warm-white">
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro studenty</p>
+              <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "volunteeringHeading")}>
+                {p.volunteeringHeading}
+              </h2>
+              <p className="text-dark/70 mb-10" data-tina-field={tinaField(p, "volunteeringIntro")}>
+                {p.volunteeringIntro}
+              </p>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10" data-tina-field={tinaField(p, "volunteeringRequirements")}>
-            {volunteeringRequirements.map((req, i) => {
-              const Icon = volunteeringRequirementIcons[i] ?? Calendar;
-              return (
-                <div key={req} className="bg-light-green rounded-2xl p-6 flex gap-4 items-start">
-                  <div className="flex-none w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
-                    <Icon className="w-5 h-5 text-forest" strokeWidth={1.75} />
-                  </div>
-                  <p className="font-semibold text-dark text-sm leading-snug pt-1">{req}</p>
-                </div>
-              );
-            })}
-          </div>
+              <FeatureGrid 
+                items={volunteeringRequirements}
+                icons={volunteeringRequirementIcons}
+                cardBgClass="bg-light-green"
+                tinaFieldData={tinaField(p, "volunteeringRequirements")}
+              />
 
-          <p className="text-dark/60 italic text-sm mb-6">
-            "Byl to nejlepší způsob, jak strávit prázdniny smysluplně." — absolventka kurzu fyzioterapie
-          </p>
+              <p className="text-dark/60 italic text-sm mb-6">
+                &quot;Byl to nejlepší způsob, jak strávit prázdniny smysluplně.&quot; — absolventka kurzu fyzioterapie
+              </p>
 
-          <div>
-            <ContactForm
-              type="dobrovolnik"
-              buttonLabel="Mám zájem →"
-              buttonClassName="inline-block bg-gold text-dark font-bold px-8 py-3.5 rounded-lg hover:bg-gold/90 transition-colors"
-            />
-            <p className="text-xs text-dark/50 mt-2 ml-1">Napište nám, rádi zodpovíme otázky.</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Jak se stát dárcem */}
-      <section className="py-20 bg-light-green">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="font-serif text-3xl font-bold mb-12" data-tina-field={tinaField(p, "donorInfoHeading")}>
-            {p.donorInfoHeading}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
-            {[
-              { Icon: Banknote, step: "1", label: "Přispějte", desc: "Bankovním převodem, věcným darem nebo domluvou." },
-              { Icon: Mail, step: "2", label: "Napište nám", desc: "Dejte nám vědět a my vám vystavíme potvrzení." },
-              { Icon: FileCheck, step: "3", label: "Dostanete potvrzení", desc: "Doklad pro daňové odpočty do několika dní." },
-            ].map(({ Icon, step, label, desc }) => (
-              <div key={step} className="flex flex-col items-start gap-3">
-                <div className="flex items-center gap-3">
-                  <span className="w-8 h-8 rounded-full bg-forest text-warm-white text-sm font-bold flex items-center justify-center flex-none">
-                    {step}
-                  </span>
-                  <Icon className="w-5 h-5 text-forest" strokeWidth={1.75} />
-                </div>
-                <p className="font-bold text-dark">{label}</p>
-                <p className="text-dark/60 text-sm leading-relaxed">{desc}</p>
+              <div>
+                <ContactForm
+                  type="dobrovolnik"
+                  buttonLabel="Mám zájem →"
+                  buttonClassName="inline-block bg-gold text-dark font-bold px-8 py-3.5 rounded-lg hover:bg-gold/90 transition-colors"
+                />
+                <p className="text-xs text-dark/50 mt-2 ml-1">Napište nám, rádi zodpovíme otázky.</p>
               </div>
-            ))}
-          </div>
-
-          <details className="group">
-            <summary className="cursor-pointer text-sm font-semibold text-forest hover:text-forest/80 transition-colors list-none flex items-center gap-2">
-              <span className="inline-block transition-transform group-open:rotate-90">›</span>
-              Více informací
-            </summary>
-            <p className="mt-4 text-dark/70 text-base leading-relaxed" data-tina-field={tinaField(p, "donorInfoBody")}>
-              {p.donorInfoBody}
-            </p>
-          </details>
+            </div>
+          </section>
         </div>
-      </section>
+      )}
     </>
   );
 }
