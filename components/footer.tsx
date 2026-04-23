@@ -40,6 +40,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
           <div>
             <h4 className="font-semibold mb-3">Navigace</h4>
             <ul className="space-y-2 text-sm text-warm-white/80">
+              <li><Link href="/" className="hover:text-gold transition-colors">Úvod</Link></li>
               <li><Link href="/jak-pomoci" className="hover:text-gold transition-colors">Jak pomoci</Link></li>
               <li><Link href="/galerie" className="hover:text-gold transition-colors">Galerie</Link></li>
               <li><Link href="/kontakt" className="hover:text-gold transition-colors">Kontakt</Link></li>
