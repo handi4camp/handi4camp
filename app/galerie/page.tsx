@@ -28,7 +28,11 @@ const galleryYears: GalleryYear[] = [
   {
     year: 2024,
     youtubeUrls: ["https://youtu.be/xRRjuz_516k"],
-    photos: [],
+    photos: Array.from({ length: 17 }, (_, i) => ({
+      src: `/images/handicamp-foto-${String(i + 29).padStart(2, "0")}.webp`,
+      alt: `Foto z HandiCampu 2024 - ${i + 1}`,
+      rotation: i % 2 === 0 ? -2 : 2,
+    })),
   },
   {
     year: 2023,
