@@ -181,6 +181,17 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
   const setTabAndHash = (tab: TabKey) => {
     setActiveTab(tab);
     window.history.pushState(null, '', `#${tab}`);
+    
+    // Na mobilních zařízeních plynule odscrollovat k sekci
+    setTimeout(() => {
+      if (window.innerWidth < 768) { // md breakpoint
+        const element = document.getElementById(tab);
+        if (element) {
+          const y = element.getBoundingClientRect().top + window.scrollY - 80; // offset pro lepší zobrazení
+          window.scrollTo({ top: y, behavior: 'smooth' });
+        }
+      }
+    }, 100);
   };
 
   const sponsoringBenefits = (p.sponsoringBenefits ?? []).filter((x: string | null): x is string => x !== null);
