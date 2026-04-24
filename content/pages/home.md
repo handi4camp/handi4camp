@@ -6,9 +6,9 @@ heroCta1Href: /jak-pomoci#darovani
 heroCta2Label: O kempu
 heroCta2Href: /jak-pomoci
 storyHeading: Přes 20 let tradice a společných zážitků
-storyBody: 'Handi4Camp je specializovaný projekt, podporovaný Rotary Cluby z Česka a Slovenska.  Již dvě desetiletí propojujeme svět studentů medicíny s dětmi s handicapem v prostředí, kde odborná péče splývá s přátelstvím.'
+storyBody: 'Handi4Camp je specializovaný projekt, podporovaný Rotary Cluby z Česka a ze Slovenska.  Již dvě desetiletí propojujeme svět studentů medicíny s dětmi s handicapem v prostředí, kde odborná péče splývá s přátelstvím.'
 campHeading: Co je Handi4Camp
-campBody: 'Handi4Camp je tábor pro děti s dětskou mozkovou obrnou, pořádaný za pomoci Rotary klubů z Česka a Slovenska. Každý ročník dopřáváme dětem plnohodnotný čas plný pohybu, přátelství a odborné péče, v bezpečném prostředí, které podporuje jejich samostatnost a přináší úlevu i jejich rodinám.'
+campBody: 'Handi4Camp je tábor pro děti s dětskou mozkovou obrnou, pořádaný za pomoci Rotary klubů z Česka a ze Slovenska. Každý ročník dopřáváme dětem plnohodnotný čas plný pohybu, přátelství a odborné péče, v bezpečném prostředí, které podporuje jejich samostatnost a přináší úlevu i jejich rodinám.'
 campActivitiesHeading: Co se na kempu děje
 campActivities:
   - title: Rehabilitace
