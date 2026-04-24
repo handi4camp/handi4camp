@@ -72,7 +72,7 @@ export default function Nav() {
               href="/jak-pomoci#darovani"
               className="hidden md:inline-flex bg-gold text-dark font-bold px-5 py-2.5 rounded-lg text-sm hover:bg-gold/90 transition-colors shadow-sm"
             >
-              Přispět →
+              Podpořit camp
             </Link>
             <button
               ref={triggerRef}
@@ -136,7 +136,7 @@ export default function Nav() {
               className="bg-gold text-dark font-semibold px-6 py-3 rounded-lg text-base hover:bg-gold/90 transition-colors"
               onClick={() => setIsOpen(false)}
             >
-              Přispět →
+              Podpořit camp
             </Link>
           </div>
           <div className="flex justify-center gap-6 pb-10">

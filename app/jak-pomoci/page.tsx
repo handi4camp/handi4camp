@@ -282,7 +282,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                     accountNumber={p.accountNumber ?? ""}
                     variableSymbol={p.variableSymbol ?? "2024"}
                     transferMessage={p.transferMessage ?? "Handi4Camp – dar"}
-                    qrCodeImage={p.qrCodeImage ?? undefined}
+                    qrCodeImage={p.qrCodeImage ?? "/qr.jpg"}
                     tinaFields={{
                       heading: tinaField(p, "bankTransferHeading"),
                       accountNumber: tinaField(p, "accountNumber"),
