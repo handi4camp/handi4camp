@@ -8,7 +8,7 @@ stats:
     label: dobrovolníků
   - value: 100%
     label: transparentní
-footerTagline: Letní tábor pro děti s DMO pod záštitou Rotary Club Valtice Břeclav.
+footerTagline: Letní tábor pro děti s DMO pod záštitou Rotary klubů z Česka a ze Slovenska.
 footerContactName: Barbora Sládková
 footerEmail: info@handi4camp.cz
 footerFacebookLabel: Handi4Camp na Facebooku
