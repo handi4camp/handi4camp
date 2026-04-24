@@ -1,16 +1,17 @@
 ---
-heroTitle: 'Kontakt'
-heroSubtitle: 'Máte otázku? Neváhejte se ozvat.'
-contactHeading: 'Spojte se s námi'
+heroTitle: Kontakt
+heroSubtitle: Máte otázku? Neváhejte se ozvat.
+contactHeading: Spojte se s námi
 organizerPhoto: ''
-organizerName: 'Barbora Sládková'
-organizerRole: 'Organizátorka kempu'
+organizerName: Barbora Sládková
+organizerRole: Organizátorka kempu
 phone: ''
-email: 'info@handi4camp.cz'
-facebookLabel: 'Handi4Camp'
+email: handi4camp@gmail.com
+facebookLabel: Handi4Camp
 facebookHref: 'https://www.facebook.com/Handi4Camp'
-instagramLabel: 'handi_camp'
+instagramLabel: handi_camp
 instagramHref: 'https://www.instagram.com/handi_camp/'
-affiliationLabel: 'Rotary Club Valtice Břeclav'
+affiliationLabel: Rotary Club Valtice Břeclav
 affiliationHref: 'https://rotary.cz'
 ---
+
