@@ -14,9 +14,9 @@ campActivities:
   - title: Rehabilitace
     description: Každodenní fyzioterapeutické cvičení přizpůsobené každému dítěti individuálně.
   - title: Sport a hry
-    description: 'Plavání, boccia, příroda — aktivity navržené pro radost i pohyb.'
+    description: 'Plavání, boccia a další program plný zábavy, radosti i pohybu.'
   - title: Výlety
-    description: 'Okolí Valtice, příroda Pálava — každý den nové dobrodružství.'
+    description: 'Okolí Valtice, příroda Pálavy, každý den nové dobrodružství.'
 quoteText: 'Díky kempu syn poprvé v životě zažil, co znamená být součástí party.'
 quoteAuthor: maminka účastníka
 photoStripHeading: 'Chvíle, které zůstanou'
