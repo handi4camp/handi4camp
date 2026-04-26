@@ -2,7 +2,7 @@
 heroTitle: Kontakt
 heroSubtitle: Máte otázku? Neváhejte se ozvat.
 contactHeading: Spojte se s námi
-organizerPhoto: ''
+organizerPhoto: /organizer.webp
 organizerName: Barbora Sládková
 organizerRole: Organizátorka kempu
 phone: ''

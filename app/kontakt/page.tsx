@@ -41,7 +41,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
               <img
                 src={p.organizerPhoto}
                 alt={p.organizerName ?? "Organizátorka"}
-                className="w-48 h-48 rounded-2xl object-cover shadow-lg flex-shrink-0 mx-auto md:mx-0"
+                className="w-56 h-72 rounded-2xl object-cover object-top shadow-lg flex-shrink-0 mx-auto md:mx-0"
                 data-tina-field={tinaField(p, 'organizerPhoto')}
               />
             )}

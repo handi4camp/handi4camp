@@ -14,8 +14,33 @@ export const metadata: Metadata = {
   title: "Handi4Camp — Léto bez hranic",
   description:
     "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+  metadataBase: new URL("https://handi4camp.cz"),
   icons: {
-    icon: "/favicon.svg",
+    icon: { url: "/favicon.png", type: "image/png" },
+  },
+  openGraph: {
+    title: "Handi4Camp — Léto bez hranic",
+    description:
+      "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+    url: "https://handi4camp.cz",
+    siteName: "Handi4Camp",
+    images: [
+      {
+        url: "/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Účastníci a vedoucí tábora Handi4Camp u rybníka za zlatého světla",
+      },
+    ],
+    locale: "cs_CZ",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Handi4Camp — Léto bez hranic",
+    description:
+      "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+    images: ["/og-image.jpg"],
   },
 };
 
