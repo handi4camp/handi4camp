@@ -1,6 +1,6 @@
 ---
 heroHeadline: 'Týden, kdy ustupují diagnózy'
-heroSubtext: 'Handi4Camp je týden plný pohybu, přátelství a společných zážitků pro děti s mozkovou obrnou. Studenti medicíny a fyzioterapie jsou po celou dobu nablízku, a to jako kamarádi i jako odborníci.'
+heroSubtext: 'Handi4Camp je týden plný pohybu, přátelství a společných zážitků pro děti s dětskou mozkovou obrnou. Studenti medicíny a fyzioterapie jsou po celou dobu nablízku, a to jako kamarádi i jako odborníci.'
 heroCta1Label: Podpořit kemp
 heroCta1Href: /jak-pomoci#darovani
 heroCta2Label: O kempu
