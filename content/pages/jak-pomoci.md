@@ -46,11 +46,11 @@ volunteeringRequirements:
   - Praxe uznatelná v rámci studia
   - Strava a ubytování zajištěno
 fundraiser:
-  enabled: false
+  enabled: true
   title: Sbírka na letní kempování 2025
   description: Pomozte nám dosáhnout cíle a zajistit dětem s DMO nezapomenutelné léto.
-  goal: 400000
-  current: 0
+  goal: 40000
+  current: 200
   deadline: 2027-10-15T00:00:00.000Z
 ---
 
