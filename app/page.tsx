@@ -30,12 +30,6 @@ const photos: PolaroidPhoto[] = [
   { src: "/images/handicamp-foto-18.webp", alt: "Vzpomínka na kamp", rotation: -2 },
 ];
 
-const sponsors = [
-  { name: "Rotary Club Valtice Břeclav", logo: "/images/partners/valtice.png", website: "https://rotary.cz" },
-  { name: "Skupina ČEZ", logo: "/images/partners/cez.png", website: "https://cez.cz" },
-  { name: "Sportisimo", logo: "/images/partners/sportisimo.svg", website: "https://sportisimo.cz" },
-];
-
 export default function Home() {
   const [homeData, setHomeData] = useState<HomeQuery | null>(null);
   const [globalData, setGlobalData] = useState<GlobalQuery | null>(null);
@@ -86,6 +80,16 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
       description: a.description ?? "",
       _tinaTitle: tinaField(a, "title"),
       _tinaDesc: tinaField(a, "description"),
+    }));
+
+  type Partner = NonNullable<NonNullable<typeof h.partners>[number]>;
+  const mappedPartners = (h.partners ?? [])
+    .filter((p): p is Partner => p !== null)
+    .map((p) => ({
+      name: p.name,
+      logo: p.logo ?? undefined,
+      website: p.website ?? undefined,
+      _tina: tinaField(p),
     }));
 
   return (
@@ -163,7 +167,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
         heading={h.rozcestnikHeading ?? ""}
         subheading={h.rozcestnikSubheading ?? ""}
         cards={mappedCards}
-        sponsors={sponsors}
+        sponsors={mappedPartners}
         tinaFields={{
           heading: tinaField(h, 'rozcestnikHeading'),
           subheading: tinaField(h, 'rozcestnikSubheading'),

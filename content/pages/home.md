@@ -29,5 +29,15 @@ rozcestnikCards:
     description: 'Firemní partnerství s logem, zmínkou a hmatatelným dopadem'
   - title: Dobrovolnictví
     description: Jedete s námi? Studenti medicíny a fyzioterapie jsou vítáni
+partners:
+  - name: Rotary Club Valtice Břeclav
+    logo: /images/partners/valtice.png
+    website: 'https://rotary.cz'
+  - name: Skupina ČEZ
+    logo: /images/partners/cez.png
+    website: 'https://cez.cz'
+  - name: Sportisimo
+    logo: /images/partners/sportisimo.svg
+    website: 'https://sportisimo.cz'
 ---
 

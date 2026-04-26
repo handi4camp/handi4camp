@@ -5,6 +5,7 @@ type Sponsor = {
   name: string;
   logo?: string;
   website?: string;
+  _tina?: string;
 };
 
 type Card = {
@@ -86,6 +87,7 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors, tinaF
                 target="_blank"
                 rel="noopener noreferrer"
                 title={sponsor.name}
+                data-tina-field={sponsor._tina}
               >
                 {sponsor.logo ? (
                   // eslint-disable-next-line @next/next/no-img-element
