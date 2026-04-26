@@ -141,6 +141,19 @@ export default defineConfig({
           { type: "string", name: "volunteeringHeading", label: "Dobrovolnictví — Nadpis" },
           { type: "string", name: "volunteeringIntro", label: "Dobrovolnictví — Úvod", ui: { component: "textarea" } },
           { type: "string", name: "volunteeringRequirements", label: "Dobrovolnictví — požadavky", list: true },
+          {
+            type: "object",
+            name: "fundraiser",
+            label: "Fundraiser / Sbírka (volitelné)",
+            fields: [
+              { type: "boolean", name: "enabled", label: "Zobrazit fundraiser" },
+              { type: "string", name: "title", label: "Název sbírky" },
+              { type: "string", name: "description", label: "Popis sbírky", ui: { component: "textarea" } },
+              { type: "number", name: "goal", label: "Cíl (Kč)" },
+              { type: "number", name: "current", label: "Aktuálně vybráno (Kč)" },
+              { type: "datetime", name: "deadline", label: "Termín sbírky (do kdy)" },
+            ],
+          },
         ],
         ui: {
           router: () => "/jak-pomoci",

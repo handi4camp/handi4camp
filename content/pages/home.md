@@ -39,5 +39,8 @@ partners:
   - name: Sportisimo
     logo: /images/partners/sportisimo.svg
     website: 'https://sportisimo.cz'
+  - name: Rotary
+    logo: /rotary.png
+    website: 'https://www.rotary2240.org/cs/'
 ---
 

@@ -45,5 +45,12 @@ volunteeringRequirements:
   - Dohled zkušených fyzioterapeutů
   - Praxe uznatelná v rámci studia
   - Strava a ubytování zajištěno
+fundraiser:
+  enabled: false
+  title: Sbírka na letní kempování 2025
+  description: Pomozte nám dosáhnout cíle a zajistit dětem s DMO nezapomenutelné léto.
+  goal: 400000
+  current: 0
+  deadline: 2027-10-15T00:00:00.000Z
 ---
 

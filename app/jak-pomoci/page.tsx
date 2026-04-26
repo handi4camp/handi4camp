@@ -285,6 +285,22 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                       iban: tinaField(p, "iban"),
                       swift: tinaField(p, "swift"),
                       qrCodeImage: tinaField(p, "qrCodeImage"),
+                      fundraiser: tinaField(p, "fundraiser"),
+                    }}
+                    fundraiser={{
+                      enabled: p.fundraiser?.enabled,
+                      title: p.fundraiser?.title,
+                      description: p.fundraiser?.description,
+                      goal: p.fundraiser?.goal,
+                      current: p.fundraiser?.current,
+                      deadline: p.fundraiser?.deadline,
+                      tinaFields: {
+                        title: p.fundraiser ? tinaField(p.fundraiser, "title") : undefined,
+                        description: p.fundraiser ? tinaField(p.fundraiser, "description") : undefined,
+                        goal: p.fundraiser ? tinaField(p.fundraiser, "goal") : undefined,
+                        current: p.fundraiser ? tinaField(p.fundraiser, "current") : undefined,
+                        deadline: p.fundraiser ? tinaField(p.fundraiser, "deadline") : undefined,
+                      },
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
