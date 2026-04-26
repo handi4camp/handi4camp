@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import posthog from "posthog-js";
 
 const slides = [
   { src: "/images/handicamp-foto-03.webp", label: "Léto plné pohybu" },
@@ -77,6 +78,7 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
             href={cta1Href}
             className="bg-gold text-dark font-bold px-8 py-3 rounded-lg text-lg hover:bg-gold/90 transition-colors"
             data-tina-field={tinaFields?.cta1Label}
+            onClick={() => posthog.capture("hero_cta_clicked", { cta: "primary", label: cta1Label, href: cta1Href })}
           >
             {cta1Label}
           </Link>
@@ -84,6 +86,7 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
             href={cta2Href}
             className="border-2 border-warm-white text-warm-white font-bold px-8 py-3 rounded-lg text-lg hover:bg-warm-white/10 transition-colors"
             data-tina-field={tinaFields?.cta2Label}
+            onClick={() => posthog.capture("hero_cta_clicked", { cta: "secondary", label: cta2Label, href: cta2Href })}
           >
             {cta2Label}
           </Link>

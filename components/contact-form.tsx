@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import posthog from "posthog-js";
 
 type Props = {
   type: "sponzor" | "dobrovolnik";
@@ -28,7 +29,9 @@ export default function ContactForm({ type, buttonLabel, buttonClassName }: Prop
       });
       if (!res.ok) throw new Error();
       setSent(true);
-    } catch {
+      posthog.capture("contact_form_submitted", { form_type: type });
+    } catch (err) {
+      posthog.captureException(err);
       alert("Nepodařilo se odeslat zprávu. Zkuste to prosím znovu.");
     } finally {
       setLoading(false);
@@ -37,7 +40,13 @@ export default function ContactForm({ type, buttonLabel, buttonClassName }: Prop
 
   if (!open) {
     return (
-      <button onClick={() => setOpen(true)} className={buttonClassName}>
+      <button
+        onClick={() => {
+          setOpen(true);
+          posthog.capture("contact_form_opened", { form_type: type });
+        }}
+        className={buttonClassName}
+      >
         {buttonLabel}
       </button>
     );

@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import PageHero from "@/components/page-hero";
+import posthog from "posthog-js";
 
 type KontaktQuery = Awaited<ReturnType<typeof client.queries.kontakt>>;
 
@@ -61,7 +62,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
                   <div className="flex items-center gap-3">
                     <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest w-20">Telefon</dt>
                     <dd>
-                      <a href={`tel:${p.phone}`} className="text-forest hover:text-dark transition-colors" data-tina-field={tinaField(p, 'phone')}>
+                      <a href={`tel:${p.phone}`} className="text-forest hover:text-dark transition-colors" data-tina-field={tinaField(p, 'phone')} onClick={() => posthog.capture("contact_link_clicked", { type: "phone" })}>
                         {p.phone}
                       </a>
                     </dd>
@@ -70,7 +71,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
                 <div className="flex items-center gap-3">
                   <dt className="text-dark/50 font-semibold text-xs uppercase tracking-widest w-20">Email</dt>
                   <dd>
-                    <a href={`mailto:${p.email ?? ""}`} className="text-forest hover:text-dark transition-colors" data-tina-field={tinaField(p, 'email')}>
+                    <a href={`mailto:${p.email ?? ""}`} className="text-forest hover:text-dark transition-colors" data-tina-field={tinaField(p, 'email')} onClick={() => posthog.capture("contact_link_clicked", { type: "email" })}>
                       {p.email}
                     </a>
                   </dd>
@@ -84,6 +85,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 text-forest hover:text-dark transition-colors"
                       data-tina-field={tinaField(p, 'facebookLabel')}
+                      onClick={() => posthog.capture("contact_link_clicked", { type: "facebook" })}
                     >
                       {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img src="/facebook.svg" alt="" className="w-4 h-4" />
@@ -101,6 +103,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 text-forest hover:text-dark transition-colors"
                         data-tina-field={tinaField(p, 'instagramLabel')}
+                        onClick={() => posthog.capture("contact_link_clicked", { type: "instagram" })}
                       >
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                           <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>

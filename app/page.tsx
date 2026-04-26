@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import Link from "next/link";
+import posthog from "posthog-js";
 import Hero from "@/components/hero";
 import StatBar from "@/components/stat-bar";
 import Rozcestnik from "@/components/rozcestnik";
@@ -148,6 +149,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
           <Link
             href="/galerie"
             className="text-forest font-semibold hover:text-dark transition-colors"
+            onClick={() => posthog.capture("gallery_link_clicked", { source: "homepage_photo_strip" })}
           >
             Prohlédnout celou galerii
           </Link>
@@ -157,7 +159,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
       {h.quoteText && (
         <div className="max-w-xl mx-auto px-4 sm:px-6 lg:px-8 py-10 text-center">
           <blockquote className="text-dark/60 text-lg leading-relaxed italic mb-3" data-tina-field={tinaField(h, 'quoteText')}>
-            „{h.quoteText}"
+            „{h.quoteText}&rdquo;
           </blockquote>
           <p className="text-dark/40 text-sm" data-tina-field={tinaField(h, 'quoteAuthor')}>— {h.quoteAuthor}</p>
         </div>

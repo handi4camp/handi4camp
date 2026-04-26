@@ -9,6 +9,7 @@ import {
   Globe, Tag, Share2, Award,
   Calendar, UserCheck, BookOpen, Home,
 } from "lucide-react";
+import posthog from "posthog-js";
 
 type JakpomociQuery = Awaited<ReturnType<typeof client.queries.jakpomoci>>;
 
@@ -58,8 +59,10 @@ function DonationConfirmationButton() {
       a.download = "potvrzeni-o-daru.docx";
       a.click();
       URL.revokeObjectURL(url);
+      posthog.capture("donation_confirmation_downloaded");
       setOpen(false);
-    } catch {
+    } catch (err) {
+      posthog.captureException(err);
       alert("Nepodařilo se vygenerovat dokument. Zkuste to prosím znovu.");
     } finally {
       setLoading(false);
@@ -69,7 +72,10 @@ function DonationConfirmationButton() {
   return (
     <>
       <button
-        onClick={() => setOpen(true)}
+        onClick={() => {
+          setOpen(true);
+          posthog.capture("donation_confirmation_form_opened");
+        }}
         className="inline-block bg-forest text-warm-white font-semibold px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors text-sm"
       >
         Požádat o potvrzení o daru
@@ -201,6 +207,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
   const setTabAndHash = (tab: TabKey) => {
     setActiveTab(tab);
     window.history.pushState(null, '', `#${tab}`);
+    posthog.capture("jak_pomoci_tab_selected", { tab, label: TAB_CONFIG[tab].label });
     
     // Na mobilních zařízeních plynule odscrollovat k sekci
     setTimeout(() => {

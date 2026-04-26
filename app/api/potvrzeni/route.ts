@@ -5,6 +5,7 @@ import { Resend } from "resend";
 import path from "path";
 import fs from "fs";
 import { toPotvrzeniPayload, toTemplateVariables } from "./template-data";
+import { getPostHogClient } from "@/lib/posthog-server";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -27,6 +28,7 @@ export async function POST(req: NextRequest) {
   doc.render(toTemplateVariables(payload));
   const buf = doc.toBuffer();
 
+  const posthog = getPostHogClient();
   await Promise.all([
     resend.emails.send({
       from: "Handi4Camp <potvrzeni@handi4camp.cz>",
@@ -57,6 +59,13 @@ export async function POST(req: NextRequest) {
       attachments: [{ filename: "potvrzeni-o-daru.docx", content: buf }],
     }),
   ]);
+
+  posthog.capture({
+    distinctId: email,
+    event: "donation_confirmation_generated",
+    properties: { donation_amount: dar, donation_purpose: ucel },
+  });
+  await posthog.shutdown();
 
   return new NextResponse(new Uint8Array(buf), {
     headers: {
