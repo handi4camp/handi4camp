@@ -5,7 +5,7 @@ contactHeading: Spojte se s námi
 organizerPhoto: /organizer.webp
 organizerName: Barbora Sládková
 organizerRole: Organizátorka kempu
-phone: ''
+phone: +420 723 166 691
 email: handi4camp@gmail.com
 facebookLabel: Handi4Camp
 facebookHref: 'https://www.facebook.com/Handi4Camp'
