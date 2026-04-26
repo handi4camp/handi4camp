@@ -10,7 +10,7 @@ stats:
     label: transparentní
 footerTagline: Letní tábor pro děti s DMO pod záštitou Rotary klubů z Česka a ze Slovenska.
 footerContactName: Barbora Sládková
-footerEmail: info@handi4camp.cz
+footerEmail: handi4camp@gmail.com
 footerFacebookLabel: Handi4Camp na Facebooku
 footerFacebookHref: 'https://www.facebook.com/Handi4Camp'
 footerInstagramLabel: handi_camp na Instagramu
