@@ -21,8 +21,10 @@ donationTiers:
     featured: false
 transparencyHeading: Transparentní financování
 transparencyIntro: Veškeré příjmy a výdaje kempu jsou veřejně dohledatelné.
-bankTransferHeading: Bankovní převod
-accountNumber: XXXX-XXXXXX/XXXX
+bankTransferHeading: klub-Handicamp
+accountNumber: 131-3696260217/0100
+iban: CZ60 0100 0001 3136 9626 0217
+swift: KOMBCZPPXXX
 variableSymbol: '2024'
 transferMessage: Handi4Camp – dar
 transactionLinkLabel: Odkaz na transparentní účet →

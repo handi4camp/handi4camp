@@ -278,16 +278,16 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                 </div>
                 <div>
                   <DonationBox
-                    heading={p.bankTransferHeading ?? "Bankovní převod"}
-                    accountNumber={p.accountNumber ?? ""}
-                    variableSymbol={p.variableSymbol ?? "2024"}
-                    transferMessage={p.transferMessage ?? "Handi4Camp – dar"}
+                    heading={p.bankTransferHeading ?? "klub-Handicamp"}
+                    accountNumber={p.accountNumber ?? "131-3696260217/0100"}
+                    iban={p.iban ?? "CZ60 0100 0001 3136 9626 0217"}
+                    swift={p.swift ?? "KOMBCZPPXXX"}
                     qrCodeImage={p.qrCodeImage ?? "/qr.jpg"}
                     tinaFields={{
                       heading: tinaField(p, "bankTransferHeading"),
                       accountNumber: tinaField(p, "accountNumber"),
-                      variableSymbol: tinaField(p, "variableSymbol"),
-                      transferMessage: tinaField(p, "transferMessage"),
+                      iban: tinaField(p, "iban"),
+                      swift: tinaField(p, "swift"),
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
@@ -327,7 +327,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
               <div>
                 <ContactForm
                   type="sponzor"
-                  buttonLabel="Mám zájem o sponzoring →"
+                  buttonLabel="Mám zájem o sponzoring"
                   buttonClassName="inline-block bg-forest text-warm-white font-bold px-8 py-3.5 rounded-lg hover:bg-forest/90 transition-colors"
                 />
                 <p className="text-xs text-dark/50 mt-2 ml-1">Odpovídáme do 2 pracovních dnů.</p>
@@ -364,7 +364,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
               <div>
                 <ContactForm
                   type="dobrovolnik"
-                  buttonLabel="Mám zájem →"
+                  buttonLabel="Mám zájem"
                   buttonClassName="inline-block bg-gold text-dark font-bold px-8 py-3.5 rounded-lg hover:bg-gold/90 transition-colors"
                 />
                 <p className="text-xs text-dark/50 mt-2 ml-1">Napište nám, rádi zodpovíme otázky.</p>

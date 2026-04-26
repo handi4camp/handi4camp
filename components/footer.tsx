@@ -34,7 +34,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
               href="/jak-pomoci#darovani"
               className="inline-block bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
             >
-              Přispět →
+              Podpořit
             </Link>
           </div>
           <div>

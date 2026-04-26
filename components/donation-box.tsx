@@ -5,11 +5,15 @@ type DonationBoxProps = {
   accountNumber: string;
   variableSymbol?: string;
   transferMessage?: string;
+  iban?: string;
+  swift?: string;
   qrCodeImage?: string;
   noteText?: string;
   tinaFields?: {
     heading?: string;
     accountNumber?: string;
+    iban?: string;
+    swift?: string;
     variableSymbol?: string;
     transferMessage?: string;
   };
@@ -19,8 +23,10 @@ type DonationBoxProps = {
 export default function DonationBox({
   heading = "Bankovní převod",
   accountNumber,
-  variableSymbol = "2024",
-  transferMessage = "Handi4Camp – dar",
+  variableSymbol,
+  transferMessage,
+  iban,
+  swift,
   qrCodeImage,
   noteText,
   tinaFields,
@@ -34,17 +40,33 @@ export default function DonationBox({
         </h3>
         <dl className="space-y-2 text-sm">
           <div className="flex gap-2 flex-wrap">
-            <dt className="text-dark/60 w-40 flex-none">Číslo účtu:</dt>
+            <dt className="text-dark/60 w-40 flex-none">Č. účtu:</dt>
             <dd className="font-mono font-bold" data-tina-field={tinaFields?.accountNumber}>{accountNumber}</dd>
           </div>
-          <div className="flex gap-2 flex-wrap">
-            <dt className="text-dark/60 w-40 flex-none">Variabilní symbol:</dt>
-            <dd className="font-mono font-bold" data-tina-field={tinaFields?.variableSymbol}>{variableSymbol}</dd>
-          </div>
-          <div className="flex gap-2 flex-wrap">
-            <dt className="text-dark/60 w-40 flex-none">Zpráva pro příjemce:</dt>
-            <dd data-tina-field={tinaFields?.transferMessage}>{transferMessage}</dd>
-          </div>
+          {variableSymbol && (
+            <div className="flex gap-2 flex-wrap">
+              <dt className="text-dark/60 w-40 flex-none">Variabilní symbol:</dt>
+              <dd className="font-mono font-bold" data-tina-field={tinaFields?.variableSymbol}>{variableSymbol}</dd>
+            </div>
+          )}
+          {transferMessage && (
+            <div className="flex gap-2 flex-wrap">
+              <dt className="text-dark/60 w-40 flex-none">Zpráva pro příjemce:</dt>
+              <dd data-tina-field={tinaFields?.transferMessage}>{transferMessage}</dd>
+            </div>
+          )}
+          {iban && (
+            <div className="flex gap-2 flex-wrap">
+              <dt className="text-dark/60 w-40 flex-none">IBAN:</dt>
+              <dd className="font-mono font-bold" data-tina-field={tinaFields?.iban}>{iban}</dd>
+            </div>
+          )}
+          {swift && (
+            <div className="flex gap-2 flex-wrap">
+              <dt className="text-dark/60 w-40 flex-none">SWIFT:</dt>
+              <dd className="font-mono font-bold" data-tina-field={tinaFields?.swift}>{swift}</dd>
+            </div>
+          )}
         </dl>
         {noteText && (
           <p className="mt-4 text-xs text-dark/50">{noteText}</p>

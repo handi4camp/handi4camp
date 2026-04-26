@@ -145,7 +145,7 @@ function HomePageContent({ homeData, globalData }: { homeData: HomeQuery; global
             href="/galerie"
             className="text-forest font-semibold hover:text-dark transition-colors"
           >
-            Prohlédnout celou galerii →
+            Prohlédnout celou galerii
           </Link>
         </div>
       </section>

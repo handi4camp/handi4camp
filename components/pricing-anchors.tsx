@@ -65,7 +65,7 @@ export default function PricingAnchors() {
                     : "bg-forest text-warm-white hover:bg-forest/90"
                 }`}
               >
-                Přispět touto částkou →
+                Podpořit touto částkou
               </Link>
             </div>
           ))}

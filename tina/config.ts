@@ -141,6 +141,8 @@ export default defineConfig({
           { type: "string", name: "transparencyIntro", label: "Transparentnost — Úvod", ui: { component: "textarea" } },
           { type: "string", name: "bankTransferHeading", label: "Bankovní převod — Nadpis" },
           { type: "string", name: "accountNumber", label: "Číslo účtu" },
+          { type: "string", name: "iban", label: "IBAN" },
+          { type: "string", name: "swift", label: "SWIFT" },
           { type: "string", name: "variableSymbol", label: "Variabilní symbol" },
           { type: "string", name: "transferMessage", label: "Zpráva pro příjemce" },
           { type: "image", name: "qrCodeImage", label: "QR kód (obrázek)" },
