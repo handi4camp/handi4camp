@@ -38,7 +38,7 @@ sponsoringBenefits:
   - Zmínka v příspěvcích na sociálních sítích
   - Certifikát partnerství
 volunteeringHeading: Dobrovolnictví
-volunteeringIntro: 'Hledáme studenty medicíny, fyzioterapie nebo pedagogiky, kteří chtějí udělat léto jinak — smysluplně a s přidanou hodnotou pro studium.'
+volunteeringIntro: 'Hledáme studenty medicíny, fyzioterapie nebo pedagogiky, kteří chtějí prožít léto jinak, smysluplně a s přidanou hodnotou pro studium. Příležitost je otevřená i všem ostatním, kteří chtějí zažít něco výjimečného, poznat skvělé lidi a odnést si silná přátelství i nezapomenutelné zážitky.'
 volunteeringRequirements:
   - 10 dní intenzivní práce s dětmi s DMO
   - Dohled zkušených fyzioterapeutů
