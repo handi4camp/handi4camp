@@ -21,7 +21,7 @@ donationTiers:
     featured: false
 transparencyHeading: Transparentní financování
 transparencyIntro: Veškeré příjmy a výdaje kempu jsou veřejně dohledatelné.
-bankTransferHeading: klub-Handicamp
+bankTransferHeading: Podpoř na účet
 accountNumber: 131-3696260217/0100
 iban: CZ60 0100 0001 3136 9626 0217
 swift: KOMBCZPPXXX
