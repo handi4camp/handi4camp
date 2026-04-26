@@ -26,7 +26,16 @@ export default function JakPomociPage() {
 function DonationConfirmationButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({ jmeno: "", adresa: "", rcico: "", dic: "", email: "" });
+  const [form, setForm] = useState({
+    jmeno: "",
+    adresa: "",
+    rcico: "",
+    dic: "",
+    datum: "",
+    dar: "",
+    ucel: "",
+    email: "",
+  });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -76,6 +85,9 @@ function DonationConfirmationButton() {
               <Field label="Adresa / Sídlo" name="adresa" value={form.adresa} onChange={handleChange} required />
               <Field label="Rodné číslo / IČO" name="rcico" value={form.rcico} onChange={handleChange} required />
               <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />
+              <Field label="Datum přijetí daru" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
+              <Field label="Výše daru" name="dar" value={form.dar} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
+              <Field label="Účel daru" name="ucel" value={form.ucel} onChange={handleChange} placeholder="např. Podpora Handi4Camp" required />
               <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
               <div className="flex gap-3 pt-2">
                 <button
@@ -97,22 +109,30 @@ function DonationConfirmationButton() {
   );
 }
 
-function Field({ label, name, value, onChange, type = "text", required }: {
+function Field({ label, name, value, onChange, type = "text", required, placeholder, suffix }: {
   label: string; name: string; value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string; required?: boolean;
+  type?: string; required?: boolean; placeholder?: string; suffix?: string;
 }) {
   return (
     <div>
       <label className="block text-xs font-semibold text-dark/60 mb-1">{label}</label>
-      <input
-        type={type}
-        name={name}
-        value={value}
-        onChange={onChange}
-        required={required}
-        className="w-full border border-dark/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-forest transition-colors bg-white"
-      />
+      <div className="relative">
+        <input
+          type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
+          required={required}
+          placeholder={placeholder}
+          className={`w-full border border-dark/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-forest transition-colors bg-white ${suffix ? "pr-12" : ""}`}
+        />
+        {suffix && (
+          <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-dark/50">
+            {suffix}
+          </span>
+        )}
+      </div>
     </div>
   );
 }
