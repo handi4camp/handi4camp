@@ -21,7 +21,7 @@ quoteText: 'Díky kempu syn poprvé v životě zažil, co znamená být součás
 quoteAuthor: maminka účastníka
 photoStripHeading: 'Chvíle, které zůstanou'
 rozcestnikHeading: Podpořte nás
-rozcestnikSubheading: 'Vyberte si cestu, která vám sedí — každá forma pomoci má přímý dopad na děti.'
+rozcestnikSubheading: 'Vyberte si cestu, která vám sedí. Každá forma pomoci má přímý dopad na děti.'
 rozcestnikCards:
   - title: Dárcovství
     description: Pošlete libovolnou částku převodem nebo QR kódem
