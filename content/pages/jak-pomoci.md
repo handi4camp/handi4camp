@@ -50,7 +50,7 @@ fundraiser:
   title: Sbírka na letní kempování 2025
   description: Pomozte nám dosáhnout cíle a zajistit dětem s DMO nezapomenutelné léto.
   goal: 40000
-  current: 200
+  current: 2000
   deadline: 2027-10-15T00:00:00.000Z
 ---
 
