@@ -47,10 +47,10 @@ volunteeringRequirements:
   - Strava a ubytování zajištěno
 fundraiser:
   enabled: true
-  title: Sbírka na letní kempování 2025
+  title: Sbírka na Handi4camp 2026
   description: Pomozte nám dosáhnout cíle a zajistit dětem s DMO nezapomenutelné léto.
-  goal: 40000
+  goal: 400000
   current: 2000
-  deadline: 2027-10-15T00:00:00.000Z
+  deadline: 2026-07-31T00:00:00.000Z
 ---
 
