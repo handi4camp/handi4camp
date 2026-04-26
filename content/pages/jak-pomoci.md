@@ -50,7 +50,7 @@ fundraiser:
   title: Sbírka na Handi4camp 2026
   description: Pomozte nám dosáhnout cíle a zajistit dětem s DMO nezapomenutelné léto.
   goal: 400000
-  current: 2000
+  current: 10500
   deadline: 2026-07-31T00:00:00.000Z
 ---
 
