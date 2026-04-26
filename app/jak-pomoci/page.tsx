@@ -264,12 +264,8 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                   </p>
                   
                   <div className="space-y-4 text-dark/80 text-base leading-relaxed mb-8">
-                    <p>
-                      Ubytování a celodenní strava stojí asi od 900 do 1200 Kč na osobu za den. Ubytování musí být plně přizpůsobené pro vozíčkáře (sociální zařízení, bez prahů) a výhodou je i bazén, protože teplá voda klientům uvolňuje křeče. Celkově takových 10 až 14 dní vychází na 350 000 až 400 000 Kč.
-                    </p>
-                    <p>
-                      Primárně jdou tyto náklady na stravu a ubytování. Pokud zbudou finance, investuji je do workshopů, odborníků na přednášky (např. kurzy sebeobrany pro vozíčkáře, canisterapie, hipoterapie s koňmi). Ideálně tedy mířím ročně na rozpočet 400 000 Kč, abych měla zajištěno ubytování a stravu a mohla si dovolit i doplňkové aktivity.
-                    </p>
+                    <p data-tina-field={tinaField(p, "financeBody1")}>{p.financeBody1}</p>
+                    <p data-tina-field={tinaField(p, "financeBody2")}>{p.financeBody2}</p>
                   </div>
 
                   <p className="text-sm text-forest font-medium italic">
@@ -288,6 +284,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                       accountNumber: tinaField(p, "accountNumber"),
                       iban: tinaField(p, "iban"),
                       swift: tinaField(p, "swift"),
+                      qrCodeImage: tinaField(p, "qrCodeImage"),
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >

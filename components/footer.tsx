@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useTina, tinaField } from "tinacms/dist/react";
+import { tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import Link from "next/link";
 import Image from "next/image";
@@ -20,7 +20,7 @@ export default function Footer() {
 }
 
 function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
-  const { data } = useTina(tinaData);
+  const { data } = tinaData;
   const g = data.global;
 
   return (
@@ -34,7 +34,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
               href="/jak-pomoci#darovani"
               className="inline-block bg-gold text-dark font-semibold px-4 py-2 rounded-lg text-sm hover:bg-gold/90 transition-colors"
             >
-              Podpořit
+              Podpořit kemp
             </Link>
           </div>
           <div>

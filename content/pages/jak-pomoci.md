@@ -27,6 +27,7 @@ iban: CZ60 0100 0001 3136 9626 0217
 swift: KOMBCZPPXXX
 variableSymbol: '2024'
 transferMessage: Handi4Camp – dar
+qrCodeImage: /qr.jpg
 transactionLinkLabel: Odkaz na transparentní účet →
 transactionLinkHref: '#'
 donationContractLabel: Stáhnout darovací smlouvu (PDF)

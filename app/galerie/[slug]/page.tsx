@@ -2,41 +2,104 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { useTina } from "tinacms/dist/react";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import { client } from "@/tina/__generated__/client";
-import type { PostQuery, PostQueryVariables } from "@/tina/__generated__/types";
+import type {
+  PostQuery,
+  PostQueryVariables,
+  GalleryConnectionQuery,
+  GalleryConnectionQueryVariables,
+} from "@/tina/__generated__/types";
+import PageHero from "@/components/page-hero";
+import PolaroidGallery from "@/components/polaroid-gallery";
+import type { PolaroidPhoto } from "@/components/polaroid-gallery";
 
-type TinaData = {
-  data: PostQuery;
-  variables: PostQueryVariables;
+// ── Gallery year ──────────────────────────────────────────────────────────────
+
+type GalleryTinaData = {
+  data: GalleryConnectionQuery;
+  variables: GalleryConnectionQueryVariables;
   query: string;
 };
 
-export default function BlogPostPage() {
-  const params = useParams();
-  const slug = Array.isArray(params.slug) ? params.slug[0] : params.slug;
-  const [tinaData, setTinaData] = useState<TinaData | null>(null);
-  const [notFound, setNotFound] = useState(false);
+function extractYoutubeId(url: string): string | null {
+  const match = url.match(/(?:v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function GalleryYearView({ year, tinaData }: { year: number; tinaData: GalleryTinaData }) {
+  const { data } = tinaData;
+
+  const years = (data.galleryConnection.edges ?? [])
+    .map((e) => e?.node)
+    .filter((n): n is NonNullable<typeof n> => n != null)
+    .sort((a, b) => b.year - a.year);
+
+  const activeGallery = years.find((y) => y.year === year) ?? years[0];
+  const videoId = activeGallery?.youtubeUrl ? extractYoutubeId(activeGallery.youtubeUrl) : null;
+
+  const photos: PolaroidPhoto[] = (activeGallery?.photos ?? [])
+    .filter((s): s is string => s != null)
+    .map((src, i) => ({
+      src,
+      alt: `Foto z HandiCampu ${year} - ${i + 1}`,
+    }));
+
+  return (
+    <>
+      <PageHero
+        title="Galerie"
+        subtitle="Vzpomínky, příběhy a okamžiky z každého ročníku."
+        imageSrc="/images/handicamp-foto-05.webp"
+      />
+
+      <section className="py-16 bg-warm-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex gap-2 mb-8 flex-wrap" role="tablist">
+            {years.map((g) => (
+              <Link
+                key={g.year}
+                href={`/galerie/${g.year}`}
+                role="tab"
+                aria-selected={g.year === year}
+                className={`px-5 py-2 rounded-full text-sm font-semibold transition-colors ${
+                  g.year === year
+                    ? "bg-forest text-warm-white"
+                    : "bg-light-green text-dark hover:bg-forest/10"
+                }`}
+              >
+                {g.year}
+              </Link>
+            ))}
+          </div>
+
+          {videoId && (
+            <div className="mb-10 max-w-xl mx-auto">
+              <div className="relative w-full aspect-video rounded-2xl overflow-hidden shadow-lg">
+                <iframe
+                  src={`https://www.youtube.com/embed/${videoId}`}
+                  title={`HandiCamp ${year} — video`}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  className="absolute inset-0 w-full h-full"
+                />
+              </div>
+            </div>
+          )}
+
+          <PolaroidGallery photos={photos} layout="grid" />
+        </div>
+      </section>
+    </>
+  );
+}
+
+function GalleryYearFetcher({ year }: { year: number }) {
+  const [tinaData, setTinaData] = useState<GalleryTinaData | null>(null);
 
   useEffect(() => {
-    if (!slug) return;
-    client.queries
-      .post({ relativePath: `${slug}.md` })
-      .then((res) => setTinaData(res))
-      .catch(() => setNotFound(true));
-  }, [slug]);
-
-  if (notFound) {
-    return (
-      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-dark/60">
-        <p className="font-serif text-2xl">Článek nebyl nalezen.</p>
-        <Link href="/galerie" className="text-forest font-semibold hover:text-dark transition-colors">
-          ← Zpět na galerii
-        </Link>
-      </div>
-    );
-  }
+    client.queries.galleryConnection({ first: 100 }).then(setTinaData);
+  }, []);
 
   if (!tinaData) {
     return (
@@ -46,11 +109,19 @@ export default function BlogPostPage() {
     );
   }
 
-  return <PostView tinaData={tinaData} />;
+  return <GalleryYearView year={year} tinaData={tinaData} />;
 }
 
-function PostView({ tinaData }: { tinaData: TinaData }) {
-  const { data } = useTina(tinaData);
+// ── Blog post ─────────────────────────────────────────────────────────────────
+
+type PostTinaData = {
+  data: PostQuery;
+  variables: PostQueryVariables;
+  query: string;
+};
+
+function PostView({ tinaData }: { tinaData: PostTinaData }) {
+  const { data } = tinaData;
   const post = data.post;
 
   return (
@@ -96,4 +167,52 @@ function PostView({ tinaData }: { tinaData: TinaData }) {
       </div>
     </article>
   );
+}
+
+function PostFetcher({ slug }: { slug: string }) {
+  const [tinaData, setTinaData] = useState<PostTinaData | null>(null);
+  const [notFound, setNotFound] = useState(false);
+
+  useEffect(() => {
+    client.queries
+      .post({ relativePath: `${slug}.md` })
+      .then(setTinaData)
+      .catch(() => setNotFound(true));
+  }, [slug]);
+
+  if (notFound) {
+    return (
+      <div className="min-h-screen flex flex-col items-center justify-center gap-4 text-dark/60">
+        <p className="font-serif text-2xl">Článek nebyl nalezen.</p>
+        <Link href="/galerie" className="text-forest font-semibold hover:text-dark transition-colors">
+          ← Zpět na galerii
+        </Link>
+      </div>
+    );
+  }
+
+  if (!tinaData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-dark/40 text-sm">
+        Načítám…
+      </div>
+    );
+  }
+
+  return <PostView tinaData={tinaData} />;
+}
+
+// ── Router ────────────────────────────────────────────────────────────────────
+
+export default function SlugPage() {
+  const params = useParams();
+  const slug = Array.isArray(params.slug) ? params.slug[0] : (params.slug ?? "");
+
+  const year = /^\d{4}$/.test(slug) ? Number(slug) : null;
+
+  if (year) {
+    return <GalleryYearFetcher year={year} />;
+  }
+
+  return <PostFetcher slug={slug} />;
 }

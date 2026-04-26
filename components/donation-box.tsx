@@ -16,6 +16,7 @@ type DonationBoxProps = {
     swift?: string;
     variableSymbol?: string;
     transferMessage?: string;
+    qrCodeImage?: string;
   };
   children?: React.ReactNode;
 };
@@ -33,7 +34,7 @@ export default function DonationBox({
   children,
 }: DonationBoxProps) {
   return (
-    <div className="bg-light-green rounded-2xl p-8 flex flex-col md:flex-row gap-8 items-start">
+    <div className="bg-light-green rounded-2xl p-8 flex flex-col md:flex-row gap-8 items-start" data-tina-field={tinaFields?.heading}>
       <div className="flex-1">
         <h3 className="font-serif text-2xl font-bold text-forest mb-4" data-tina-field={tinaFields?.heading}>
           {heading}
@@ -76,9 +77,9 @@ export default function DonationBox({
       <div className="flex-none text-center">
         <div className="bg-white p-4 rounded-xl inline-block shadow">
           {qrCodeImage ? (
-            <Image src={qrCodeImage} alt="QR kód pro platbu" width={128} height={128} className="rounded" />
+            <Image src={qrCodeImage} alt="QR kód pro platbu" width={128} height={128} className="rounded" data-tina-field={tinaFields?.qrCodeImage} />
           ) : (
-            <div className="w-32 h-32 bg-light-green/60 flex items-center justify-center text-xs text-forest/50 rounded">
+            <div className="w-32 h-32 bg-light-green/60 flex items-center justify-center text-xs text-forest/50 rounded" data-tina-field={tinaFields?.qrCodeImage}>
               QR kód
             </div>
           )}
