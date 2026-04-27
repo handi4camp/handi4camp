@@ -61,7 +61,7 @@ function DonationContractButton() {
     <>
       <button
         onClick={() => { setOpen(true); posthog.capture("donation_contract_form_opened"); }}
-        className="flex-1 bg-warm-white text-forest border border-forest font-semibold px-4 py-3 rounded-lg hover:bg-forest/5 transition-colors text-sm text-center"
+        className="bg-warm-white text-forest border border-forest font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/5 transition-colors text-sm whitespace-nowrap"
       >
         Požádat o darovací smlouvu
       </button>
@@ -143,7 +143,7 @@ function DonationConfirmationButton() {
     <>
       <button
         onClick={() => { setOpen(true); posthog.capture("donation_confirmation_form_opened"); }}
-        className="flex-1 bg-forest text-warm-white font-semibold px-4 py-3 rounded-lg hover:bg-forest/90 transition-colors text-sm text-center"
+        className="bg-forest text-warm-white font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm whitespace-nowrap"
       >
         Požádat o potvrzení o daru
       </button>
