@@ -36,6 +36,7 @@ function DonationContractButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [step, setStep] = useState(1);
   const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
   const [form, setForm] = useState({
     nazev: "",
@@ -52,8 +53,7 @@ function DonationContractButton() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     setLoading(true);
     try {
       const res = await fetch("/api/smlouva", {
@@ -75,7 +75,17 @@ function DonationContractButton() {
   function handleClose() {
     setOpen(false);
     setSent(false);
+    setStep(1);
   }
+
+  function canAdvance() {
+    if (step === 1)
+      return form.nazev && form.adresa && (typ === "osoba" ? form.rc : form.ico);
+    if (step === 2) return form.datum && form.castka;
+    return true;
+  }
+
+  const stepLabels = ["Vaše identifikační údaje", "Údaje o daru", "Kam zaslat smlouvu"];
 
   return (
     <>
@@ -117,89 +127,109 @@ function DonationContractButton() {
               </div>
             ) : (
               <>
-                <h3 className="font-serif text-2xl font-bold mb-1">
-                  Darovací smlouva
-                </h3>
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-serif text-2xl font-bold">
+                    Darovací smlouva
+                  </h3>
+                  <StepDots step={step} total={3} />
+                </div>
                 <p className="text-dark/60 text-sm mb-4">
-                  Vyplňte údaje — smlouvu vám zašleme e-mailem.
+                  {stepLabels[step - 1]}
                 </p>
-                <TypToggle value={typ} onChange={setTyp} />
-                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <Field
-                    label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
-                    name="nazev"
-                    value={form.nazev}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Field
-                    label={
-                      typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"
-                    }
-                    name="adresa"
-                    value={form.adresa}
-                    onChange={handleChange}
-                    required
-                  />
-                  {typ === "osoba" && (
+
+                {step === 1 && (
+                  <>
+                    <TypToggle value={typ} onChange={setTyp} />
+                    <div className="space-y-4 mt-4">
+                      <Field
+                        label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
+                        name="nazev"
+                        value={form.nazev}
+                        onChange={handleChange}
+                        required
+                      />
+                      <Field
+                        label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"}
+                        name="adresa"
+                        value={form.adresa}
+                        onChange={handleChange}
+                        required
+                      />
+                      {typ === "osoba" && (
+                        <Field
+                          label="Rodné číslo"
+                          name="rc"
+                          value={form.rc}
+                          onChange={handleChange}
+                          required
+                        />
+                      )}
+                      {typ === "firma" && (
+                        <Field
+                          label="IČO"
+                          name="ico"
+                          value={form.ico}
+                          onChange={handleChange}
+                          required
+                        />
+                      )}
+                      {typ === "firma" && (
+                        <Field
+                          label="DIČ (pokud je přiděleno)"
+                          name="dic"
+                          value={form.dic}
+                          onChange={handleChange}
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {step === 2 && (
+                  <div className="space-y-4 mt-4">
                     <Field
-                      label="Rodné číslo"
-                      name="rc"
-                      value={form.rc}
+                      label="Datum darování"
+                      name="datum"
+                      value={form.datum}
+                      onChange={handleChange}
+                      placeholder="např. 26.04.2026"
+                      required
+                    />
+                    <Field
+                      label="Výše daru"
+                      name="castka"
+                      value={form.castka}
+                      onChange={handleChange}
+                      placeholder="např. 5 000"
+                      suffix="Kč"
+                      required
+                    />
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className="space-y-4 mt-4">
+                    <Field
+                      label="Váš e-mail"
+                      name="email"
+                      type="email"
+                      value={form.email}
                       onChange={handleChange}
                       required
                     />
-                  )}
-                  {typ === "firma" && (
-                    <Field
-                      label="IČO"
-                      name="ico"
-                      value={form.ico}
-                      onChange={handleChange}
-                      required
-                    />
-                  )}
-                  {typ === "firma" && (
-                    <Field
-                      label="DIČ (pokud je přiděleno)"
-                      name="dic"
-                      value={form.dic}
-                      onChange={handleChange}
-                    />
-                  )}
-                  <Field
-                    label="Datum darování"
-                    name="datum"
-                    value={form.datum}
-                    onChange={handleChange}
-                    placeholder="např. 26.04.2026"
-                    required
-                  />
-                  <Field
-                    label="Výše daru"
-                    name="castka"
-                    value={form.castka}
-                    onChange={handleChange}
-                    placeholder="např. 5 000"
-                    suffix="Kč"
-                    required
-                  />
-                  <Field
-                    label="Váš e-mail"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <div className="flex gap-3 pt-2">
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4">
+                  {step > 1 ? (
                     <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                      type="button"
+                      onClick={() => setStep((s) => s - 1)}
+                      className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm"
                     >
-                      {loading ? "Odesílám…" : "Požádat o smlouvu"}
+                      Zpět
                     </button>
+                  ) : (
                     <button
                       type="button"
                       onClick={handleClose}
@@ -207,8 +237,27 @@ function DonationContractButton() {
                     >
                       Zrušit
                     </button>
-                  </div>
-                </form>
+                  )}
+                  {step < 3 ? (
+                    <button
+                      type="button"
+                      onClick={() => setStep((s) => s + 1)}
+                      disabled={!canAdvance()}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
+                      Pokračovat
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={loading || !form.email}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
+                      {loading ? "Odesílám…" : "Požádat o smlouvu"}
+                    </button>
+                  )}
+                </div>
               </>
             )}
           </div>
@@ -222,6 +271,7 @@ function DonationConfirmationButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
+  const [step, setStep] = useState(1);
   const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
   const [form, setForm] = useState({
     jmeno: "",
@@ -238,8 +288,7 @@ function DonationConfirmationButton() {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
   }
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleSubmit() {
     setLoading(true);
     try {
       const res = await fetch("/api/potvrzeni", {
@@ -261,7 +310,16 @@ function DonationConfirmationButton() {
   function handleClose() {
     setOpen(false);
     setSent(false);
+    setStep(1);
   }
+
+  function canAdvance() {
+    if (step === 1) return form.jmeno && form.adresa && form.rcico;
+    if (step === 2) return form.datum && form.dar && form.ucel;
+    return true;
+  }
+
+  const stepLabels = ["Vaše identifikační údaje", "Údaje o daru", "Kam zaslat potvrzení"];
 
   return (
     <>
@@ -303,86 +361,106 @@ function DonationConfirmationButton() {
               </div>
             ) : (
               <>
-                <h3 className="font-serif text-2xl font-bold mb-1">
-                  Potvrzení o daru
-                </h3>
+                <div className="flex items-center justify-between mb-1">
+                  <h3 className="font-serif text-2xl font-bold">
+                    Potvrzení o daru
+                  </h3>
+                  <StepDots step={step} total={3} />
+                </div>
                 <p className="text-dark/60 text-sm mb-4">
-                  Vyplňte údaje — potvrzení vám zašleme e-mailem.
+                  {stepLabels[step - 1]}
                 </p>
-                <TypToggle value={typ} onChange={setTyp} />
-                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <Field
-                    label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
-                    name="jmeno"
-                    value={form.jmeno}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Field
-                    label={
-                      typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"
-                    }
-                    name="adresa"
-                    value={form.adresa}
-                    onChange={handleChange}
-                    required
-                  />
-                  <Field
-                    label={typ === "firma" ? "IČO" : "Rodné číslo"}
-                    name="rcico"
-                    value={form.rcico}
-                    onChange={handleChange}
-                    required
-                  />
-                  {typ === "firma" && (
+
+                {step === 1 && (
+                  <>
+                    <TypToggle value={typ} onChange={setTyp} />
+                    <div className="space-y-4 mt-4">
+                      <Field
+                        label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
+                        name="jmeno"
+                        value={form.jmeno}
+                        onChange={handleChange}
+                        required
+                      />
+                      <Field
+                        label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"}
+                        name="adresa"
+                        value={form.adresa}
+                        onChange={handleChange}
+                        required
+                      />
+                      <Field
+                        label={typ === "firma" ? "IČO" : "Rodné číslo"}
+                        name="rcico"
+                        value={form.rcico}
+                        onChange={handleChange}
+                        required
+                      />
+                      {typ === "firma" && (
+                        <Field
+                          label="DIČ (pokud je přiděleno)"
+                          name="dic"
+                          value={form.dic}
+                          onChange={handleChange}
+                        />
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {step === 2 && (
+                  <div className="space-y-4 mt-4">
                     <Field
-                      label="DIČ (pokud je přiděleno)"
-                      name="dic"
-                      value={form.dic}
+                      label="Datum přijetí daru"
+                      name="datum"
+                      value={form.datum}
                       onChange={handleChange}
+                      placeholder="např. 26.04.2026"
+                      required
                     />
-                  )}
-                  <Field
-                    label="Datum přijetí daru"
-                    name="datum"
-                    value={form.datum}
-                    onChange={handleChange}
-                    placeholder="např. 26.04.2026"
-                    required
-                  />
-                  <Field
-                    label="Výše daru"
-                    name="dar"
-                    value={form.dar}
-                    onChange={handleChange}
-                    placeholder="např. 5 000"
-                    suffix="Kč"
-                    required
-                  />
-                  <Field
-                    label="Účel daru"
-                    name="ucel"
-                    value={form.ucel}
-                    onChange={handleChange}
-                    placeholder="např. Podpora Handi4Camp"
-                    required
-                  />
-                  <Field
-                    label="Váš e-mail"
-                    name="email"
-                    type="email"
-                    value={form.email}
-                    onChange={handleChange}
-                    required
-                  />
-                  <div className="flex gap-3 pt-2">
+                    <Field
+                      label="Výše daru"
+                      name="dar"
+                      value={form.dar}
+                      onChange={handleChange}
+                      placeholder="např. 5 000"
+                      suffix="Kč"
+                      required
+                    />
+                    <Field
+                      label="Účel daru"
+                      name="ucel"
+                      value={form.ucel}
+                      onChange={handleChange}
+                      placeholder="např. Podpora Handi4Camp"
+                      required
+                    />
+                  </div>
+                )}
+
+                {step === 3 && (
+                  <div className="space-y-4 mt-4">
+                    <Field
+                      label="Váš e-mail"
+                      name="email"
+                      type="email"
+                      value={form.email}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4">
+                  {step > 1 ? (
                     <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                      type="button"
+                      onClick={() => setStep((s) => s - 1)}
+                      className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm"
                     >
-                      {loading ? "Odesílám…" : "Požádat o potvrzení"}
+                      Zpět
                     </button>
+                  ) : (
                     <button
                       type="button"
                       onClick={handleClose}
@@ -390,14 +468,52 @@ function DonationConfirmationButton() {
                     >
                       Zrušit
                     </button>
-                  </div>
-                </form>
+                  )}
+                  {step < 3 ? (
+                    <button
+                      type="button"
+                      onClick={() => setStep((s) => s + 1)}
+                      disabled={!canAdvance()}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
+                      Pokračovat
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={handleSubmit}
+                      disabled={loading || !form.email}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
+                      {loading ? "Odesílám…" : "Požádat o potvrzení"}
+                    </button>
+                  )}
+                </div>
               </>
             )}
           </div>
         </div>
       )}
     </>
+  );
+}
+
+function StepDots({ step, total }: { step: number; total: number }) {
+  return (
+    <div className="flex gap-1.5 items-center">
+      {Array.from({ length: total }).map((_, i) => (
+        <div
+          key={i}
+          className={`rounded-full transition-all ${
+            i + 1 === step
+              ? "w-4 h-2 bg-forest"
+              : i + 1 < step
+              ? "w-2 h-2 bg-forest/40"
+              : "w-2 h-2 bg-dark/20"
+          }`}
+        />
+      ))}
+    </div>
   );
 }
 
