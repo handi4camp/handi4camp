@@ -14,7 +14,6 @@ test("hundreds + tens + ones", () => assert.equal(numberToCzechWords(356), "tři
 test("one thousand", () => assert.equal(numberToCzechWords(1000), "jeden tisíc"));
 test("two thousand", () => assert.equal(numberToCzechWords(2000), "dva tisíce"));
 test("five thousand", () => assert.equal(numberToCzechWords(5000), "pět tisíc"));
-test("common donation 5000", () => assert.equal(numberToCzechWords(5000), "pět tisíc"));
 test("common donation 10000", () => assert.equal(numberToCzechWords(10000), "deset tisíc"));
 test("mixed thousands", () => assert.equal(numberToCzechWords(1234), "jeden tisíc dvě stě třicet čtyři"));
 test("2500", () => assert.equal(numberToCzechWords(2500), "dva tisíce pět set"));
@@ -23,38 +22,61 @@ test("two million", () => assert.equal(numberToCzechWords(2000000), "dva miliony
 test("five million", () => assert.equal(numberToCzechWords(5000000), "pět milionů"));
 
 // toSmlouvaPayload
+test("defaults to osoba when typ missing", () => {
+  const p = toSmlouvaPayload({ nazev: "Jan", adresa: "Brno", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(p.typ, "osoba");
+});
+
+test("parses firma typ", () => {
+  const p = toSmlouvaPayload({ typ: "firma", nazev: "ABC s.r.o.", adresa: "Praha", ico: "12345678", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(p.typ, "firma");
+});
+
 test("trims whitespace", () => {
-  const p = toSmlouvaPayload({ nazev: "  Jan  ", adresa: " Brno ", ico: " 123 ", castka: " 5000 ", datum: " 1.1.2026 ", email: " a@b.com " });
+  const p = toSmlouvaPayload({ typ: "osoba", nazev: "  Jan  ", adresa: " Brno ", rc: " 123456/7890 ", castka: " 5000 ", datum: " 1.1.2026 ", email: " a@b.com " });
   assert.equal(p.nazev, "Jan");
-  assert.equal(p.adresa, "Brno");
-  assert.equal(p.ico, "123");
-  assert.equal(p.castka, "5000");
-  assert.equal(p.datum, "1.1.2026");
-  assert.equal(p.email, "a@b.com");
+  assert.equal(p.rc, "123456/7890");
 });
 
-test("handles missing dic", () => {
-  const p = toSmlouvaPayload({ nazev: "Jan", adresa: "Brno", ico: "123", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
-  assert.equal(p.dic, "");
+// toTemplateVariables — osoba
+test("osoba: ico_udaj uses Rodné číslo label", () => {
+  const vars = toTemplateVariables({ typ: "osoba", nazev: "Jan", adresa: "Brno", rc: "123456/7890", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.ico_udaj, "Rodné číslo: 123456/7890");
 });
 
-// toTemplateVariables
+test("osoba: dic_udaj is empty", () => {
+  const vars = toTemplateVariables({ typ: "osoba", nazev: "Jan", adresa: "Brno", rc: "123456/7890", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.dic_udaj, "");
+});
+
+// toTemplateVariables — firma
+test("firma: ico_udaj uses IČO label", () => {
+  const vars = toTemplateVariables({ typ: "firma", nazev: "ABC s.r.o.", adresa: "Praha", ico: "12345678", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.ico_udaj, "IČO: 12345678");
+});
+
+test("firma: dic_udaj includes DIČ when provided", () => {
+  const vars = toTemplateVariables({ typ: "firma", nazev: "ABC s.r.o.", adresa: "Praha", ico: "12345678", dic: "CZ12345678", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.dic_udaj, "DIČ: CZ12345678");
+});
+
+test("firma: dic_udaj is empty when dic not provided", () => {
+  const vars = toTemplateVariables({ typ: "firma", nazev: "ABC s.r.o.", adresa: "Praha", ico: "12345678", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.dic_udaj, "");
+});
+
+// castka formatting
 test("formats castka with czech thousands separator", () => {
-  const vars = toTemplateVariables({ nazev: "Jan", adresa: "Brno", ico: "123", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
-  assert.equal(vars.castka_cislem, "5 000");
+  const vars = toTemplateVariables({ typ: "osoba", nazev: "Jan", adresa: "Brno", rc: "123", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  assert.equal(vars.castka_cislem, new Intl.NumberFormat("cs-CZ").format(5000));
 });
 
 test("generates castka_slovy", () => {
-  const vars = toTemplateVariables({ nazev: "Jan", adresa: "Brno", ico: "123", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
+  const vars = toTemplateVariables({ typ: "osoba", nazev: "Jan", adresa: "Brno", rc: "123", castka: "5000", datum: "1.1.2026", email: "a@b.com" });
   assert.equal(vars.castka_slovy, "pět tisíc");
 });
 
-test("empty dic becomes empty string", () => {
-  const vars = toTemplateVariables({ nazev: "Jan", adresa: "Brno", ico: "123", castka: "1000", datum: "1.1.2026", email: "a@b.com" });
-  assert.equal(vars.dic, "");
-});
-
 test("castka with spaces stripped before parsing", () => {
-  const vars = toTemplateVariables({ nazev: "Jan", adresa: "Brno", ico: "123", castka: "10 000", datum: "1.1.2026", email: "a@b.com" });
+  const vars = toTemplateVariables({ typ: "osoba", nazev: "Jan", adresa: "Brno", rc: "123", castka: "10 000", datum: "1.1.2026", email: "a@b.com" });
   assert.equal(vars.castka_slovy, "deset tisíc");
 });

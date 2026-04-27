@@ -28,15 +28,8 @@ function DonationContractButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({
-    nazev: "",
-    adresa: "",
-    ico: "",
-    dic: "",
-    datum: "",
-    castka: "",
-    email: "",
-  });
+  const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
+  const [form, setForm] = useState({ nazev: "", adresa: "", rc: "", ico: "", dic: "", datum: "", castka: "", email: "" });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -49,10 +42,10 @@ function DonationContractButton() {
       const res = await fetch("/api/smlouva", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, typ }),
       });
       if (!res.ok) throw new Error("Chyba při odeslání žádosti");
-      posthog.capture("donation_contract_requested");
+      posthog.capture("donation_contract_requested", { typ });
       setSent(true);
     } catch (err) {
       posthog.captureException(err);
@@ -62,19 +55,13 @@ function DonationContractButton() {
     }
   }
 
-  function handleClose() {
-    setOpen(false);
-    setSent(false);
-  }
+  function handleClose() { setOpen(false); setSent(false); }
 
   return (
     <>
       <button
-        onClick={() => {
-          setOpen(true);
-          posthog.capture("donation_contract_form_opened");
-        }}
-        className="inline-block bg-warm-white text-forest border border-forest font-semibold px-6 py-3 rounded-lg hover:bg-forest/5 transition-colors text-sm"
+        onClick={() => { setOpen(true); posthog.capture("donation_contract_form_opened"); }}
+        className="flex-1 bg-warm-white text-forest border border-forest font-semibold px-4 py-3 rounded-lg hover:bg-forest/5 transition-colors text-sm text-center"
       >
         Požádat o darovací smlouvu
       </button>
@@ -87,33 +74,27 @@ function DonationContractButton() {
                 <p className="text-3xl mb-4">✓</p>
                 <h3 className="font-serif text-2xl font-bold mb-2">Žádost odeslána</h3>
                 <p className="text-dark/60 text-sm mb-6">Potvrzení přijetí jsme vám zaslali na e-mail. Smlouvu vám zašleme co nejdříve.</p>
-                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">
-                  Zavřít
-                </button>
+                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">Zavřít</button>
               </div>
             ) : (
               <>
                 <h3 className="font-serif text-2xl font-bold mb-1">Darovací smlouva</h3>
-                <p className="text-dark/60 text-sm mb-6">Vyplňte údaje — smlouvu vám zašleme e-mailem.</p>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <Field label="Jméno a příjmení / Název firmy" name="nazev" value={form.nazev} onChange={handleChange} required />
-                  <Field label="Adresa / Sídlo" name="adresa" value={form.adresa} onChange={handleChange} required />
-                  <Field label="Rodné číslo / IČO" name="ico" value={form.ico} onChange={handleChange} required />
-                  <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />
+                <p className="text-dark/60 text-sm mb-4">Vyplňte údaje — smlouvu vám zašleme e-mailem.</p>
+                <TypToggle value={typ} onChange={setTyp} />
+                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                  <Field label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"} name="nazev" value={form.nazev} onChange={handleChange} required />
+                  <Field label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"} name="adresa" value={form.adresa} onChange={handleChange} required />
+                  {typ === "osoba" && <Field label="Rodné číslo" name="rc" value={form.rc} onChange={handleChange} required />}
+                  {typ === "firma" && <Field label="IČO" name="ico" value={form.ico} onChange={handleChange} required />}
+                  {typ === "firma" && <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />}
                   <Field label="Datum darování" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
                   <Field label="Výše daru" name="castka" value={form.castka} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
                   <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
                   <div className="flex gap-3 pt-2">
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
-                    >
+                    <button type="submit" disabled={loading} className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60">
                       {loading ? "Odesílám…" : "Požádat o smlouvu"}
                     </button>
-                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">
-                      Zrušit
-                    </button>
+                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">Zrušit</button>
                   </div>
                 </form>
               </>
@@ -129,16 +110,8 @@ function DonationConfirmationButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
-  const [form, setForm] = useState({
-    jmeno: "",
-    adresa: "",
-    rcico: "",
-    dic: "",
-    datum: "",
-    dar: "",
-    ucel: "",
-    email: "",
-  });
+  const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
+  const [form, setForm] = useState({ jmeno: "", adresa: "", rcico: "", dic: "", datum: "", dar: "", ucel: "", email: "" });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -154,7 +127,7 @@ function DonationConfirmationButton() {
         body: JSON.stringify(form),
       });
       if (!res.ok) throw new Error("Chyba při odeslání žádosti");
-      posthog.capture("donation_confirmation_requested");
+      posthog.capture("donation_confirmation_requested", { typ });
       setSent(true);
     } catch (err) {
       posthog.captureException(err);
@@ -164,19 +137,13 @@ function DonationConfirmationButton() {
     }
   }
 
-  function handleClose() {
-    setOpen(false);
-    setSent(false);
-  }
+  function handleClose() { setOpen(false); setSent(false); }
 
   return (
     <>
       <button
-        onClick={() => {
-          setOpen(true);
-          posthog.capture("donation_confirmation_form_opened");
-        }}
-        className="inline-block bg-forest text-warm-white font-semibold px-6 py-3 rounded-lg hover:bg-forest/90 transition-colors text-sm"
+        onClick={() => { setOpen(true); posthog.capture("donation_confirmation_form_opened"); }}
+        className="flex-1 bg-forest text-warm-white font-semibold px-4 py-3 rounded-lg hover:bg-forest/90 transition-colors text-sm text-center"
       >
         Požádat o potvrzení o daru
       </button>
@@ -189,34 +156,27 @@ function DonationConfirmationButton() {
                 <p className="text-3xl mb-4">✓</p>
                 <h3 className="font-serif text-2xl font-bold mb-2">Žádost odeslána</h3>
                 <p className="text-dark/60 text-sm mb-6">Potvrzení přijetí jsme vám zaslali na e-mail. Potvrzení o daru vám zašleme co nejdříve.</p>
-                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">
-                  Zavřít
-                </button>
+                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">Zavřít</button>
               </div>
             ) : (
               <>
                 <h3 className="font-serif text-2xl font-bold mb-1">Potvrzení o daru</h3>
-                <p className="text-dark/60 text-sm mb-6">Vyplňte údaje — potvrzení vám zašleme e-mailem.</p>
-                <form onSubmit={handleSubmit} className="space-y-4">
-                  <Field label="Jméno a příjmení / Název firmy" name="jmeno" value={form.jmeno} onChange={handleChange} required />
-                  <Field label="Adresa / Sídlo" name="adresa" value={form.adresa} onChange={handleChange} required />
-                  <Field label="Rodné číslo / IČO" name="rcico" value={form.rcico} onChange={handleChange} required />
-                  <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />
+                <p className="text-dark/60 text-sm mb-4">Vyplňte údaje — potvrzení vám zašleme e-mailem.</p>
+                <TypToggle value={typ} onChange={setTyp} />
+                <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+                  <Field label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"} name="jmeno" value={form.jmeno} onChange={handleChange} required />
+                  <Field label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"} name="adresa" value={form.adresa} onChange={handleChange} required />
+                  <Field label={typ === "firma" ? "IČO" : "Rodné číslo"} name="rcico" value={form.rcico} onChange={handleChange} required />
+                  {typ === "firma" && <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />}
                   <Field label="Datum přijetí daru" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
                   <Field label="Výše daru" name="dar" value={form.dar} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
                   <Field label="Účel daru" name="ucel" value={form.ucel} onChange={handleChange} placeholder="např. Podpora Handi4Camp" required />
                   <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
                   <div className="flex gap-3 pt-2">
-                    <button
-                      type="submit"
-                      disabled={loading}
-                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
-                    >
+                    <button type="submit" disabled={loading} className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60">
                       {loading ? "Odesílám…" : "Požádat o potvrzení"}
                     </button>
-                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">
-                  Zrušit
-                </button>
+                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">Zrušit</button>
                   </div>
                 </form>
               </>
@@ -225,6 +185,23 @@ function DonationConfirmationButton() {
         </div>
       )}
     </>
+  );
+}
+
+function TypToggle({ value, onChange }: { value: "osoba" | "firma"; onChange: (v: "osoba" | "firma") => void }) {
+  return (
+    <div className="flex rounded-lg border border-dark/20 overflow-hidden text-sm">
+      {(["osoba", "firma"] as const).map((t) => (
+        <button
+          key={t}
+          type="button"
+          onClick={() => onChange(t)}
+          className={`flex-1 py-2 font-semibold transition-colors ${value === t ? "bg-forest text-warm-white" : "bg-white text-dark/60 hover:bg-forest/5"}`}
+        >
+          {t === "osoba" ? "Fyzická osoba" : "Právnická osoba"}
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -444,7 +421,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-row gap-3">
                       <DonationConfirmationButton />
                       <DonationContractButton />
                     </div>

@@ -11,9 +11,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   const payload = toSmlouvaPayload(await req.json());
-  const { nazev, adresa, ico, email, castka, datum } = payload;
+  const { nazev, adresa, email, castka, datum, typ } = payload;
+  const identifikator = typ === "firma" ? payload.ico : payload.rc;
 
-  if (!nazev || !adresa || !ico || !email || !castka || !datum) {
+  if (!nazev || !adresa || !identifikator || !email || !castka || !datum) {
     return NextResponse.json(
       { error: "Chybí povinné údaje pro vystavení darovací smlouvy." },
       { status: 400 },
@@ -45,10 +46,12 @@ export async function POST(req: NextRequest) {
       subject: `Žádost o darovací smlouvu – ${nazev}`,
       html: `<p>Nová žádost o darovací smlouvu:</p>
 <ul>
+  <li><strong>Typ dárce:</strong> ${typ === "firma" ? "Právnická osoba" : "Fyzická osoba"}</li>
   <li><strong>Jméno / Název firmy:</strong> ${nazev}</li>
   <li><strong>Adresa / Sídlo:</strong> ${adresa}</li>
-  <li><strong>IČO:</strong> ${ico}</li>
-  <li><strong>DIČ:</strong> ${payload.dic || "—"}</li>
+  ${typ === "firma"
+    ? `<li><strong>IČO:</strong> ${payload.ico || "—"}</li><li><strong>DIČ:</strong> ${payload.dic || "—"}</li>`
+    : `<li><strong>Rodné číslo:</strong> ${payload.rc || "—"}</li>`}
   <li><strong>Výše daru:</strong> ${castka} Kč</li>
   <li><strong>Datum darování:</strong> ${datum}</li>
   <li><strong>E-mail dárce:</strong> ${email}</li>

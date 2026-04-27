@@ -1,7 +1,11 @@
+export type SmlouvaTyp = "osoba" | "firma";
+
 export type SmlouvaPayload = {
+  typ: SmlouvaTyp;
   nazev: string;
   adresa: string;
-  ico: string;
+  rc?: string;
+  ico?: string;
   dic?: string;
   castka: string;
   datum: string;
@@ -77,9 +81,12 @@ export function numberToCzechWords(n: number): string {
 
 export function toSmlouvaPayload(value: unknown): SmlouvaPayload {
   const data = typeof value === "object" && value !== null ? value as Record<string, unknown> : {};
+  const typ = toText(data.typ) === "firma" ? "firma" : "osoba";
   return {
+    typ,
     nazev: toText(data.nazev),
     adresa: toText(data.adresa),
+    rc: toText(data.rc),
     ico: toText(data.ico),
     dic: toText(data.dic),
     castka: toText(data.castka),
@@ -94,11 +101,19 @@ export function toTemplateVariables(payload: SmlouvaPayload) {
     ? payload.castka
     : new Intl.NumberFormat("cs-CZ").format(castkaNum);
 
+  const ico_udaj = payload.typ === "firma"
+    ? `IČO: ${payload.ico ?? ""}`
+    : `Rodné číslo: ${payload.rc ?? ""}`;
+
+  const dic_udaj = payload.typ === "firma" && payload.dic
+    ? `DIČ: ${payload.dic}`
+    : "";
+
   return {
     nazev: payload.nazev,
     adresa: payload.adresa,
-    ico: payload.ico,
-    dic: payload.dic ?? "",
+    ico_udaj,
+    dic_udaj,
     castka_cislem: castkaFormatted,
     castka_slovy: isNaN(castkaNum) ? payload.castka : numberToCzechWords(castkaNum),
     datum: payload.datum,
