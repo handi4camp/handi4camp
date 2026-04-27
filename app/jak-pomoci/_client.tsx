@@ -421,7 +421,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
-                    <div className="flex flex-row gap-3">
+                    <div className="flex flex-wrap gap-2">
                       <DonationConfirmationButton />
                       <DonationContractButton />
                     </div>
