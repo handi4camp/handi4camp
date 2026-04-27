@@ -96,61 +96,63 @@ export default function DonationBox({
   children,
 }: DonationBoxProps) {
   return (
-    <div className="bg-light-green rounded-2xl p-8" data-tina-field={tinaFields?.heading}>
+    <div className="bg-light-green rounded-2xl p-6 sm:p-8" data-tina-field={tinaFields?.heading}>
       {fundraiser?.enabled && <FundraiserSection f={fundraiser} />}
-      <div className="flex flex-col md:flex-row gap-8 items-start">
-        <div className="flex-1">
-          <h3 className="font-serif text-2xl font-bold text-forest mb-4" data-tina-field={tinaFields?.heading}>
-            {heading}
-          </h3>
-          <dl className="space-y-2 text-sm">
-            <div className="flex gap-2 flex-wrap">
-              <dt className="text-dark/60 w-40 flex-none">Č. účtu:</dt>
-              <dd className="font-mono font-bold" data-tina-field={tinaFields?.accountNumber}>{accountNumber}</dd>
-            </div>
-            {variableSymbol && (
-              <div className="flex gap-2 flex-wrap">
-                <dt className="text-dark/60 w-40 flex-none">Variabilní symbol:</dt>
-                <dd className="font-mono font-bold" data-tina-field={tinaFields?.variableSymbol}>{variableSymbol}</dd>
-              </div>
-            )}
-            {transferMessage && (
-              <div className="flex gap-2 flex-wrap">
-                <dt className="text-dark/60 w-40 flex-none">Zpráva pro příjemce:</dt>
-                <dd data-tina-field={tinaFields?.transferMessage}>{transferMessage}</dd>
-              </div>
-            )}
-            {iban && (
-              <div className="flex gap-2 flex-wrap">
-                <dt className="text-dark/60 w-40 flex-none">IBAN:</dt>
-                <dd className="font-mono font-bold" data-tina-field={tinaFields?.iban}>{iban}</dd>
-              </div>
-            )}
-            {swift && (
-              <div className="flex gap-2 flex-wrap">
-                <dt className="text-dark/60 w-40 flex-none">SWIFT:</dt>
-                <dd className="font-mono font-bold" data-tina-field={tinaFields?.swift}>{swift}</dd>
-              </div>
-            )}
-          </dl>
-          {noteText && <p className="mt-4 text-xs text-dark/50">{noteText}</p>}
-          {children && <div className="mt-6">{children}</div>}
-        </div>
 
-        <div className="flex-none text-center">
-          <div className="bg-white p-4 rounded-xl inline-block shadow">
+      {/* Heading + QR side by side, both always inside the card */}
+      <div className="flex items-start justify-between gap-4 mb-5">
+        <h3 className="font-serif text-2xl font-bold text-forest" data-tina-field={tinaFields?.heading}>
+          {heading}
+        </h3>
+        <div className="flex-none text-center" data-tina-field={tinaFields?.qrCodeImage}>
+          <div className="bg-white p-3 rounded-xl inline-block shadow">
             {qrCodeImage ? (
               // eslint-disable-next-line @next/next/no-img-element
-              <img src={qrCodeImage} alt="QR kód pro platbu" width={128} height={128} className="rounded" data-tina-field={tinaFields?.qrCodeImage} />
+              <img src={qrCodeImage} alt="QR kód pro platbu" width={96} height={96} className="rounded block" />
             ) : (
-              <div className="w-32 h-32 bg-light-green/60 flex items-center justify-center text-xs text-forest/50 rounded" data-tina-field={tinaFields?.qrCodeImage}>
+              <div className="w-24 h-24 bg-light-green/60 flex items-center justify-center text-xs text-forest/50 rounded">
                 QR kód
               </div>
             )}
           </div>
-          <p className="text-xs text-dark/60 mt-2">Naskenujte pro platbu</p>
+          <p className="text-xs text-dark/50 mt-1">QR Platba</p>
         </div>
       </div>
+
+      {/* Bank details – label left, value right, no wrapping issues */}
+      <dl className="space-y-1.5 text-sm mb-4">
+        <div className="flex items-baseline gap-2">
+          <dt className="text-dark/60 shrink-0 w-36">Č. účtu:</dt>
+          <dd className="font-mono font-bold min-w-0 break-all" data-tina-field={tinaFields?.accountNumber}>{accountNumber}</dd>
+        </div>
+        {variableSymbol && (
+          <div className="flex items-baseline gap-2">
+            <dt className="text-dark/60 shrink-0 w-36">Variabilní symbol:</dt>
+            <dd className="font-mono font-bold min-w-0" data-tina-field={tinaFields?.variableSymbol}>{variableSymbol}</dd>
+          </div>
+        )}
+        {transferMessage && (
+          <div className="flex items-baseline gap-2">
+            <dt className="text-dark/60 shrink-0 w-36">Zpráva:</dt>
+            <dd className="min-w-0" data-tina-field={tinaFields?.transferMessage}>{transferMessage}</dd>
+          </div>
+        )}
+        {iban && (
+          <div className="flex items-baseline gap-2">
+            <dt className="text-dark/60 shrink-0 w-36">IBAN:</dt>
+            <dd className="font-mono font-bold min-w-0 break-all" data-tina-field={tinaFields?.iban}>{iban}</dd>
+          </div>
+        )}
+        {swift && (
+          <div className="flex items-baseline gap-2">
+            <dt className="text-dark/60 shrink-0 w-36">SWIFT:</dt>
+            <dd className="font-mono font-bold min-w-0" data-tina-field={tinaFields?.swift}>{swift}</dd>
+          </div>
+        )}
+      </dl>
+
+      {noteText && <p className="text-xs text-dark/50 mb-4">{noteText}</p>}
+      {children && <div>{children}</div>}
     </div>
   );
 }
