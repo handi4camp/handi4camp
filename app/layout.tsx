@@ -44,6 +44,23 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "NGO",
+  name: "Handi4Camp",
+  alternateName: "HandiCamp",
+  url: "https://handi4camp.cz",
+  logo: "https://handi4camp.cz/favicon.png",
+  description:
+    "Letní tábor pro děti s dětskou mozkovou obrnou, pořádaný pod záštitou Rotary Club Valtice Břeclav.",
+  sameAs: ["https://www.facebook.com/Handi4Camp"],
+  sponsor: {
+    "@type": "Organization",
+    name: "Rotary Club Valtice Břeclav",
+    url: "https://rotary.cz",
+  },
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -52,6 +69,10 @@ export default function RootLayout({
   return (
     <html lang="cs" className={openSans.variable}>
       <body className="min-h-screen flex flex-col bg-warm-white text-dark font-sans">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
