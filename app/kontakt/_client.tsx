@@ -119,9 +119,11 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
 
           <div className="mt-12 pt-10 border-t border-light-green text-center">
             <p className="text-dark/50 text-sm mb-4">Pořádáme pod záštitou</p>
-            <div className="mb-4 flex justify-center">
+            <div className="mb-4 flex justify-center gap-6 items-center">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/rotary_logo.png" alt="Rotary" className="h-16" />
+              <img src="/rotary_logo.png" alt="Rotary Club Valtice - Břeclav" className="h-24 object-contain" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src="/rotary.png" alt="Rotary" className="h-16 object-contain" />
             </div>
             <a
               href={p.affiliationHref ?? "https://rotary.cz"}

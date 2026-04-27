@@ -500,19 +500,24 @@ function DonationConfirmationButton() {
 
 function StepDots({ step, total }: { step: number; total: number }) {
   return (
-    <div className="flex gap-1.5 items-center">
-      {Array.from({ length: total }).map((_, i) => (
-        <div
-          key={i}
-          className={`rounded-full transition-all ${
-            i + 1 === step
-              ? "w-4 h-2 bg-forest"
-              : i + 1 < step
-              ? "w-2 h-2 bg-forest/40"
-              : "w-2 h-2 bg-dark/20"
-          }`}
-        />
-      ))}
+    <div className="flex items-center gap-3">
+      <span className="text-sm font-semibold text-forest">
+        Krok {step} ze {total}
+      </span>
+      <div className="flex gap-1.5 items-center">
+        {Array.from({ length: total }).map((_, i) => (
+          <div
+            key={i}
+            className={`rounded-full transition-all ${
+              i + 1 === step
+                ? "w-5 h-2.5 bg-forest"
+                : i + 1 < step
+                ? "w-2.5 h-2.5 bg-forest/40"
+                : "w-2.5 h-2.5 bg-dark/20"
+            }`}
+          />
+        ))}
+      </div>
     </div>
   );
 }
