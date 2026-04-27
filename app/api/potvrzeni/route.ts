@@ -11,7 +11,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(req: NextRequest) {
   const payload = toPotvrzeniPayload(await req.json());
-  const { jmeno, adresa, rcico, dic, email, datum, dar, ucel } = payload;
+  const { jmeno, adresa, rcico, email, datum, dar, ucel } = payload;
 
   if (!jmeno || !adresa || !rcico || !email || !datum || !dar || !ucel) {
     return NextResponse.json(
@@ -35,10 +35,9 @@ export async function POST(req: NextRequest) {
       to: [email],
       subject: "Vaše žádost o potvrzení o daru – Handi4Camp",
       html: `<p>Dobrý den ${jmeno},</p>
-<p>děkujeme za váš dar! V příloze najdete vyplněný formulář pro daňové účely.</p>
+<p>děkujeme za váš dar a zájem o potvrzení! Vaše žádost byla přijata a potvrzení vám zašleme co nejdříve.</p>
 <p>V případě dotazů nás kontaktujte na <a href="mailto:info@handi4camp.cz">info@handi4camp.cz</a>.</p>
 <p>S pozdravem,<br>tým Handi4Camp</p>`,
-      attachments: [{ filename: "potvrzeni-o-daru.docx", content: buf }],
     }),
     resend.emails.send({
       from: "Handi4Camp web <potvrzeni@handi4camp.cz>",
@@ -49,7 +48,7 @@ export async function POST(req: NextRequest) {
   <li><strong>Jméno / Název firmy:</strong> ${jmeno}</li>
   <li><strong>Adresa / Sídlo:</strong> ${adresa}</li>
   <li><strong>Rodné číslo / IČO:</strong> ${rcico}</li>
-  <li><strong>DIČ:</strong> ${dic || "—"}</li>
+  <li><strong>DIČ:</strong> ${payload.dic || "—"}</li>
   <li><strong>Datum přijetí daru:</strong> ${datum}</li>
   <li><strong>Výše daru:</strong> ${dar}</li>
   <li><strong>Účel daru:</strong> ${ucel}</li>
@@ -62,16 +61,10 @@ export async function POST(req: NextRequest) {
 
   posthog.capture({
     distinctId: email,
-    event: "donation_confirmation_generated",
+    event: "donation_confirmation_requested",
     properties: { donation_amount: dar, donation_purpose: ucel },
   });
   await posthog.shutdown();
 
-  return new NextResponse(new Uint8Array(buf), {
-    headers: {
-      "Content-Type":
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "Content-Disposition": 'attachment; filename="potvrzeni-o-daru.docx"',
-    },
-  });
+  return NextResponse.json({ ok: true });
 }

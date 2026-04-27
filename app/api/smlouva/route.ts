@@ -33,18 +33,17 @@ export async function POST(req: NextRequest) {
     resend.emails.send({
       from: "Handi4Camp <potvrzeni@handi4camp.cz>",
       to: [email],
-      subject: "Vaše darovací smlouva – Handi4Camp",
+      subject: "Vaše žádost o darovací smlouvu – Handi4Camp",
       html: `<p>Dobrý den ${nazev},</p>
-<p>děkujeme za váš dar! V příloze najdete darovací smlouvu.</p>
+<p>děkujeme za váš zájem! Vaše žádost o darovací smlouvu byla přijata a smlouvu vám zašleme co nejdříve.</p>
 <p>V případě dotazů nás kontaktujte na <a href="mailto:info@handi4camp.cz">info@handi4camp.cz</a>.</p>
 <p>S pozdravem,<br>tým Handi4Camp</p>`,
-      attachments: [{ filename: "smlouva-darovaci.docx", content: buf }],
     }),
     resend.emails.send({
       from: "Handi4Camp web <potvrzeni@handi4camp.cz>",
       to: ["handi4camp@proton.me"],
-      subject: `Darovací smlouva – ${nazev}`,
-      html: `<p>Nová darovací smlouva:</p>
+      subject: `Žádost o darovací smlouvu – ${nazev}`,
+      html: `<p>Nová žádost o darovací smlouvu:</p>
 <ul>
   <li><strong>Jméno / Název firmy:</strong> ${nazev}</li>
   <li><strong>Adresa / Sídlo:</strong> ${adresa}</li>
@@ -61,16 +60,10 @@ export async function POST(req: NextRequest) {
 
   posthog.capture({
     distinctId: email,
-    event: "donation_contract_generated",
+    event: "donation_contract_requested",
     properties: { donation_amount: castka },
   });
   await posthog.shutdown();
 
-  return new NextResponse(new Uint8Array(buf), {
-    headers: {
-      "Content-Type":
-        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-      "Content-Disposition": 'attachment; filename="smlouva-darovaci.docx"',
-    },
-  });
+  return NextResponse.json({ ok: true });
 }
