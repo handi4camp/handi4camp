@@ -6,8 +6,14 @@ import PageHero from "@/components/page-hero";
 import DonationBox from "@/components/donation-box";
 import ContactForm from "@/components/contact-form";
 import {
-  Globe, Tag, Share2, Award,
-  Calendar, UserCheck, BookOpen, Home,
+  Globe,
+  Tag,
+  Share2,
+  Award,
+  Calendar,
+  UserCheck,
+  BookOpen,
+  Home,
 } from "lucide-react";
 import posthog from "posthog-js";
 
@@ -17,7 +23,9 @@ export default function JakPomociPage() {
   const [tinaData, setTinaData] = useState<JakpomociQuery | null>(null);
 
   useEffect(() => {
-    client.queries.jakpomoci({ relativePath: "jak-pomoci.md" }).then(setTinaData);
+    client.queries
+      .jakpomoci({ relativePath: "jak-pomoci.md" })
+      .then(setTinaData);
   }, []);
 
   if (!tinaData) return null;
@@ -29,7 +37,16 @@ function DonationContractButton() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
-  const [form, setForm] = useState({ nazev: "", adresa: "", rc: "", ico: "", dic: "", datum: "", castka: "", email: "" });
+  const [form, setForm] = useState({
+    nazev: "",
+    adresa: "",
+    rc: "",
+    ico: "",
+    dic: "",
+    datum: "",
+    castka: "",
+    email: "",
+  });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -55,46 +72,141 @@ function DonationContractButton() {
     }
   }
 
-  function handleClose() { setOpen(false); setSent(false); }
+  function handleClose() {
+    setOpen(false);
+    setSent(false);
+  }
 
   return (
     <>
       <button
-        onClick={() => { setOpen(true); posthog.capture("donation_contract_form_opened"); }}
+        onClick={() => {
+          setOpen(true);
+          posthog.capture("donation_contract_form_opened");
+        }}
         className="bg-warm-white text-forest border border-forest font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/5 transition-colors text-sm whitespace-nowrap"
       >
-        Požádat o darovací smlouvu
+        Darovací smlouva
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/40 backdrop-blur-sm" onClick={handleClose}>
-          <div className="bg-warm-white rounded-2xl p-8 w-full max-w-md shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/40 backdrop-blur-sm"
+          onClick={handleClose}
+        >
+          <div
+            className="bg-warm-white rounded-2xl p-8 w-full max-w-md shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             {sent ? (
               <div className="text-center py-4">
                 <p className="text-3xl mb-4">✓</p>
-                <h3 className="font-serif text-2xl font-bold mb-2">Žádost odeslána</h3>
-                <p className="text-dark/60 text-sm mb-6">Potvrzení přijetí jsme vám zaslali na e-mail. Smlouvu vám zašleme co nejdříve.</p>
-                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">Zavřít</button>
+                <h3 className="font-serif text-2xl font-bold mb-2">
+                  Žádost odeslána
+                </h3>
+                <p className="text-dark/60 text-sm mb-6">
+                  Potvrzení přijetí jsme vám zaslali na e-mail. Smlouvu vám
+                  zašleme co nejdříve.
+                </p>
+                <button
+                  onClick={handleClose}
+                  className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm"
+                >
+                  Zavřít
+                </button>
               </div>
             ) : (
               <>
-                <h3 className="font-serif text-2xl font-bold mb-1">Darovací smlouva</h3>
-                <p className="text-dark/60 text-sm mb-4">Vyplňte údaje — smlouvu vám zašleme e-mailem.</p>
+                <h3 className="font-serif text-2xl font-bold mb-1">
+                  Darovací smlouva
+                </h3>
+                <p className="text-dark/60 text-sm mb-4">
+                  Vyplňte údaje — smlouvu vám zašleme e-mailem.
+                </p>
                 <TypToggle value={typ} onChange={setTyp} />
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <Field label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"} name="nazev" value={form.nazev} onChange={handleChange} required />
-                  <Field label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"} name="adresa" value={form.adresa} onChange={handleChange} required />
-                  {typ === "osoba" && <Field label="Rodné číslo" name="rc" value={form.rc} onChange={handleChange} required />}
-                  {typ === "firma" && <Field label="IČO" name="ico" value={form.ico} onChange={handleChange} required />}
-                  {typ === "firma" && <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />}
-                  <Field label="Datum darování" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
-                  <Field label="Výše daru" name="castka" value={form.castka} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
-                  <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
+                  <Field
+                    label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
+                    name="nazev"
+                    value={form.nazev}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Field
+                    label={
+                      typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"
+                    }
+                    name="adresa"
+                    value={form.adresa}
+                    onChange={handleChange}
+                    required
+                  />
+                  {typ === "osoba" && (
+                    <Field
+                      label="Rodné číslo"
+                      name="rc"
+                      value={form.rc}
+                      onChange={handleChange}
+                      required
+                    />
+                  )}
+                  {typ === "firma" && (
+                    <Field
+                      label="IČO"
+                      name="ico"
+                      value={form.ico}
+                      onChange={handleChange}
+                      required
+                    />
+                  )}
+                  {typ === "firma" && (
+                    <Field
+                      label="DIČ (pokud je přiděleno)"
+                      name="dic"
+                      value={form.dic}
+                      onChange={handleChange}
+                    />
+                  )}
+                  <Field
+                    label="Datum darování"
+                    name="datum"
+                    value={form.datum}
+                    onChange={handleChange}
+                    placeholder="např. 26.04.2026"
+                    required
+                  />
+                  <Field
+                    label="Výše daru"
+                    name="castka"
+                    value={form.castka}
+                    onChange={handleChange}
+                    placeholder="např. 5 000"
+                    suffix="Kč"
+                    required
+                  />
+                  <Field
+                    label="Váš e-mail"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
                   <div className="flex gap-3 pt-2">
-                    <button type="submit" disabled={loading} className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
                       {loading ? "Odesílám…" : "Požádat o smlouvu"}
                     </button>
-                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">Zrušit</button>
+                    <button
+                      type="button"
+                      onClick={handleClose}
+                      className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm"
+                    >
+                      Zrušit
+                    </button>
                   </div>
                 </form>
               </>
@@ -111,7 +223,16 @@ function DonationConfirmationButton() {
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [typ, setTyp] = useState<"osoba" | "firma">("osoba");
-  const [form, setForm] = useState({ jmeno: "", adresa: "", rcico: "", dic: "", datum: "", dar: "", ucel: "", email: "" });
+  const [form, setForm] = useState({
+    jmeno: "",
+    adresa: "",
+    rcico: "",
+    dic: "",
+    datum: "",
+    dar: "",
+    ucel: "",
+    email: "",
+  });
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -137,46 +258,138 @@ function DonationConfirmationButton() {
     }
   }
 
-  function handleClose() { setOpen(false); setSent(false); }
+  function handleClose() {
+    setOpen(false);
+    setSent(false);
+  }
 
   return (
     <>
       <button
-        onClick={() => { setOpen(true); posthog.capture("donation_confirmation_form_opened"); }}
+        onClick={() => {
+          setOpen(true);
+          posthog.capture("donation_confirmation_form_opened");
+        }}
         className="bg-forest text-warm-white font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm whitespace-nowrap"
       >
-        Požádat o potvrzení o daru
+        Potvrzení o daru
       </button>
 
       {open && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/40 backdrop-blur-sm" onClick={handleClose}>
-          <div className="bg-warm-white rounded-2xl p-8 w-full max-w-md shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/40 backdrop-blur-sm"
+          onClick={handleClose}
+        >
+          <div
+            className="bg-warm-white rounded-2xl p-8 w-full max-w-md shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             {sent ? (
               <div className="text-center py-4">
                 <p className="text-3xl mb-4">✓</p>
-                <h3 className="font-serif text-2xl font-bold mb-2">Žádost odeslána</h3>
-                <p className="text-dark/60 text-sm mb-6">Potvrzení přijetí jsme vám zaslali na e-mail. Potvrzení o daru vám zašleme co nejdříve.</p>
-                <button onClick={handleClose} className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm">Zavřít</button>
+                <h3 className="font-serif text-2xl font-bold mb-2">
+                  Žádost odeslána
+                </h3>
+                <p className="text-dark/60 text-sm mb-6">
+                  Potvrzení přijetí jsme vám zaslali na e-mail. Potvrzení o daru
+                  vám zašleme co nejdříve.
+                </p>
+                <button
+                  onClick={handleClose}
+                  className="bg-forest text-warm-white font-semibold px-6 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm"
+                >
+                  Zavřít
+                </button>
               </div>
             ) : (
               <>
-                <h3 className="font-serif text-2xl font-bold mb-1">Potvrzení o daru</h3>
-                <p className="text-dark/60 text-sm mb-4">Vyplňte údaje — potvrzení vám zašleme e-mailem.</p>
+                <h3 className="font-serif text-2xl font-bold mb-1">
+                  Potvrzení o daru
+                </h3>
+                <p className="text-dark/60 text-sm mb-4">
+                  Vyplňte údaje — potvrzení vám zašleme e-mailem.
+                </p>
                 <TypToggle value={typ} onChange={setTyp} />
                 <form onSubmit={handleSubmit} className="space-y-4 mt-4">
-                  <Field label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"} name="jmeno" value={form.jmeno} onChange={handleChange} required />
-                  <Field label={typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"} name="adresa" value={form.adresa} onChange={handleChange} required />
-                  <Field label={typ === "firma" ? "IČO" : "Rodné číslo"} name="rcico" value={form.rcico} onChange={handleChange} required />
-                  {typ === "firma" && <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />}
-                  <Field label="Datum přijetí daru" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
-                  <Field label="Výše daru" name="dar" value={form.dar} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
-                  <Field label="Účel daru" name="ucel" value={form.ucel} onChange={handleChange} placeholder="např. Podpora Handi4Camp" required />
-                  <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
+                  <Field
+                    label={typ === "firma" ? "Název firmy" : "Jméno a příjmení"}
+                    name="jmeno"
+                    value={form.jmeno}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Field
+                    label={
+                      typ === "firma" ? "Sídlo" : "Adresa trvalého bydliště"
+                    }
+                    name="adresa"
+                    value={form.adresa}
+                    onChange={handleChange}
+                    required
+                  />
+                  <Field
+                    label={typ === "firma" ? "IČO" : "Rodné číslo"}
+                    name="rcico"
+                    value={form.rcico}
+                    onChange={handleChange}
+                    required
+                  />
+                  {typ === "firma" && (
+                    <Field
+                      label="DIČ (pokud je přiděleno)"
+                      name="dic"
+                      value={form.dic}
+                      onChange={handleChange}
+                    />
+                  )}
+                  <Field
+                    label="Datum přijetí daru"
+                    name="datum"
+                    value={form.datum}
+                    onChange={handleChange}
+                    placeholder="např. 26.04.2026"
+                    required
+                  />
+                  <Field
+                    label="Výše daru"
+                    name="dar"
+                    value={form.dar}
+                    onChange={handleChange}
+                    placeholder="např. 5 000"
+                    suffix="Kč"
+                    required
+                  />
+                  <Field
+                    label="Účel daru"
+                    name="ucel"
+                    value={form.ucel}
+                    onChange={handleChange}
+                    placeholder="např. Podpora Handi4Camp"
+                    required
+                  />
+                  <Field
+                    label="Váš e-mail"
+                    name="email"
+                    type="email"
+                    value={form.email}
+                    onChange={handleChange}
+                    required
+                  />
                   <div className="flex gap-3 pt-2">
-                    <button type="submit" disabled={loading} className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60">
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                    >
                       {loading ? "Odesílám…" : "Požádat o potvrzení"}
                     </button>
-                    <button type="button" onClick={handleClose} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">Zrušit</button>
+                    <button
+                      type="button"
+                      onClick={handleClose}
+                      className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm"
+                    >
+                      Zrušit
+                    </button>
                   </div>
                 </form>
               </>
@@ -188,7 +401,13 @@ function DonationConfirmationButton() {
   );
 }
 
-function TypToggle({ value, onChange }: { value: "osoba" | "firma"; onChange: (v: "osoba" | "firma") => void }) {
+function TypToggle({
+  value,
+  onChange,
+}: {
+  value: "osoba" | "firma";
+  onChange: (v: "osoba" | "firma") => void;
+}) {
   return (
     <div className="flex rounded-lg border border-dark/20 overflow-hidden text-sm">
       {(["osoba", "firma"] as const).map((t) => (
@@ -196,7 +415,11 @@ function TypToggle({ value, onChange }: { value: "osoba" | "firma"; onChange: (v
           key={t}
           type="button"
           onClick={() => onChange(t)}
-          className={`flex-1 py-2 font-semibold transition-colors ${value === t ? "bg-forest text-warm-white" : "bg-white text-dark/60 hover:bg-forest/5"}`}
+          className={`flex-1 py-2 font-semibold transition-colors ${
+            value === t
+              ? "bg-forest text-warm-white"
+              : "bg-white text-dark/60 hover:bg-forest/5"
+          }`}
         >
           {t === "osoba" ? "Fyzická osoba" : "Právnická osoba"}
         </button>
@@ -205,14 +428,30 @@ function TypToggle({ value, onChange }: { value: "osoba" | "firma"; onChange: (v
   );
 }
 
-function Field({ label, name, value, onChange, type = "text", required, placeholder, suffix }: {
-  label: string; name: string; value: string;
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  type = "text",
+  required,
+  placeholder,
+  suffix,
+}: {
+  label: string;
+  name: string;
+  value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string; required?: boolean; placeholder?: string; suffix?: string;
+  type?: string;
+  required?: boolean;
+  placeholder?: string;
+  suffix?: string;
 }) {
   return (
     <div>
-      <label className="block text-xs font-semibold text-dark/60 mb-1">{label}</label>
+      <label className="block text-xs font-semibold text-dark/60 mb-1">
+        {label}
+      </label>
       <div className="relative">
         <input
           type={type}
@@ -221,7 +460,9 @@ function Field({ label, name, value, onChange, type = "text", required, placehol
           onChange={onChange}
           required={required}
           placeholder={placeholder}
-          className={`w-full border border-dark/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-forest transition-colors bg-white ${suffix ? "pr-12" : ""}`}
+          className={`w-full border border-dark/20 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-forest transition-colors bg-white ${
+            suffix ? "pr-12" : ""
+          }`}
         />
         {suffix && (
           <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-dark/50">
@@ -237,34 +478,42 @@ const sponsoringBenefitIcons = [Globe, Tag, Share2, Award];
 const volunteeringRequirementIcons = [Calendar, UserCheck, BookOpen, Home];
 
 const TAB_CONFIG: Record<string, { label: string; desc: string }> = {
-  darovani: { label: 'Darování', desc: 'Finanční nebo věcný dar' },
-  sponzoring: { label: 'Firemní sponzoring', desc: 'Pro firmy a organizace' },
-  dobrovolnictvi: { label: 'Dobrovolnictví', desc: 'Zapojte se osobně' }
+  darovani: { label: "Darování", desc: "Finanční nebo věcný dar" },
+  sponzoring: { label: "Firemní sponzoring", desc: "Pro firmy a organizace" },
+  dobrovolnictvi: { label: "Dobrovolnictví", desc: "Zapojte se osobně" },
 };
 
-type TabKey = 'darovani' | 'sponzoring' | 'dobrovolnictvi';
+type TabKey = "darovani" | "sponzoring" | "dobrovolnictvi";
 
 function FeatureGrid({
   items,
   icons,
   cardBgClass,
-  tinaFieldData
+  tinaFieldData,
 }: {
-  items: string[],
-  icons: React.ElementType[],
-  cardBgClass: string,
-  tinaFieldData?: string
+  items: string[];
+  icons: React.ElementType[];
+  cardBgClass: string;
+  tinaFieldData?: string;
 }) {
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10" data-tina-field={tinaFieldData}>
+    <div
+      className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10"
+      data-tina-field={tinaFieldData}
+    >
       {items.map((item, i) => {
         const Icon = icons[i] ?? Award;
         return (
-          <div key={item} className={`${cardBgClass} rounded-2xl p-6 flex gap-4 items-start`}>
+          <div
+            key={item}
+            className={`${cardBgClass} rounded-2xl p-6 flex gap-4 items-start`}
+          >
             <div className="flex-none w-10 h-10 rounded-xl bg-forest/10 flex items-center justify-center">
               <Icon className="w-5 h-5 text-forest" strokeWidth={1.75} />
             </div>
-            <p className="font-semibold text-dark text-sm leading-snug pt-1">{item}</p>
+            <p className="font-semibold text-dark text-sm leading-snug pt-1">
+              {item}
+            </p>
           </div>
         );
       })}
@@ -276,11 +525,11 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
   const { data } = useTina(tinaData);
   const p = data.jakpomoci;
 
-  const [activeTab, setActiveTab] = useState<TabKey>('darovani');
+  const [activeTab, setActiveTab] = useState<TabKey>("darovani");
 
   useEffect(() => {
     const handleHashChange = () => {
-      const hash = window.location.hash.replace('#', '') as TabKey;
+      const hash = window.location.hash.replace("#", "") as TabKey;
       if (TAB_CONFIG[hash]) {
         setActiveTab(hash);
       }
@@ -290,43 +539,58 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
     handleHashChange();
 
     // Listen for hash changes
-    window.addEventListener('hashchange', handleHashChange);
-    return () => window.removeEventListener('hashchange', handleHashChange);
+    window.addEventListener("hashchange", handleHashChange);
+    return () => window.removeEventListener("hashchange", handleHashChange);
   }, []);
 
   const setTabAndHash = (tab: TabKey) => {
     setActiveTab(tab);
-    window.history.pushState(null, '', `#${tab}`);
-    posthog.capture("jak_pomoci_tab_selected", { tab, label: TAB_CONFIG[tab].label });
+    window.history.pushState(null, "", `#${tab}`);
+    posthog.capture("jak_pomoci_tab_selected", {
+      tab,
+      label: TAB_CONFIG[tab].label,
+    });
 
     // Na mobilních zařízeních plynule odscrollovat k sekci
     setTimeout(() => {
-      if (window.innerWidth < 768) { // md breakpoint
+      if (window.innerWidth < 768) {
+        // md breakpoint
         const element = document.getElementById(tab);
         if (element) {
           const y = element.getBoundingClientRect().top + window.scrollY - 80; // offset pro lepší zobrazení
-          window.scrollTo({ top: y, behavior: 'smooth' });
+          window.scrollTo({ top: y, behavior: "smooth" });
         }
       }
     }, 100);
   };
 
-  const sponsoringBenefits = (p.sponsoringBenefits ?? []).filter((x: string | null): x is string => x !== null);
-  const volunteeringRequirements = (p.volunteeringRequirements ?? []).filter((x: string | null): x is string => x !== null);
+  const sponsoringBenefits = (p.sponsoringBenefits ?? []).filter(
+    (x: string | null): x is string => x !== null
+  );
+  const volunteeringRequirements = (p.volunteeringRequirements ?? []).filter(
+    (x: string | null): x is string => x !== null
+  );
 
   return (
     <>
       <PageHero
         title={p.heroTitle ?? ""}
         subtitle={p.heroSubtitle ?? ""}
-        tinaFields={{ title: tinaField(p, "heroTitle"), subtitle: tinaField(p, "heroSubtitle") }}
+        tinaFields={{
+          title: tinaField(p, "heroTitle"),
+          subtitle: tinaField(p, "heroSubtitle"),
+        }}
       />
 
       <div className="bg-warm-white pt-12 pb-8">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-dark mb-3">Jak se chcete zapojit?</h2>
-            <p className="text-dark/70 text-lg">Vyberte prosím jednu z možností níže:</p>
+            <h2 className="font-serif text-2xl md:text-3xl font-bold text-dark mb-3">
+              Jak se chcete zapojit?
+            </h2>
+            <p className="text-dark/70 text-lg">
+              Vyberte prosím jednu z možností níže:
+            </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-4xl mx-auto">
@@ -339,12 +603,18 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                   onClick={() => setTabAndHash(tab)}
                   className={`p-4 sm:p-6 rounded-2xl transition-all border-2 flex flex-row sm:flex-col items-center sm:text-center text-left group gap-4 sm:gap-0 ${
                     isActive
-                      ? 'border-forest bg-forest/5 shadow-md'
-                      : 'border-dark/10 bg-white hover:border-forest/40 hover:shadow-sm'
+                      ? "border-forest bg-forest/5 shadow-md"
+                      : "border-dark/10 bg-white hover:border-forest/40 hover:shadow-sm"
                   }`}
                 >
                   <div className="flex-1 sm:order-first">
-                    <span className={`block font-bold text-lg sm:text-xl mb-1 sm:mb-2 ${isActive ? 'text-forest' : 'text-dark group-hover:text-forest'}`}>
+                    <span
+                      className={`block font-bold text-lg sm:text-xl mb-1 sm:mb-2 ${
+                        isActive
+                          ? "text-forest"
+                          : "text-dark group-hover:text-forest"
+                      }`}
+                    >
                       {config.label}
                     </span>
                     <span className="block text-sm text-dark/60 sm:mb-6">
@@ -353,10 +623,16 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                   </div>
 
                   {/* Ukazatel výběru (styl radio buttonu pro lepší srozumitelnost) */}
-                  <div className={`shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-colors sm:mt-auto sm:order-last ${
-                    isActive ? 'border-forest bg-forest' : 'border-dark/20 bg-white group-hover:border-forest/40'
-                  }`}>
-                    {isActive && <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full" />}
+                  <div
+                    className={`shrink-0 w-6 h-6 sm:w-7 sm:h-7 rounded-full border-2 flex items-center justify-center transition-colors sm:mt-auto sm:order-last ${
+                      isActive
+                        ? "border-forest bg-forest"
+                        : "border-dark/20 bg-white group-hover:border-forest/40"
+                    }`}
+                  >
+                    {isActive && (
+                      <div className="w-2 h-2 sm:w-2.5 sm:h-2.5 bg-white rounded-full" />
+                    )}
                   </div>
                 </button>
               );
@@ -366,27 +642,40 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
       </div>
 
       {/* Darování */}
-      {activeTab === 'darovani' && (
+      {activeTab === "darovani" && (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <section id="darovani" className="py-20 bg-warm-white">
             <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="grid md:grid-cols-2 gap-12 items-start">
                 <div>
-                  <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro dárce</p>
-                  <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "donationHeading")}>
+                  <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">
+                    Pro dárce
+                  </p>
+                  <h2
+                    className="font-serif text-3xl font-bold mb-4"
+                    data-tina-field={tinaField(p, "donationHeading")}
+                  >
                     {p.donationHeading}
                   </h2>
-                  <p className="text-dark/70 mb-6 text-lg" data-tina-field={tinaField(p, "donationIntro")}>
+                  <p
+                    className="text-dark/70 mb-6 text-lg"
+                    data-tina-field={tinaField(p, "donationIntro")}
+                  >
                     {p.donationIntro}
                   </p>
 
                   <div className="space-y-4 text-dark/80 text-base leading-relaxed mb-8">
-                    <p data-tina-field={tinaField(p, "financeBody1")}>{p.financeBody1}</p>
-                    <p data-tina-field={tinaField(p, "financeBody2")}>{p.financeBody2}</p>
+                    <p data-tina-field={tinaField(p, "financeBody1")}>
+                      {p.financeBody1}
+                    </p>
+                    <p data-tina-field={tinaField(p, "financeBody2")}>
+                      {p.financeBody2}
+                    </p>
                   </div>
 
                   <p className="text-sm text-forest font-medium italic">
-                    Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb. — po přijetí vám vystavíme potvrzení.
+                    Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992
+                    Sb. — po přijetí vám vystavíme potvrzení.
                   </p>
                 </div>
                 <div>
@@ -412,16 +701,26 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                       current: p.fundraiser?.current,
                       deadline: p.fundraiser?.deadline,
                       tinaFields: {
-                        title: p.fundraiser ? tinaField(p.fundraiser, "title") : undefined,
-                        description: p.fundraiser ? tinaField(p.fundraiser, "description") : undefined,
-                        goal: p.fundraiser ? tinaField(p.fundraiser, "goal") : undefined,
-                        current: p.fundraiser ? tinaField(p.fundraiser, "current") : undefined,
-                        deadline: p.fundraiser ? tinaField(p.fundraiser, "deadline") : undefined,
+                        title: p.fundraiser
+                          ? tinaField(p.fundraiser, "title")
+                          : undefined,
+                        description: p.fundraiser
+                          ? tinaField(p.fundraiser, "description")
+                          : undefined,
+                        goal: p.fundraiser
+                          ? tinaField(p.fundraiser, "goal")
+                          : undefined,
+                        current: p.fundraiser
+                          ? tinaField(p.fundraiser, "current")
+                          : undefined,
+                        deadline: p.fundraiser
+                          ? tinaField(p.fundraiser, "deadline")
+                          : undefined,
                       },
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap justify-between ">
                       <DonationConfirmationButton />
                       <DonationContractButton />
                     </div>
@@ -434,15 +733,23 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
       )}
 
       {/* Firemní sponzoring */}
-      {activeTab === 'sponzoring' && (
+      {activeTab === "sponzoring" && (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <section id="sponzoring" className="py-20 bg-warm-white">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro firmy</p>
-              <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "sponsoringHeading")}>
+              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">
+                Pro firmy
+              </p>
+              <h2
+                className="font-serif text-3xl font-bold mb-4"
+                data-tina-field={tinaField(p, "sponsoringHeading")}
+              >
                 {p.sponsoringHeading}
               </h2>
-              <p className="text-dark/70 mb-10" data-tina-field={tinaField(p, "sponsoringIntro")}>
+              <p
+                className="text-dark/70 mb-10"
+                data-tina-field={tinaField(p, "sponsoringIntro")}
+              >
                 {p.sponsoringIntro}
               </p>
 
@@ -454,7 +761,8 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
               />
 
               <p className="text-dark/60 italic text-sm mb-6">
-                &quot;Stáváte se součástí příběhu, na který děti vzpomínají celý život.&quot;
+                &quot;Stáváte se součástí příběhu, na který děti vzpomínají celý
+                život.&quot;
               </p>
 
               <div>
@@ -463,7 +771,9 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                   buttonLabel="Mám zájem o sponzoring"
                   buttonClassName="inline-block bg-forest text-warm-white font-bold px-8 py-3.5 rounded-lg hover:bg-forest/90 transition-colors"
                 />
-                <p className="text-xs text-dark/50 mt-2 ml-1">Odpovídáme do 2 pracovních dnů.</p>
+                <p className="text-xs text-dark/50 mt-2 ml-1">
+                  Napište nám, rádi zodpovíme otázky.
+                </p>
               </div>
             </div>
           </section>
@@ -471,15 +781,23 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
       )}
 
       {/* Dobrovolnictví */}
-      {activeTab === 'dobrovolnictvi' && (
+      {activeTab === "dobrovolnictvi" && (
         <div className="animate-in fade-in slide-in-from-bottom-4 duration-500">
           <section id="dobrovolnictvi" className="py-20 bg-warm-white">
             <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">Pro studenty</p>
-              <h2 className="font-serif text-3xl font-bold mb-4" data-tina-field={tinaField(p, "volunteeringHeading")}>
+              <p className="text-xs font-bold tracking-widest uppercase text-forest mb-3">
+                Pro mladé
+              </p>
+              <h2
+                className="font-serif text-3xl font-bold mb-4"
+                data-tina-field={tinaField(p, "volunteeringHeading")}
+              >
                 {p.volunteeringHeading}
               </h2>
-              <p className="text-dark/70 mb-10" data-tina-field={tinaField(p, "volunteeringIntro")}>
+              <p
+                className="text-dark/70 mb-10"
+                data-tina-field={tinaField(p, "volunteeringIntro")}
+              >
                 {p.volunteeringIntro}
               </p>
 
@@ -490,17 +808,15 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                 tinaFieldData={tinaField(p, "volunteeringRequirements")}
               />
 
-              <p className="text-dark/60 italic text-sm mb-6">
-                &quot;Byl to nejlepší způsob, jak strávit prázdniny smysluplně.&quot; — absolventka kurzu fyzioterapie
-              </p>
-
               <div>
                 <ContactForm
                   type="dobrovolnik"
                   buttonLabel="Mám zájem"
                   buttonClassName="inline-block bg-gold text-dark font-bold px-8 py-3.5 rounded-lg hover:bg-gold/90 transition-colors"
                 />
-                <p className="text-xs text-dark/50 mt-2 ml-1">Napište nám, rádi zodpovíme otázky.</p>
+                <p className="text-xs text-dark/50 mt-2 ml-1">
+                  Napište nám, rádi zodpovíme otázky.
+                </p>
               </div>
             </div>
           </section>
