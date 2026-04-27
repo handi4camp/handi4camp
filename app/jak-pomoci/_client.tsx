@@ -138,7 +138,7 @@ function DonationContractButton() {
                 </p>
 
                 {step === 1 && (
-                  <>
+                  <div className="animate-in fade-in slide-in-from-right-8 duration-300">
                     <TypToggle value={typ} onChange={setTyp} />
                     <div className="space-y-4 mt-4">
                       <Field
@@ -182,11 +182,11 @@ function DonationContractButton() {
                         />
                       )}
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {step === 2 && (
-                  <div className="space-y-4 mt-4">
+                  <div className="space-y-4 mt-4 animate-in fade-in slide-in-from-right-8 duration-300">
                     <Field
                       label="Datum darování"
                       name="datum"
@@ -208,7 +208,7 @@ function DonationContractButton() {
                 )}
 
                 {step === 3 && (
-                  <div className="space-y-4 mt-4">
+                  <div className="space-y-4 mt-4 animate-in fade-in slide-in-from-right-8 duration-300">
                     <Field
                       label="Váš e-mail"
                       name="email"
@@ -372,7 +372,7 @@ function DonationConfirmationButton() {
                 </p>
 
                 {step === 1 && (
-                  <>
+                  <div className="animate-in fade-in slide-in-from-right-8 duration-300">
                     <TypToggle value={typ} onChange={setTyp} />
                     <div className="space-y-4 mt-4">
                       <Field
@@ -405,11 +405,11 @@ function DonationConfirmationButton() {
                         />
                       )}
                     </div>
-                  </>
+                  </div>
                 )}
 
                 {step === 2 && (
-                  <div className="space-y-4 mt-4">
+                  <div className="space-y-4 mt-4 animate-in fade-in slide-in-from-right-8 duration-300">
                     <Field
                       label="Datum přijetí daru"
                       name="datum"
@@ -439,7 +439,7 @@ function DonationConfirmationButton() {
                 )}
 
                 {step === 3 && (
-                  <div className="space-y-4 mt-4">
+                  <div className="space-y-4 mt-4 animate-in fade-in slide-in-from-right-8 duration-300">
                     <Field
                       label="Váš e-mail"
                       name="email"

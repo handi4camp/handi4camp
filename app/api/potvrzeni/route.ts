@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
       subject: "Vaše žádost o potvrzení o daru – Handi4Camp",
       html: `<p>Dobrý den ${jmeno},</p>
 <p>děkujeme za váš dar a zájem o potvrzení! Vaše žádost byla přijata a potvrzení vám zašleme co nejdříve.</p>
-<p>V případě dotazů nás kontaktujte na <a href="mailto:info@handi4camp.cz">info@handi4camp.cz</a>.</p>
+<p>V případě dotazů nás kontaktujte na <a href="mailto:handi4camp@gmail.com">handi4camp@gmail.com</a>.</p>
 <p>S pozdravem,<br>tým Handi4Camp</p>`,
     }),
     resend.emails.send({
