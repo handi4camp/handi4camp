@@ -24,6 +24,95 @@ export default function JakPomociPage() {
   return <JakPomociContent tinaData={tinaData} />;
 }
 
+function DonationContractButton() {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [form, setForm] = useState({
+    nazev: "",
+    adresa: "",
+    ico: "",
+    dic: "",
+    datum: "",
+    castka: "",
+    email: "",
+  });
+
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/smlouva", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      if (!res.ok) throw new Error("Chyba při generování dokumentu");
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "smlouva-darovaci.docx";
+      a.click();
+      URL.revokeObjectURL(url);
+      posthog.capture("donation_contract_downloaded");
+      setOpen(false);
+    } catch (err) {
+      posthog.captureException(err);
+      alert("Nepodařilo se vygenerovat smlouvu. Zkuste to prosím znovu.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => {
+          setOpen(true);
+          posthog.capture("donation_contract_form_opened");
+        }}
+        className="inline-block bg-warm-white text-forest border border-forest font-semibold px-6 py-3 rounded-lg hover:bg-forest/5 transition-colors text-sm"
+      >
+        Stáhnout darovací smlouvu
+      </button>
+
+      {open && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-dark/40 backdrop-blur-sm" onClick={() => setOpen(false)}>
+          <div className="bg-warm-white rounded-2xl p-8 w-full max-w-md shadow-xl" onClick={(e) => e.stopPropagation()}>
+            <h3 className="font-serif text-2xl font-bold mb-1">Darovací smlouva</h3>
+            <p className="text-dark/60 text-sm mb-6">Vyplňte údaje — stáhnete vyplněnou darovací smlouvu.</p>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Field label="Jméno a příjmení / Název firmy" name="nazev" value={form.nazev} onChange={handleChange} required />
+              <Field label="Adresa / Sídlo" name="adresa" value={form.adresa} onChange={handleChange} required />
+              <Field label="Rodné číslo / IČO" name="ico" value={form.ico} onChange={handleChange} required />
+              <Field label="DIČ (pokud je přiděleno)" name="dic" value={form.dic} onChange={handleChange} />
+              <Field label="Datum darování" name="datum" value={form.datum} onChange={handleChange} placeholder="např. 26.04.2026" required />
+              <Field label="Výše daru" name="castka" value={form.castka} onChange={handleChange} placeholder="např. 5 000" suffix="Kč" required />
+              <Field label="Váš e-mail" name="email" type="email" value={form.email} onChange={handleChange} required />
+              <div className="flex gap-3 pt-2">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="flex-1 bg-forest text-warm-white font-semibold py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm disabled:opacity-60"
+                >
+                  {loading ? "Generuji…" : "Stáhnout smlouvu"}
+                </button>
+                <button type="button" onClick={() => setOpen(false)} className="px-4 py-2.5 rounded-lg border border-dark/20 text-dark/60 hover:border-dark/40 transition-colors text-sm">
+                  Zrušit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
 function DonationConfirmationButton() {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -331,7 +420,10 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
-                    <DonationConfirmationButton />
+                    <div className="flex flex-col gap-3">
+                      <DonationConfirmationButton />
+                      <DonationContractButton />
+                    </div>
                   </DonationBox>
                 </div>
               </div>
