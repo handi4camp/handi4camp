@@ -54,7 +54,7 @@ const jsonLd = {
   description:
     "Letní tábor pro děti s dětskou mozkovou obrnou, pořádaný pod záštitou Rotary Club Valtice Břeclav.",
   sameAs: ["https://www.facebook.com/Handi4Camp"],
-  sponsor: {
+  memberOf: {
     "@type": "Organization",
     name: "Rotary Club Valtice Břeclav",
     url: "https://rotary.cz",
@@ -68,11 +68,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="cs" className={openSans.variable}>
-      <body className="min-h-screen flex flex-col bg-warm-white text-dark font-sans">
+      <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+      </head>
+      <body className="min-h-screen flex flex-col bg-warm-white text-dark font-sans">
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
