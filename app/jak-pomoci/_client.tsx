@@ -94,7 +94,7 @@ function DonationContractButton() {
           setOpen(true);
           posthog.capture("donation_contract_form_opened");
         }}
-        className="bg-warm-white text-forest border border-forest font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/5 transition-colors text-sm whitespace-nowrap"
+        className="w-full bg-warm-white text-forest border border-forest font-semibold py-3 rounded-xl hover:bg-forest/5 transition-colors text-sm whitespace-nowrap"
       >
         Darovací smlouva
       </button>
@@ -328,7 +328,7 @@ function DonationConfirmationButton() {
           setOpen(true);
           posthog.capture("donation_confirmation_form_opened");
         }}
-        className="bg-forest text-warm-white font-semibold px-5 py-2.5 rounded-lg hover:bg-forest/90 transition-colors text-sm whitespace-nowrap"
+        className="w-full bg-forest text-warm-white border border-forest font-semibold py-3 rounded-xl hover:bg-forest/90 transition-colors text-sm whitespace-nowrap"
       >
         Potvrzení o daru
       </button>
@@ -836,7 +836,7 @@ function JakPomociContent({ tinaData }: { tinaData: JakpomociQuery }) {
                     }}
                     noteText="Dar je daňově uznatelný dle § 15 odst. 1 zákona č. 586/1992 Sb."
                   >
-                    <div className="flex flex-wrap justify-between ">
+                    <div className="flex flex-col gap-2 mt-4">
                       <DonationConfirmationButton />
                       <DonationContractButton />
                     </div>
