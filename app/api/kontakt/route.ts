@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   await resend.emails.send({
     from: "Handi4Camp web <potvrzeni@handi4camp.cz>",
-    to: ["handi4camp@proton.me"],
+    to: ["handi4camp@gmail.com"],
     replyTo: email,
     subject,
     html: `<p>Nová zpráva od ${label}:</p>

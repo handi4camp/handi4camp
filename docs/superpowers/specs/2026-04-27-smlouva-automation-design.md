@@ -69,7 +69,7 @@ Content-Type: application/json
 2. Load `public/smlouva.docx`, render via PizZip + Docxtemplater with `toTemplateVariables(payload)`
 3. Send two emails in parallel via Resend:
    - **To donor** (`payload.email`): subject `"Vaše darovací smlouva – Handi4Camp"`, body with greeting, attachment `smlouva-darovaci.docx`
-   - **To admin** (`handi4camp@proton.me`): subject `"Darovací smlouva – {nazev}"`, body with all field summary, same attachment
+   - **To admin** (`handi4camp@gmail.com`): subject `"Darovací smlouva – {nazev}"`, body with all field summary, same attachment
 4. Fire PostHog event `donation_contract_generated` with `{ donation_amount: castka }`
 5. Return the rendered docx buffer as `application/vnd.openxmlformats-officedocument.wordprocessingml.document`
 

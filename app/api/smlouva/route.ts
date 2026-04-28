@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     }),
     resend.emails.send({
       from: "Handi4Camp web <potvrzeni@handi4camp.cz>",
-      to: ["handi4camp@proton.me"],
+      to: ["handi4camp@gmail.com"],
       subject: `Žádost o darovací smlouvu – ${nazev}`,
       html: `<p>Nová žádost o darovací smlouvu:</p>
 <ul>
