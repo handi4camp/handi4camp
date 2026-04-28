@@ -187,6 +187,32 @@ export default defineConfig({
         },
       },
       {
+        name: "napsali",
+        label: "Napsali o nás",
+        path: "content/pages",
+        match: { include: "napsali-o-nas" },
+        fields: [
+          { type: "string", name: "heroTitle", label: "Hero — Nadpis" },
+          { type: "string", name: "heroSubtitle", label: "Hero — Podnadpis" },
+          {
+            type: "object",
+            name: "mentions",
+            label: "Zmínky",
+            list: true,
+            fields: [
+              { type: "string", name: "title", label: "Název", required: true },
+              { type: "string", name: "description", label: "Popis", ui: { component: "textarea" } },
+              { type: "string", name: "date", label: "Datum (např. květen 2024)" },
+              { type: "string", name: "url", label: "Odkaz (URL)" },
+            ],
+          },
+        ],
+        ui: {
+          router: () => "/napsali-o-nas",
+          allowedActions: { create: false, delete: false },
+        },
+      },
+      {
         name: "global",
         label: "Globální — Footer & Statistiky",
         path: "content/pages",
