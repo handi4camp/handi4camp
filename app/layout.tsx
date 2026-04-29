@@ -12,17 +12,22 @@ const openSans = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Handi4Camp — Léto bez hranic",
+  title: "Handi4Camp | Léto bez hranic",
   description:
-    "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+    "Letní tábor pro děti s DMO pod záštitou Rotary klubů z Česka a ze Slovenska.",
   metadataBase: new URL("https://handi4camp.cz"),
   icons: {
-    icon: { url: "/favicon.png", type: "image/png" },
+    icon: [
+      { url: "/favicon.png", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    shortcut: "/favicon.png",
+    apple: "/favicon.png",
   },
   openGraph: {
-    title: "Handi4Camp — Léto bez hranic",
+    title: "Handi4Camp | Léto bez hranic",
     description:
-      "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+      "Letní tábor pro děti s DMO pod záštitou Rotary klubů z Česka a ze Slovenska.",
     url: "https://handi4camp.cz",
     siteName: "Handi4Camp",
     images: [
@@ -38,9 +43,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Handi4Camp — Léto bez hranic",
+    title: "Handi4Camp | Léto bez hranic",
     description:
-      "Letní tábor pro děti s dětskou mozkovou obrnou. Již 20 let pod záštitou Rotary Club Valtice Břeclav.",
+      "Letní tábor pro děti s DMO pod záštitou Rotary klubů z Česka a ze Slovenska.",
     images: ["/og-image.jpg"],
   },
 };
