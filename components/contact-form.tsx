@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import posthog from "posthog-js";
+import Link from "next/link";
 
 type Props = {
   type: "sponzor" | "dobrovolnik";
@@ -91,6 +92,11 @@ export default function ContactForm({ type, buttonLabel, buttonClassName }: Prop
           Zrušit
         </button>
       </div>
+      <p className="text-xs text-dark/50 leading-relaxed">
+        Údaje zpracováváme výhradně pro odpověď na váš dotaz (oprávněný zájem správce, čl. 6 odst. 1 písm. f GDPR).
+        Správce: Rotary Club Valtice Břeclav ·{" "}
+        <Link href="/soukromi" className="underline hover:text-dark/70 transition-colors">Zásady soukromí</Link>
+      </p>
     </form>
   );
 }
