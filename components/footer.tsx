@@ -90,6 +90,8 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
           <span>© {new Date().getFullYear()} Handi4Camp · Rotary Club Valtice Břeclav</span>
           <span className="hidden sm:inline">·</span>
           <Link href="/soukromi" className="hover:text-gold transition-colors">Zásady ochrany soukromí</Link>
+          <span className="hidden sm:inline">·</span>
+          <Link href="/soukromi#souhlas" className="hover:text-gold transition-colors">Nastavení cookies</Link>
         </div>
       </div>
     </footer>
