@@ -3,6 +3,7 @@ import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
+import CookieBanner from "@/components/cookie-banner";
 
 const openSans = Open_Sans({
   subsets: ["latin", "latin-ext"],
@@ -78,6 +79,7 @@ export default function RootLayout({
         <Nav />
         <main className="flex-1">{children}</main>
         <Footer />
+        <CookieBanner />
       </body>
     </html>
   );

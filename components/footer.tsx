@@ -86,8 +86,10 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
             </div>
           </div>
         </div>
-        <div className="mt-8 pt-8 border-t border-warm-white/20 text-center text-xs text-warm-white/60">
-          © {new Date().getFullYear()} Handi4Camp · Rotary Club Valtice Břeclav
+        <div className="mt-8 pt-8 border-t border-warm-white/20 text-center text-xs text-warm-white/60 flex flex-col sm:flex-row justify-center items-center gap-2">
+          <span>© {new Date().getFullYear()} Handi4Camp · Rotary Club Valtice Břeclav</span>
+          <span className="hidden sm:inline">·</span>
+          <Link href="/soukromi" className="hover:text-gold transition-colors">Zásady ochrany soukromí</Link>
         </div>
       </div>
     </footer>
