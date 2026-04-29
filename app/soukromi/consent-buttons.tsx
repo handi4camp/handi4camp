@@ -29,14 +29,14 @@ export default function ConsentButtonsClient() {
       <button
         onClick={accept}
         disabled={current === "accepted"}
-        className="px-5 py-2 rounded-lg bg-forest text-warm-white font-semibold text-sm hover:bg-forest/90 transition-colors disabled:opacity-50"
+        className="px-5 py-2 rounded-lg border border-forest text-forest font-semibold text-sm hover:bg-forest/10 transition-colors disabled:opacity-50"
       >
         Povolit analytické cookies
       </button>
       <button
         onClick={decline}
         disabled={current === "declined"}
-        className="px-5 py-2 rounded-lg border border-dark/20 text-dark text-sm hover:border-dark/40 transition-colors disabled:opacity-50"
+        className="px-5 py-2 rounded-lg border border-forest text-forest font-semibold text-sm hover:bg-forest/10 transition-colors disabled:opacity-50"
       >
         Odmítnout analytické cookies
       </button>
