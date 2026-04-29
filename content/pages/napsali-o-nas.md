@@ -2,7 +2,7 @@
 heroTitle: Napsali o nás
 heroSubtitle: Co o Handi4Camp říkají média a partneři
 mentions:
-  - title: Rotary Good News 4/2025
+  - title: Rotary Good News 4/20255
     description: Článek o nejnovějším ročníku Handi4Camp v bulletinu Rotary district 2240.
     date: '2025'
     url: 'https://www.rotary2240.org/files/good-news/19/rgn_4_2025_flowie.pdf'
@@ -23,7 +23,7 @@ mentions:
     date: '2022'
     url: 'https://www.rotary2240.org/files/good-news/94/rgn_5_22_ii.pdf'
   - title: Rotary Good News 5/2018
-    description: Handi4Camp v bulletinu Rotary district 2240, ročník 2018.
+    description: 'Handi4Camp v bulletinu Rotary district 2240, ročník 2018.'
     date: '2018'
     url: 'https://www.rotary2240.org/files/good-news/e7/rgn_2018_5.pdf'
   - title: Rotary Good News 5/2017
@@ -31,3 +31,4 @@ mentions:
     date: '2017'
     url: 'https://www.rotary2240.org/files/good-news/e8/rgn_2017_5.pdf'
 ---
+
