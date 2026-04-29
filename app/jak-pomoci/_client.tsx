@@ -217,6 +217,12 @@ function DonationContractButton() {
                       onChange={handleChange}
                       required
                     />
+                    <p className="text-xs text-dark/50 leading-relaxed">
+                      Vaše údaje (včetně rodného čísla / IČO) zpracováváme výhradně za účelem vyhotovení
+                      darovací smlouvy (plnění smlouvy, čl. 6 odst. 1 písm. b GDPR).
+                      Správce: Rotary Club Valtice Břeclav ·{" "}
+                      <a href="/soukromi" className="underline hover:text-dark/70 transition-colors">Zásady soukromí</a>
+                    </p>
                   </div>
                 )}
 
@@ -448,6 +454,12 @@ function DonationConfirmationButton() {
                       onChange={handleChange}
                       required
                     />
+                    <p className="text-xs text-dark/50 leading-relaxed">
+                      Vaše údaje (včetně rodného čísla / IČO) zpracováváme výhradně za účelem vystavení
+                      potvrzení o daru (plnění smlouvy, čl. 6 odst. 1 písm. b GDPR).
+                      Správce: Rotary Club Valtice Břeclav ·{" "}
+                      <a href="/soukromi" className="underline hover:text-dark/70 transition-colors">Zásady soukromí</a>
+                    </p>
                   </div>
                 )}
 
