@@ -34,9 +34,19 @@ export default function SoukromiPage() {
               <h3 className="font-semibold mb-1">Kontaktní formulář</h3>
               <p className="text-dark/80">
                 Když nám napíšete přes kontaktní formulář, zpracováváme vaše jméno, e-mailovou adresu a text zprávy.
-                Tyto údaje používáme výhradně k odpovědi na vaši zprávu. Právním základem je váš souhlas
-                (čl. 6 odst. 1 písm. a GDPR). Údaje uchováváme po dobu nezbytnou k vyřízení vašeho dotazu,
-                nejdéle 1 rok.
+                Tyto údaje používáme výhradně k odpovědi na vaši zprávu. Právním základem je oprávněný zájem správce
+                (čl. 6 odst. 1 písm. f GDPR) spočívající ve vyřízení vašeho dotazu. Údaje uchováváme po dobu nezbytnou
+                k vyřízení vašeho dotazu, nejdéle 1 rok.
+              </p>
+            </div>
+            <div>
+              <h3 className="font-semibold mb-1">Darovací smlouva a potvrzení o daru</h3>
+              <p className="text-dark/80">
+                Při žádosti o darovací smlouvu nebo potvrzení o daru zpracováváme vaše jméno, adresu,
+                rodné číslo nebo IČO (a případně DIČ), datum a výši daru a e-mailovou adresu.
+                Tyto údaje jsou nezbytné pro vyhotovení požadovaného dokumentu. Právním základem je
+                plnění smlouvy (čl. 6 odst. 1 písm. b GDPR). Údaje uchováváme po dobu vyžadovanou
+                daňovými a účetními předpisy (zpravidla 10 let).
               </p>
             </div>
             <div>
@@ -90,7 +100,7 @@ export default function SoukromiPage() {
           </p>
         </section>
 
-        <section className="space-y-3">
+        <section id="souhlas" className="space-y-3">
           <h2 className="text-xl font-semibold">Správa souhlasu s cookies</h2>
           <p className="text-dark/80 mb-4">
             Svůj souhlas s analytickými cookies můžete kdykoli změnit:
