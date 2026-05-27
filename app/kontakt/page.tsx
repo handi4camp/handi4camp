@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import KontaktClient from './_client'
+import { client } from '@/tina/__generated__/client'
 
 export const metadata: Metadata = {
   title: 'Kontakt — Handi4Camp',
@@ -13,6 +14,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function KontaktPage() {
-  return <KontaktClient />
+export default async function KontaktPage() {
+  const tinaData = await client.queries.kontakt({ relativePath: 'kontakt.md' })
+  return <KontaktClient tinaData={tinaData} />
 }

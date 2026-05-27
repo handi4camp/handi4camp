@@ -1,5 +1,4 @@
 "use client";
-import { useState, useEffect } from "react";
 import Image from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
@@ -8,14 +7,7 @@ import posthog from "posthog-js";
 
 type KontaktQuery = Awaited<ReturnType<typeof client.queries.kontakt>>;
 
-export default function KontaktPage() {
-  const [tinaData, setTinaData] = useState<KontaktQuery | null>(null);
-
-  useEffect(() => {
-    client.queries.kontakt({ relativePath: "kontakt.md" }).then(setTinaData);
-  }, []);
-
-  if (!tinaData) return null;
+export default function KontaktClient({ tinaData }: { tinaData: KontaktQuery }) {
   return <KontaktContent tinaData={tinaData} />;
 }
 

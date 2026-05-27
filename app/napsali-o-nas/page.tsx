@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import NapsaliClient from './_client'
+import { client } from '@/tina/__generated__/client'
 
 export const metadata: Metadata = {
   title: 'Napsali o nás — Handi4Camp',
@@ -11,6 +12,7 @@ export const metadata: Metadata = {
   },
 }
 
-export default function NapsaliPage() {
-  return <NapsaliClient />
+export default async function NapsaliPage() {
+  const tinaData = await client.queries.napsali({ relativePath: 'napsali-o-nas.md' })
+  return <NapsaliClient tinaData={tinaData} />
 }

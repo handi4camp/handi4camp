@@ -19,16 +19,7 @@ import posthog from "posthog-js";
 
 type JakpomociQuery = Awaited<ReturnType<typeof client.queries.jakpomoci>>;
 
-export default function JakPomociPage() {
-  const [tinaData, setTinaData] = useState<JakpomociQuery | null>(null);
-
-  useEffect(() => {
-    client.queries
-      .jakpomoci({ relativePath: "jak-pomoci.md" })
-      .then(setTinaData);
-  }, []);
-
-  if (!tinaData) return null;
+export default function JakPomociClient({ tinaData }: { tinaData: JakpomociQuery }) {
   return <JakPomociContent tinaData={tinaData} />;
 }
 

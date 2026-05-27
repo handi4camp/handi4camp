@@ -1,19 +1,11 @@
 "use client";
-import { useState, useEffect } from "react";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import PageHero from "@/components/page-hero";
 
 type NapsaliQuery = Awaited<ReturnType<typeof client.queries.napsali>>;
 
-export default function NapsaliClient() {
-  const [tinaData, setTinaData] = useState<NapsaliQuery | null>(null);
-
-  useEffect(() => {
-    client.queries.napsali({ relativePath: "napsali-o-nas.md" }).then(setTinaData);
-  }, []);
-
-  if (!tinaData) return null;
+export default function NapsaliClient({ tinaData }: { tinaData: NapsaliQuery }) {
   return <NapsaliContent tinaData={tinaData} />;
 }
 
