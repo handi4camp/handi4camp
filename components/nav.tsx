@@ -52,7 +52,8 @@ export default function Nav() {
               alt="Handi4Camp"
               width={160}
               height={128}
-              className="h-14 w-auto brightness-0 invert"
+              style={{ width: "auto" }}
+              className="h-14 brightness-0 invert"
               priority
             />
           </Link>
@@ -114,7 +115,8 @@ export default function Nav() {
                 alt="Handi4Camp"
                 width={160}
                 height={128}
-                className="h-14 w-auto brightness-0 invert"
+                style={{ width: "auto" }}
+                className="h-14 brightness-0 invert"
               />
             </Link>
           </div>
@@ -148,8 +150,7 @@ export default function Nav() {
               aria-label="Facebook"
               className="text-warm-white/70 hover:text-warm-white transition-colors"
             >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src="/facebook.svg" alt="" className="w-6 h-6 brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
+              <Image src="/facebook.svg" alt="" width={24} height={24} className="brightness-0 invert opacity-70 hover:opacity-100 transition-opacity" />
             </a>
             <a
               href="https://www.instagram.com/handi_camp/"

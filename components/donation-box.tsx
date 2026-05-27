@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type FundraiserProps = {
   enabled?: boolean | null;
   title?: string | null;
@@ -143,8 +145,7 @@ export default function DonationBox({
       >
         <div className="bg-white p-3 rounded-xl inline-block shadow">
           {qrCodeImage ? (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
+            <Image
               src={qrCodeImage}
               alt="QR kód pro platbu"
               width={150}

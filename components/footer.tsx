@@ -65,8 +65,7 @@ function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
                 className="inline-flex items-center gap-2 text-warm-white/70 hover:text-warm-white transition-colors text-sm"
                 data-tina-field={tinaField(g, 'footerFacebookLabel')}
               >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/facebook.svg" alt="" className="w-4 h-4 brightness-0 invert" />
+                <Image src="/facebook.svg" alt="" width={16} height={16} className="brightness-0 invert" />
                 {g.footerFacebookLabel}
               </a>
               {g.footerInstagramHref && (

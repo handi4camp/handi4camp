@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
@@ -60,14 +61,15 @@ export default function PolaroidGallery({
                       <button
                         type="button"
                         onClick={() => photo.videoSrc ? setVideoSrc(photo.videoSrc) : setLightboxIndex(slideIndex)}
-                        className="w-full h-full cursor-pointer"
+                        className="relative w-full h-full cursor-pointer"
                         aria-label={photo.videoSrc ? `Přehrát video: ${photo.alt}` : `Otevřít foto: ${photo.alt}`}
                       >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
+                        <Image
                           src={photo.src}
                           alt={photo.alt}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                          className="object-cover"
                         />
                         {photo.videoSrc && (
                           <div className="absolute inset-0 flex items-center justify-center">

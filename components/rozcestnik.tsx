@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Heart, Building2, HandHelping, ArrowRight } from "lucide-react";
 
@@ -90,11 +91,13 @@ export default function Rozcestnik({ heading, subheading, cards, sponsors, tinaF
                 data-tina-field={sponsor._tina}
               >
                 {sponsor.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
+                  <Image
                     src={sponsor.logo}
                     alt={sponsor.name}
-                    className="h-10 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
+                    width={0}
+                    height={0}
+                    sizes="160px"
+                    className="h-10 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all"
                   />
                 ) : (
                   <span className="text-dark/40 hover:text-dark font-bold text-sm transition-colors">{sponsor.name}</span>

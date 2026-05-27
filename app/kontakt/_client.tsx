@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { useTina, tinaField } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import PageHero from "@/components/page-hero";
@@ -44,10 +45,11 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
 
           <div className="flex flex-col md:flex-row gap-10 items-start">
             {p.organizerPhoto && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
+              <Image
                 src={p.organizerPhoto}
                 alt={p.organizerName ?? "Organizátorka"}
+                width={224}
+                height={288}
                 className="w-56 h-72 rounded-2xl object-cover object-top shadow-lg flex-shrink-0 mx-auto md:mx-0"
                 data-tina-field={tinaField(p, "organizerPhoto")}
               />
@@ -129,8 +131,7 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
                         })
                       }
                     >
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img src="/facebook.svg" alt="" className="w-4 h-4" />
+                      <Image src="/facebook.svg" alt="" width={16} height={16} />
                       {p.facebookLabel}
                     </a>
                   </dd>
@@ -186,17 +187,21 @@ function KontaktContent({ tinaData }: { tinaData: KontaktQuery }) {
           <div className="mt-12 pt-10 border-t border-light-green text-center">
             <p className="text-dark/50 text-sm mb-4">Pořádáme pod záštitou</p>
             <div className="mb-4 flex justify-center gap-6 items-center">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/rotary_logo.png"
                 alt="Rotary Club Valtice - Břeclav"
-                className="h-24 object-contain"
+                width={0}
+                height={0}
+                sizes="200px"
+                className="h-24 w-auto object-contain"
               />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/rotary.png"
                 alt="Rotary"
-                className="h-16 object-contain"
+                width={0}
+                height={0}
+                sizes="150px"
+                className="h-16 w-auto object-contain"
               />
             </div>
           </div>

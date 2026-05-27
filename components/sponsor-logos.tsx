@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export type SponsorEntry = {
   name: string;
   logo?: string;
@@ -26,11 +28,13 @@ export default function SponsorLogos({
               className="text-dark/40 hover:text-dark transition-colors"
             >
               {sponsor.logo ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
+                <Image
                   src={sponsor.logo}
                   alt={sponsor.name}
-                  className="h-10 grayscale hover:grayscale-0 transition-all"
+                  width={0}
+                  height={0}
+                  sizes="160px"
+                  className="h-10 w-auto grayscale hover:grayscale-0 transition-all"
                 />
               ) : (
                 <span className="font-bold text-sm">{sponsor.name}</span>

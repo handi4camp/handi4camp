@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import posthog from "posthog-js";
 
@@ -41,11 +42,13 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
             i === current ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={slide.src}
             alt={slide.label}
-            className="w-full h-full object-cover"
+            fill
+            priority={i === 0}
+            sizes="100vw"
+            className="object-cover"
           />
         </div>
       ))}

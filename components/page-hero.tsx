@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type PageHeroProps = {
   title: string;
   subtitle?: string;
@@ -9,13 +11,17 @@ export default function PageHero({ title, subtitle, imageSrc, tinaFields }: Page
   return (
     <section className="relative py-20 bg-forest text-warm-white overflow-hidden">
       {imageSrc && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={imageSrc}
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 w-full h-full object-cover"
-        />
+        <div className="absolute inset-0">
+          <Image
+            src={imageSrc}
+            alt=""
+            aria-hidden
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
       )}
       {imageSrc && (
         <div className="absolute inset-0 bg-gradient-to-t from-dark/70 via-dark/30 to-transparent pointer-events-none" />
