@@ -4,6 +4,7 @@ import "./globals.css";
 import Nav from "@/components/nav";
 import Footer from "@/components/footer";
 import CookieBanner from "@/components/cookie-banner";
+import { client } from "@/tina/__generated__/client";
 
 const openSans = Open_Sans({
   subsets: ["latin", "latin-ext"],
@@ -67,11 +68,13 @@ const jsonLd = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const globalData = await client.queries.global({ relativePath: "global.md" });
+
   return (
     <html lang="cs" className={openSans.variable}>
       <head>
@@ -79,11 +82,18 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <link rel="preconnect" href="https://content.tinajs.io" />
+        <link
+          rel="preload"
+          as="image"
+          href="/_next/image?url=%2Fimages%2Fhandicamp-foto-03.webp&w=828&q=75"
+          fetchPriority="high"
+        />
       </head>
       <body className="min-h-screen flex flex-col bg-warm-white text-dark font-sans">
         <Nav />
         <main className="flex-1">{children}</main>
-        <Footer />
+        <Footer initialData={globalData} />
         <CookieBanner />
       </body>
     </html>

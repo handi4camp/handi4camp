@@ -56,16 +56,18 @@ export default function Hero({ headline, subtext, cta1Label, cta1Href, cta2Label
       <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-dark/80 via-dark/50 to-transparent pointer-events-none" />
 
 
-      <div className="absolute top-6 right-6 z-20 flex gap-2">
+      <div className="absolute top-6 right-6 z-20 flex gap-1">
         {slides.map((_, i) => (
           <button
             key={i}
             onClick={() => setCurrent(i)}
             aria-label={`Snímek ${i + 1}`}
-            className={`w-2 h-2 rounded-full transition-all ${
-              i === current ? "bg-gold w-6" : "bg-warm-white/50"
-            }`}
-          />
+            className="w-8 h-8 flex items-center justify-center"
+          >
+            <span className={`block rounded-full transition-all duration-300 h-2 ${
+              i === current ? "bg-gold w-6" : "bg-warm-white/50 w-2"
+            }`} />
+          </button>
         ))}
       </div>
 

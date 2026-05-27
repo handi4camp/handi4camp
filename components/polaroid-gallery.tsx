@@ -68,7 +68,11 @@ export default function PolaroidGallery({
                           src={photo.src}
                           alt={photo.alt}
                           fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+                          sizes={
+                            layout === "grid"
+                              ? "(max-width: 640px) calc(50vw - 16px), (max-width: 1024px) calc(33vw - 16px), calc(25vw - 16px)"
+                              : "(max-width: 639px) 256px, 320px"
+                          }
                           className="object-cover"
                         />
                         {photo.videoSrc && (

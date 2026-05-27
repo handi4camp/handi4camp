@@ -1,6 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
-import { tinaField } from "tinacms/dist/react";
+import { tinaField, useTina } from "tinacms/dist/react";
 import { client } from "@/tina/__generated__/client";
 import Link from "next/link";
 import Image from "next/image";
@@ -8,19 +7,8 @@ import logo from "../logo.png";
 
 type GlobalQuery = Awaited<ReturnType<typeof client.queries.global>>;
 
-export default function Footer() {
-  const [tinaData, setTinaData] = useState<GlobalQuery | null>(null);
-
-  useEffect(() => {
-    client.queries.global({ relativePath: "global.md" }).then(setTinaData);
-  }, []);
-
-  if (!tinaData) return null;
-  return <FooterContent tinaData={tinaData} />;
-}
-
-function FooterContent({ tinaData }: { tinaData: GlobalQuery }) {
-  const { data } = tinaData;
+export default function Footer({ initialData }: { initialData: GlobalQuery }) {
+  const { data } = useTina(initialData);
   const g = data.global;
 
   return (
